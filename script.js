@@ -245,7 +245,7 @@
       ),
       adapterMode: toDisplayText(
         airjelly.adapterMode,
-        snapshot.mode?.includes("mock") ? "Mock Mode" : "Connected",
+        "Mock Mode",
       ),
       capability: toDisplayText(
         airjelly.capability,
