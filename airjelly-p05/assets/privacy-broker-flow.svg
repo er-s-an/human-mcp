@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">AirJelly Local Privacy Broker Flow</title>
+  <desc id="desc">Diagram showing local signals entering a privacy broker and only an approved capability card leaving for HumanMCP.</desc>
+  <rect width="1400" height="900" fill="#041017"/>
+  <text x="80" y="110" fill="#8eb8c2" font-family="'Inter', 'Segoe UI', sans-serif" font-size="28" letter-spacing="2">LOCAL PRIVACY BROKER</text>
+  <text x="80" y="178" fill="#f3feff" font-family="'Inter', 'Segoe UI', sans-serif" font-size="52" font-weight="700">Private context stays local.</text>
+
+  <rect x="80" y="260" width="320" height="420" rx="26" fill="#0b1720" stroke="#4beeff" stroke-opacity="0.28"/>
+  <text x="116" y="322" fill="#7fe7f3" font-family="'Inter', sans-serif" font-size="28">Local-only inputs</text>
+  <text x="116" y="390" fill="#d7eef2" font-family="'Inter', sans-serif" font-size="26">• recent app focus category</text>
+  <text x="116" y="442" fill="#d7eef2" font-family="'Inter', sans-serif" font-size="26">• calendar busy/free hint</text>
+  <text x="116" y="494" fill="#d7eef2" font-family="'Inter', sans-serif" font-size="26">• current work rhythm signal</text>
+  <text x="116" y="582" fill="#ff8fbf" font-family="'Inter', sans-serif" font-size="24">Never exported:</text>
+  <text x="116" y="630" fill="#ffd3e5" font-family="'Inter', sans-serif" font-size="24">raw memories, screenshots,</text>
+  <text x="116" y="666" fill="#ffd3e5" font-family="'Inter', sans-serif" font-size="24">contacts, clipboard, notes</text>
+
+  <rect x="500" y="230" width="380" height="470" rx="28" fill="#0d1f26" stroke="#35ff8f" stroke-opacity="0.36"/>
+  <text x="540" y="310" fill="#9dffcb" font-family="'Inter', sans-serif" font-size="30">AirJelly Local Privacy Broker</text>
+  <text x="540" y="388" fill="#f3feff" font-family="'Inter', sans-serif" font-size="28">1. Suggest capability locally</text>
+  <text x="540" y="446" fill="#f3feff" font-family="'Inter', sans-serif" font-size="28">2. Request user approval</text>
+  <text x="540" y="504" fill="#f3feff" font-family="'Inter', sans-serif" font-size="28">3. Export capability card only</text>
+  <rect x="540" y="564" width="300" height="72" rx="16" fill="#122c33" stroke="#4beeff" stroke-opacity="0.4"/>
+  <text x="575" y="608" fill="#4beeff" font-family="'JetBrains Mono', monospace" font-size="26">AirJelly Suggested</text>
+  <text x="575" y="642" fill="#4beeff" font-family="'JetBrains Mono', monospace" font-size="26">User Approved</text>
+
+  <rect x="980" y="260" width="340" height="420" rx="26" fill="#10181c" stroke="#4beeff" stroke-opacity="0.28"/>
+  <text x="1020" y="322" fill="#7fe7f3" font-family="'Inter', sans-serif" font-size="28">HumanMCP receives</text>
+  <text x="1020" y="396" fill="#f3feff" font-family="'JetBrains Mono', monospace" font-size="28">capability_id</text>
+  <text x="1020" y="444" fill="#f3feff" font-family="'JetBrains Mono', monospace" font-size="28">display_name</text>
+  <text x="1020" y="492" fill="#f3feff" font-family="'JetBrains Mono', monospace" font-size="28">summary</text>
+  <text x="1020" y="540" fill="#f3feff" font-family="'JetBrains Mono', monospace" font-size="28">approval_timestamp</text>
+  <text x="1020" y="588" fill="#f3feff" font-family="'JetBrains Mono', monospace" font-size="28">source_label</text>
+  <rect x="1020" y="620" width="240" height="44" rx="10" fill="#122c33"/>
+  <text x="1042" y="649" fill="#9dffcb" font-family="'Inter', sans-serif" font-size="20">capability card only</text>
+
+  <path d="M416 470 H476" stroke="#4beeff" stroke-width="4" stroke-dasharray="12 10" fill="none"/>
+  <polygon points="476,470 446,454 446,486" fill="#4beeff"/>
+  <path d="M896 470 H956" stroke="#35ff8f" stroke-width="4" stroke-dasharray="12 10" fill="none"/>
+  <polygon points="956,470 926,454 926,486" fill="#35ff8f"/>
+
+  <rect x="80" y="760" width="1240" height="64" rx="14" fill="#0a151b" stroke="#8eb8c2" stroke-opacity="0.2"/>
+  <text x="110" y="801" fill="#d7eef2" font-family="'Inter', sans-serif" font-size="26">Local-first suggestion. User approval required. Capability card only. No raw-memory export.</text>
+</svg>

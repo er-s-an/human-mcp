@@ -1,0 +1,85 @@
+{
+  "requiredStageStates": [
+    "idle",
+    "auth_blocked",
+    "no_humans",
+    "assigned",
+    "calling",
+    "proof_pending",
+    "verify_failed",
+    "verified",
+    "stamp_ready",
+    "virtual_stamp",
+    "manual_override",
+    "stamped",
+    "complete",
+    "fallback_scripted"
+  ],
+  "requiredSnapshotKeys": [
+    "stage",
+    "humanName",
+    "endpoint",
+    "taskId",
+    "subtaskId",
+    "proofId",
+    "verified",
+    "level",
+    "rewardDelta",
+    "stampStatus",
+    "message",
+    "updatedAt",
+    "mode"
+  ],
+  "happyPathStages": [
+    "idle",
+    "assigned",
+    "calling",
+    "proof_pending",
+    "verified",
+    "stamp_ready",
+    "stamped",
+    "complete"
+  ],
+  "fallbackPathStages": [
+    "idle",
+    "auth_blocked",
+    "manual_override",
+    "fallback_scripted"
+  ],
+  "requiredSignals": [
+    {
+      "name": "airjelly_source_label",
+      "mode": "allOf",
+      "patterns": [
+        "AirJelly Suggested, User Approved"
+      ]
+    },
+    {
+      "name": "airjelly_adapter_mode",
+      "mode": "anyOf",
+      "patterns": [
+        "AirJelly Adapter: Mock Mode",
+        "AirJelly Connected"
+      ]
+    },
+    {
+      "name": "fallback_operator_sync_mode",
+      "mode": "allOf",
+      "patterns": [
+        "fallback_scripted",
+        "operator sync mode"
+      ]
+    },
+    {
+      "name": "stage_feed_contract",
+      "mode": "anyOf",
+      "patterns": [
+        "/humanmcp/stage-state",
+        "stage-state.json",
+        "GET /humanmcp/stage-state",
+        "stage-events",
+        "EventSource"
+      ]
+    }
+  ]
+}

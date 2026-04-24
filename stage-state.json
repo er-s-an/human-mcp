@@ -1,0 +1,26 @@
+{
+  "stage": "proof_pending",
+  "humanName": "Lindsay",
+  "endpoint": "/lindsay/business_judgement",
+  "taskId": "task-demo-014",
+  "subtaskId": "subtask-02",
+  "proofId": "proof-117",
+  "verified": false,
+  "level": "L2",
+  "rewardDelta": "+5",
+  "stampStatus": "awaiting_verification",
+  "message": "Lindsay submitted judgement notes. Waiting for operator verify on Windows/OpenClaw.",
+  "updatedAt": "2026-04-24T10:58:40.000Z",
+  "mode": "mock_live_feed",
+  "currentGoal": "Turn AirJelly capability discovery into a stage-safe verified HumanMCP call.",
+  "nextAction": "Review the submitted proof on Windows and verify once evidence is clearly visible.",
+  "proofState": "submitted",
+  "verifyState": "pending",
+  "airjelly": {
+    "source": "AirJelly Suggested, User Approved",
+    "adapterMode": "Mock Mode",
+    "capability": "/lindsay/business_judgement",
+    "approvalStatus": "approved",
+    "privacy": "No raw AirJelly memories or private context leave the local broker."
+  }
+}

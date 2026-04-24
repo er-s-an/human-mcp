@@ -1,0 +1,131 @@
+{
+  "generatedAt": "2026-04-24T11:22:44.197Z",
+  "summary": {
+    "ready": true,
+    "failedChecks": [],
+    "sourceFiles": [
+      "index.html",
+      "script.js",
+      "styles.css"
+    ]
+  },
+  "checks": [
+    {
+      "name": "required_stage_states_present_in_script",
+      "pass": true,
+      "details": {
+        "present": [
+          "idle",
+          "auth_blocked",
+          "no_humans",
+          "assigned",
+          "calling",
+          "proof_pending",
+          "verify_failed",
+          "verified",
+          "stamp_ready",
+          "virtual_stamp",
+          "manual_override",
+          "stamped",
+          "complete",
+          "fallback_scripted"
+        ],
+        "missing": []
+      }
+    },
+    {
+      "name": "happy_path_sequence_present_in_script",
+      "pass": true,
+      "details": {
+        "expected": [
+          "idle",
+          "assigned",
+          "calling",
+          "proof_pending",
+          "verified",
+          "stamp_ready",
+          "stamped",
+          "complete"
+        ],
+        "actual": [
+          "idle",
+          "auth_blocked",
+          "no_humans",
+          "assigned",
+          "calling",
+          "proof_pending",
+          "verify_failed",
+          "verified",
+          "stamp_ready",
+          "virtual_stamp",
+          "manual_override",
+          "stamped",
+          "complete",
+          "fallback_scripted"
+        ]
+      }
+    },
+    {
+      "name": "airjelly_source_label",
+      "pass": true,
+      "details": {
+        "mode": "allOf",
+        "matches": [
+          "AirJelly Suggested, User Approved"
+        ],
+        "missing": []
+      }
+    },
+    {
+      "name": "airjelly_adapter_mode",
+      "pass": true,
+      "details": {
+        "mode": "anyOf",
+        "matches": [
+          "AirJelly Adapter: Mock Mode"
+        ],
+        "missing": [
+          "AirJelly Connected"
+        ]
+      }
+    },
+    {
+      "name": "fallback_operator_sync_mode",
+      "pass": true,
+      "details": {
+        "mode": "allOf",
+        "matches": [
+          "fallback_scripted",
+          "operator sync mode"
+        ],
+        "missing": []
+      }
+    },
+    {
+      "name": "stage_feed_contract",
+      "pass": true,
+      "details": {
+        "mode": "anyOf",
+        "matches": [
+          "stage-state.json"
+        ],
+        "missing": [
+          "/humanmcp/stage-state",
+          "GET /humanmcp/stage-state",
+          "stage-events",
+          "EventSource"
+        ]
+      }
+    },
+    {
+      "name": "happyPath",
+      "pass": true,
+      "details": "happyPath fixture matches required stage sequence."
+    },
+    {
+      "name": "fallbackPath",
+      "pass": true,
+      "details": "fallbackPath fixture matches required stage sequence."
+    }
+  ]
+}

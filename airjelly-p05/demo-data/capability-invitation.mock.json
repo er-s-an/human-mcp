@@ -1,0 +1,71 @@
+{
+  "adapter": {
+    "mode": "mock",
+    "status_label": "AirJelly Adapter: Mock Mode",
+    "connected_status_label": "AirJelly Connected",
+    "story_parity": true,
+    "notes": [
+      "Mock Mode preserves the exact same invitation, approval, and source-label flow as live mode.",
+      "Mock payload is demo-safe and intentionally excludes raw personal context."
+    ]
+  },
+  "privacy_broker": {
+    "name": "Local Privacy Broker",
+    "summary": "Local-first suggestion. User approval required. Capability card only.",
+    "local_inputs": [
+      "recent app focus category",
+      "calendar busy/free hint",
+      "current work rhythm signal"
+    ],
+    "never_exports": [
+      "raw memories",
+      "screenshots",
+      "contacts",
+      "clipboard contents",
+      "full activity timelines",
+      "private notes",
+      "unapproved inferred labels"
+    ],
+    "export_shape": {
+      "type": "capability_card",
+      "fields": [
+        "capability_id",
+        "display_name",
+        "user_visible_summary",
+        "approval_timestamp",
+        "source_label"
+      ]
+    }
+  },
+  "capability_invitation": {
+    "invitation_id": "airjelly-capability-focus-checkin",
+    "title": "Capability Invitation",
+    "headline": "AirJelly suggests a focus check-in helper for your HumanMCP toolbox.",
+    "suggested_by": "AirJelly",
+    "reason_summary": "A private local signal suggests you are in a deep-work block and may want a low-noise check-in endpoint.",
+    "approval_required": true,
+    "approval_cta": "Approve capability",
+    "decline_cta": "Not now",
+    "user_approved": true,
+    "user_approved_at": "2026-04-24T18:22:00+08:00",
+    "approved_copy": "User approved. Endpoint added to HumanMCP toolbox.",
+    "endpoint_card": {
+      "endpoint_id": "airjelly_focus_checkin",
+      "display_name": "/airjelly/focus_checkin",
+      "summary": "Checks whether the operator wants a focus-preserving check-in before routing work.",
+      "source_label": "Source: AirJelly Suggested, User Approved",
+      "toolbox_group": "private-context helpers"
+    }
+  },
+  "operator_narration": [
+    "AirJelly does not dump private memories into HumanMCP.",
+    "It suggests a capability locally, asks for approval, and only the approved capability card reaches the toolbox.",
+    "This works in both live mode and Mock Mode."
+  ],
+  "forbidden_claims": [
+    "HumanMCP exports raw AirJelly memories.",
+    "HumanMCP stores screenshots from AirJelly.",
+    "AirJelly silently turns users into tools without approval.",
+    "The demo depends on live AirJelly connectivity to prove the story."
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "version": "2026-04-24",
+  "source": "windows-openclaw",
+  "mode": "live",
+  "stage": "stamp_ready",
+  "expressionState": "verified",
+  "humanId": "human_123",
+  "humanName": "Alice",
+  "endpoint": "/humanmcp/alice/vision",
+  "assignmentId": "assign_123",
+  "taskId": "openclaw_live_demo",
+  "subtaskId": "surface-b",
+  "proofId": "proof_987",
+  "verified": true,
+  "level": "L2",
+  "rewardDelta": 10,
+  "stampStatus": "requested",
+  "message": "Proof verified; robot or fallback stamp can complete now.",
+  "updatedAt": "2026-04-24T11:30:00.000Z",
+  "operatorActions": {
+    "canRetry": true,
+    "canManualAdvance": true,
+    "canVirtualStamp": true,
+    "canOperatorFallback": true,
+    "canTriggerRobot": true
+  },
+  "fallback": {
+    "macContextMode": "live",
+    "reason": null
+  }
+}
