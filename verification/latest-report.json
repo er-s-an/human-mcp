@@ -1,12 +1,13 @@
 {
-  "generatedAt": "2026-04-24T11:22:44.197Z",
+  "generatedAt": "2026-04-24T12:41:21.304Z",
   "summary": {
     "ready": true,
     "failedChecks": [],
     "sourceFiles": [
       "index.html",
       "script.js",
-      "styles.css"
+      "styles.css",
+      "scripts/stage_state_rehearsal_server.mjs"
     ]
   },
   "checks": [
@@ -107,10 +108,10 @@
       "details": {
         "mode": "anyOf",
         "matches": [
+          "/humanmcp/stage-state",
           "stage-state.json"
         ],
         "missing": [
-          "/humanmcp/stage-state",
           "GET /humanmcp/stage-state",
           "stage-events",
           "EventSource"
@@ -126,6 +127,25 @@
       "name": "fallbackPath",
       "pass": true,
       "details": "fallbackPath fixture matches required stage sequence."
+    },
+    {
+      "name": "virtualStampPath",
+      "pass": true,
+      "details": "virtualStampPath fixture matches required stage sequence."
+    },
+    {
+      "name": "local_rehearsal_server_present",
+      "pass": true,
+      "details": {
+        "path": "scripts/stage_state_rehearsal_server.mjs",
+        "markers": [
+          "/humanmcp/stage-state",
+          "/humanmcp/rehearsal/status",
+          "/humanmcp/rehearsal/next",
+          "virtualStampPath"
+        ],
+        "missing": []
+      }
     }
   ]
 }

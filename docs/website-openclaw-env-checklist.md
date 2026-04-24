@@ -18,6 +18,15 @@ Use this checklist before rehearsal or live demo. Leave secrets blank in files; 
 - [ ] OpenClaw can reach `GET /proofs?status=pending`
 - [ ] OpenClaw operator knows whether the stamp branch for this run is `hardware_done` or `virtual_done`
 
+## 2.5 Mac / Surface A Machine
+
+- [ ] `node scripts/stage_state_rehearsal_server.mjs --port 4173 --scenario happyPath` can start locally
+- [ ] Surface A can open `http://127.0.0.1:4173/?feed=http://127.0.0.1:4173/humanmcp/stage-state`
+- [ ] Happy path can be advanced through `/humanmcp/rehearsal/next` to `complete`
+- [ ] `virtualStampPath` reaches `complete` with `virtual_done`
+- [ ] `fallbackPath` reaches `fallback_scripted` and the operator banner is visible
+- [ ] After Windows is ready, Surface A is reopened with the Windows feed URL instead of the local rehearsal feed
+
 ## 3. Website / Admin / Operator Lane
 
 - [ ] At least one seed human exists

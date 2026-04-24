@@ -182,5 +182,67 @@
       "updatedAt": "2026-04-24T10:05:16.000Z",
       "mode": "operator_sync"
     }
+  ],
+  "virtualStampPath": [
+    {
+      "stage": "stamp_ready",
+      "humanName": "Lindsay",
+      "endpoint": "/lindsay/business_judgement",
+      "taskId": "task-1",
+      "subtaskId": "subtask-1",
+      "proofId": "proof-1",
+      "verified": true,
+      "level": 2,
+      "rewardDelta": 10,
+      "stampStatus": "requested",
+      "message": "Stamp action ready, but robot availability is not guaranteed",
+      "updatedAt": "2026-04-24T10:10:00.000Z",
+      "mode": "mock_live_feed"
+    },
+    {
+      "stage": "virtual_stamp",
+      "humanName": "Lindsay",
+      "endpoint": "/lindsay/business_judgement",
+      "taskId": "task-1",
+      "subtaskId": "subtask-1",
+      "proofId": "proof-1",
+      "verified": true,
+      "level": 2,
+      "rewardDelta": 10,
+      "stampStatus": "requested",
+      "message": "Robot branch is unavailable; virtual stamp fallback is visible",
+      "updatedAt": "2026-04-24T10:10:10.000Z",
+      "mode": "mock_live_feed"
+    },
+    {
+      "stage": "stamped",
+      "humanName": "Lindsay",
+      "endpoint": "/lindsay/business_judgement",
+      "taskId": "task-1",
+      "subtaskId": "subtask-1",
+      "proofId": "proof-1",
+      "verified": true,
+      "level": 2,
+      "rewardDelta": 10,
+      "stampStatus": "virtual_done",
+      "message": "Virtual stamp fallback completed and can be reconciled later",
+      "updatedAt": "2026-04-24T10:10:20.000Z",
+      "mode": "mock_live_feed"
+    },
+    {
+      "stage": "complete",
+      "humanName": "Lindsay",
+      "endpoint": "/lindsay/business_judgement",
+      "taskId": "task-1",
+      "subtaskId": "subtask-1",
+      "proofId": "proof-1",
+      "verified": true,
+      "level": 2,
+      "rewardDelta": 10,
+      "stampStatus": "virtual_done",
+      "message": "Demo loop complete with virtual stamp fallback",
+      "updatedAt": "2026-04-24T10:10:30.000Z",
+      "mode": "mock_live_feed"
+    }
   ]
 }

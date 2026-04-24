@@ -25,7 +25,12 @@ const fixtures = JSON.parse(
   fs.readFileSync(path.join(verificationDir, 'stage-state-fixtures.json'), 'utf8')
 );
 
-const filesToScan = ['index.html', 'script.js', 'styles.css'];
+const filesToScan = [
+  'index.html',
+  'script.js',
+  'styles.css',
+  'scripts/stage_state_rehearsal_server.mjs',
+];
 const sourceByFile = Object.fromEntries(
   filesToScan.map((name) => [name, fs.readFileSync(path.join(rootDir, name), 'utf8')])
 );
@@ -107,9 +112,42 @@ const signalChecks = requirements.requiredSignals.map((signal) => evaluateSignal
 const fixtureChecks = [
   validateFixturePath('happyPath', fixtures.happyPath, requirements.happyPathStages),
   validateFixturePath('fallbackPath', fixtures.fallbackPath, requirements.fallbackPathStages),
+  validateFixturePath(
+    'virtualStampPath',
+    fixtures.virtualStampPath,
+    requirements.virtualStampPathStages
+  ),
 ];
 
-const checks = [requiredStateCheck, happyPathCheck, ...signalChecks, ...fixtureChecks];
+const rehearsalServerPath = path.join(rootDir, 'scripts', 'stage_state_rehearsal_server.mjs');
+const rehearsalServerSource = fs.existsSync(rehearsalServerPath)
+  ? fs.readFileSync(rehearsalServerPath, 'utf8')
+  : '';
+const rehearsalServerMarkers = [
+  '/humanmcp/stage-state',
+  '/humanmcp/rehearsal/status',
+  '/humanmcp/rehearsal/next',
+  'virtualStampPath',
+];
+const rehearsalServerCheck = {
+  name: 'local_rehearsal_server_present',
+  pass:
+    fs.existsSync(rehearsalServerPath) &&
+    rehearsalServerMarkers.every((marker) => rehearsalServerSource.includes(marker)),
+  details: {
+    path: 'scripts/stage_state_rehearsal_server.mjs',
+    markers: rehearsalServerMarkers.filter((marker) => rehearsalServerSource.includes(marker)),
+    missing: rehearsalServerMarkers.filter((marker) => !rehearsalServerSource.includes(marker)),
+  },
+};
+
+const checks = [
+  requiredStateCheck,
+  happyPathCheck,
+  ...signalChecks,
+  ...fixtureChecks,
+  rehearsalServerCheck,
+];
 const failedChecks = checks.filter((check) => !check.pass);
 const summary = {
   ready: failedChecks.length === 0,

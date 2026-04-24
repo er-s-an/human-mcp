@@ -46,6 +46,12 @@
     "manual_override",
     "fallback_scripted"
   ],
+  "virtualStampPathStages": [
+    "stamp_ready",
+    "virtual_stamp",
+    "stamped",
+    "complete"
+  ],
   "requiredSignals": [
     {
       "name": "airjelly_source_label",
