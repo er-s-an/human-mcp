@@ -49,6 +49,8 @@ require_env() {
 
 build_headers() {
   AUTH_HEADER=$(normalize_bearer "$HUMAN_MCP_AUTH_TOKEN")
+  API_KEY_HEADER=${AUTH_HEADER#Bearer }
+  API_KEY_HEADER=${API_KEY_HEADER#bearer }
 }
 
 run_curl() {
@@ -56,7 +58,7 @@ run_curl() {
   local path=$2
   local body=${3:-}
   local url="${HUMAN_MCP_API_BASE_URL%/}${path}"
-  local -a cmd=(curl -sS -X "$method" "$url" -H 'Accept: application/json' -H "Authorization: ${AUTH_HEADER}")
+  local -a cmd=(curl -sS -X "$method" "$url" -H 'Accept: application/json' -H "Authorization: ${AUTH_HEADER}" -H "apikey: ${API_KEY_HEADER}")
   if [[ -n $body ]]; then
     cmd+=(-H 'Content-Type: application/json' --data "$body")
   fi
