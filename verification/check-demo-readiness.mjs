@@ -12,9 +12,17 @@ const args = process.argv.slice(2);
 const strict = args.includes('--strict');
 const reportFlagIndex = args.indexOf('--report');
 const reportPath = reportFlagIndex >= 0 ? args[reportFlagIndex + 1] : null;
+const remoteFeedFlagIndex = args.indexOf('--remote-feed');
+const remoteFeedUrl =
+  remoteFeedFlagIndex >= 0 ? args[remoteFeedFlagIndex + 1] : null;
 
 if (reportFlagIndex >= 0 && !reportPath) {
   console.error('Missing value for --report');
+  process.exit(2);
+}
+
+if (remoteFeedFlagIndex >= 0 && !remoteFeedUrl) {
+  console.error('Missing value for --remote-feed');
   process.exit(2);
 }
 
@@ -90,6 +98,113 @@ function validateFixturePath(name, snapshots, expectedStages) {
   };
 }
 
+async function fetchRemoteSnapshot(feedUrl) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const response = await fetch(feedUrl, {
+      cache: 'no-store',
+      signal: controller.signal,
+    });
+    const text = await response.text();
+    let snapshot = null;
+
+    try {
+      snapshot = JSON.parse(text);
+    } catch (error) {
+      throw new Error(`Remote feed did not return JSON: ${error.message}`);
+    }
+
+    return {
+      ok: response.ok,
+      status: response.status,
+      headers: {
+        contentType: response.headers.get('content-type') || '',
+        cors: response.headers.get('access-control-allow-origin') || '',
+        cacheControl: response.headers.get('cache-control') || '',
+      },
+      snapshot,
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function validateRemoteSnapshot(feedUrl, remoteResult) {
+  const errors = [];
+  const { ok, status, headers, snapshot } = remoteResult;
+  const requiredRemoteKeys = [
+    'source',
+    'mode',
+    'stage',
+    'expressionState',
+    'stampStatus',
+    'message',
+    'updatedAt',
+    'operatorActions',
+  ];
+
+  if (!ok) {
+    errors.push(`HTTP status was ${status}`);
+  }
+
+  if (!headers.contentType.includes('application/json')) {
+    errors.push(`content-type is not JSON: ${headers.contentType || 'missing'}`);
+  }
+
+  if (!headers.cors) {
+    errors.push('missing Access-Control-Allow-Origin header');
+  }
+
+  const missingKeys = requiredRemoteKeys.filter((key) => !(key in snapshot));
+  if (missingKeys.length) {
+    errors.push(`missing remote keys: ${missingKeys.join(', ')}`);
+  }
+
+  if (snapshot.source !== 'windows-openclaw') {
+    errors.push(`source must be windows-openclaw; got ${snapshot.source}`);
+  }
+
+  if (!requirements.requiredStageStates.includes(snapshot.stage)) {
+    errors.push(`stage is not in approved vocabulary: ${snapshot.stage}`);
+  }
+
+  const parsedUpdatedAt = new Date(snapshot.updatedAt);
+  if (Number.isNaN(parsedUpdatedAt.getTime())) {
+    errors.push(`updatedAt is not parseable: ${snapshot.updatedAt}`);
+  } else {
+    const ageMs = Date.now() - parsedUpdatedAt.getTime();
+    if (Math.abs(ageMs) > 15000) {
+      errors.push(`updatedAt is not fresh enough: ageMs=${ageMs}`);
+    }
+  }
+
+  if (!snapshot.operatorActions || typeof snapshot.operatorActions !== 'object') {
+    errors.push('operatorActions must be an object');
+  }
+
+  return {
+    name: 'remote_windows_stage_state_feed',
+    pass: errors.length === 0,
+    details:
+      errors.length === 0
+        ? {
+            feedUrl,
+            status,
+            cors: headers.cors,
+            cacheControl: headers.cacheControl,
+            source: snapshot.source,
+            mode: snapshot.mode,
+            stage: snapshot.stage,
+            expressionState: snapshot.expressionState,
+            stampStatus: snapshot.stampStatus,
+            updatedAt: snapshot.updatedAt,
+          }
+        : errors,
+  };
+}
+
 const requiredStateCheck = {
   name: 'required_stage_states_present_in_script',
   pass: requirements.requiredStageStates.every((state) => currentStates.includes(state)),
@@ -141,18 +256,34 @@ const rehearsalServerCheck = {
   },
 };
 
+const remoteFeedChecks = [];
+if (remoteFeedUrl) {
+  try {
+    const remoteResult = await fetchRemoteSnapshot(remoteFeedUrl);
+    remoteFeedChecks.push(validateRemoteSnapshot(remoteFeedUrl, remoteResult));
+  } catch (error) {
+    remoteFeedChecks.push({
+      name: 'remote_windows_stage_state_feed',
+      pass: false,
+      details: [String(error.message || error)],
+    });
+  }
+}
+
 const checks = [
   requiredStateCheck,
   happyPathCheck,
   ...signalChecks,
   ...fixtureChecks,
   rehearsalServerCheck,
+  ...remoteFeedChecks,
 ];
 const failedChecks = checks.filter((check) => !check.pass);
 const summary = {
   ready: failedChecks.length === 0,
   failedChecks: failedChecks.map((check) => check.name),
   sourceFiles: filesToScan,
+  remoteFeedUrl,
 };
 
 const report = {

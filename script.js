@@ -349,7 +349,11 @@
 
   function createFeedState(kind, detail) {
     if (kind === "live") {
-      return { kind, label: "LIVE", detail: detail || "Live feed healthy" };
+      return {
+        kind,
+        label: "CONNECTED",
+        detail: detail || "Controller feed healthy",
+      };
     }
 
     if (kind === "degraded") {

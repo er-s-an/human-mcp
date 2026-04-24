@@ -19,10 +19,12 @@ This worker lane adds a lightweight, dependency-free verification harness for th
 node --check scripts/stage_state_rehearsal_server.mjs
 node verification/check-demo-readiness.mjs --report verification/latest-report.json
 node verification/check-demo-readiness.mjs --strict
+node verification/check-demo-readiness.mjs --strict --remote-feed http://<windows-host>:4173/humanmcp/stage-state
 ```
 
 - Default mode writes a human-readable console report and can optionally emit JSON.
 - `--strict` exits non-zero when the local worktree is not demo-ready.
+- `--remote-feed` validates a Windows/OpenClaw stage-state feed for HTTP reachability, JSON shape, CORS, approved stage vocabulary, source ownership, and fresh `updatedAt`.
 
 ## Files
 
