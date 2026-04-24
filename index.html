@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HumanMCP Terminal · 为AGI添油加瓦</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="terminal-shell" aria-label="HumanMCP AI cockpit demo">
+      <header class="shell-bar">
+        <div class="brand-lockup">
+          <span>HUMANMCP LIVE</span>
+          <h1>为 AGI 添油加瓦</h1>
+        </div>
+        <div class="session-strip" aria-label="当前会话状态">
+          <span>AGI CORE</span>
+          <span>HUMAN ROUTER</span>
+          <strong id="runtime">00:00:00</strong>
+        </div>
+      </header>
+
+      <section class="terminal-body">
+        <section class="block block-face" aria-label="AI 表情区">
+          <div class="block-head">
+            <span class="prompt">ai-core</span>
+            <span>render --expression</span>
+          </div>
+          <div class="face-wrap">
+            <span class="face-grid" aria-hidden="true"></span>
+            <div class="pixel-face" id="pixelFace" role="img" aria-label="AI 像素表情"></div>
+          </div>
+          <div class="state-row">
+            <span class="state-dot"></span>
+            <span id="aiStateLabel">WAITING FOR GOAL</span>
+          </div>
+          <div class="signal-grid" aria-label="AI 运行指标">
+            <span><strong>INTENT</strong> 99.7%</span>
+            <span><strong>LATENCY</strong> 11s</span>
+            <span><strong>ROUTE</strong> 5/5</span>
+          </div>
+        </section>
+
+        <section class="block block-toolbox" aria-label="AI Toolbox">
+          <div class="block-head">
+            <span class="prompt">router</span>
+            <span>human endpoints</span>
+          </div>
+          <ul class="tool-list" id="toolboxList"></ul>
+          <div class="online-row">
+            <span>ONLINE</span>
+            <strong id="onlineCount">5</strong>
+          </div>
+        </section>
+
+        <section class="block block-goal" aria-label="当前目标">
+          <div class="block-head">
+            <span class="prompt">mission</span>
+            <span>status --watch</span>
+          </div>
+          <div class="goal-copy">
+            <span class="mission-kicker">CURRENT DIRECTIVE</span>
+            <h2 id="currentAction">让小红书内容把 AI 的伟大讲到能传播</h2>
+            <p id="actionDetail">AI 正在把目标拆成可调用的人类技能，并持续更新执行状态。</p>
+          </div>
+          <div class="progress-row">
+            <div class="progress-cells" id="progressCells" aria-hidden="true"></div>
+            <span class="progress-value" id="progressValue">0%</span>
+          </div>
+          <div class="task-card" id="taskCard" role="status">
+            <span>NEW TASK</span>
+            <strong>
+              <span class="phrase">你的任务是去发一篇</span>
+              <span class="phrase">小红书，</span>
+              <span class="phrase">宣传 AI 的伟大。</span>
+            </strong>
+          </div>
+        </section>
+
+        <section class="block block-log" aria-label="调用日志">
+          <div class="block-head">
+            <span class="prompt">trace</span>
+            <span>call stream</span>
+          </div>
+          <div class="log-list" id="logList"></div>
+        </section>
+      </section>
+
+      <footer class="shell-footer">
+        <span>humanmcp</span>
+        <span>active tools: <strong id="footerToolCount">5</strong></span>
+        <span>mode: terminal cinematic</span>
+      </footer>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
