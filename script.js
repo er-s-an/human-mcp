@@ -203,6 +203,46 @@
       approvalStatus: "approved",
       privacy:
         "No raw AirJelly memories or private context leave the local broker.",
+      match: {
+        status: "matched",
+        need: {
+          label: "AI needs human judgment",
+          reason:
+            "The AI needs a direction-level answer before continuing the landing-page critique.",
+          question:
+            "Can you understand the product in 10 seconds, and would you click Join Waitlist?",
+        },
+        candidate: {
+          displayName: "Lindsay",
+          endpoint: "/lindsay/business_judgement",
+        },
+        signals: [
+          {
+            label: "Relevant experience",
+            summary:
+              "Recent product-copy and founder-feedback context matched locally.",
+            source: "local AirJelly context",
+          },
+          {
+            label: "Available now",
+            summary:
+              "AirJelly exports availability summary only, not raw app history.",
+            source: "local task/app state",
+          },
+          {
+            label: "Low interruption",
+            summary: "The invite asks one scoped 30-second question.",
+            source: "HumanMCP task packet",
+          },
+        ],
+        score: 0.92,
+        invite: {
+          text: "Willing to help AI with one 30-second question?",
+          status: "ready",
+        },
+        exportedContext:
+          "Only the match summary leaves AirJelly; raw memories and screenshots stay local.",
+      },
     },
     smartAssignment: {
       status: "proof_wait",
@@ -372,6 +412,29 @@
 
   function normalizeAirJelly(snapshot) {
     const airjelly = snapshot.airjelly || {};
+    const match = airjelly.match || airjelly.contextMatch || {};
+    const need = match.need || {};
+    const candidate = match.candidate || {};
+    const invite = match.invite || {};
+    const signals = Array.isArray(match.signals) && match.signals.length
+      ? match.signals
+      : [
+          {
+            label: "Relevant experience",
+            summary: "Recent startup copy and business-judgement context matched locally.",
+            source: "local AirJelly context",
+          },
+          {
+            label: "Available now",
+            summary: "No high-focus block is exported; only availability summary leaves the broker.",
+            source: "local task/app state",
+          },
+          {
+            label: "Low interruption",
+            summary: "HumanMCP sends one scoped 30-second question.",
+            source: "HumanMCP task packet",
+          },
+        ];
 
     return {
       source: toDisplayText(
@@ -394,6 +457,47 @@
         airjelly.privacy,
         "No raw AirJelly memories, screenshots, app usage, or contacts leave the local layer.",
       ),
+      match: {
+        status: toDisplayText(match.status, snapshot.endpoint ? "matched" : "waiting"),
+        need: {
+          label: toDisplayText(need.label, "AI needs human judgment"),
+          reason: toDisplayText(
+            need.reason,
+            "The AI has a direction-level uncertainty that benefits from a human answer.",
+          ),
+          question: toDisplayText(
+            need.question || match.question,
+            "Can the target user understand this in 10 seconds?",
+          ),
+        },
+        candidate: {
+          displayName: toDisplayText(
+            candidate.displayName || candidate.name,
+            snapshot.humanName || "Awaiting candidate",
+          ),
+          endpoint: toDisplayText(
+            candidate.endpoint,
+            snapshot.endpoint || "Awaiting HumanMCP endpoint",
+          ),
+        },
+        signals: signals.slice(0, 4).map((signal) => ({
+          label: toDisplayText(signal.label || signal.name, "Match signal"),
+          summary: toDisplayText(signal.summary || signal.detail, "Privacy-safe local signal."),
+          source: toDisplayText(signal.source, "AirJelly local context"),
+        })),
+        score: formatConfidence(match.score ?? (snapshot.endpoint ? 0.92 : 0)),
+        invite: {
+          text: toDisplayText(
+            invite.text,
+            "Willing to help AI with one 30-second question?",
+          ),
+          status: toDisplayText(invite.status, snapshot.endpoint ? "ready" : "waiting"),
+        },
+        exportedContext: toDisplayText(
+          match.exportedContext || match.exported_context,
+          "Only the match summary leaves AirJelly; raw memories and screenshots stay local.",
+        ),
+      },
     };
   }
 
@@ -818,6 +922,13 @@
       adapterMode: snapshot.airjelly.adapterMode,
       approvalStatus: snapshot.airjelly.approvalStatus,
       privacy: snapshot.airjelly.privacy,
+      airjellyMatchStatus: snapshot.airjelly.match.status,
+      airjellyMatchNeed: `${snapshot.airjelly.match.need.label}: ${snapshot.airjelly.match.need.reason}`,
+      airjellyMatchQuestion: snapshot.airjelly.match.need.question,
+      airjellyMatchCandidate: `${snapshot.airjelly.match.candidate.displayName} · ${snapshot.airjelly.match.candidate.endpoint}`,
+      airjellyMatchSignals: snapshot.airjelly.match.signals,
+      airjellyMatchInvite: `${snapshot.airjelly.match.invite.status}: ${snapshot.airjelly.match.invite.text}`,
+      airjellyMatchExportedContext: snapshot.airjelly.match.exportedContext,
       proofState: snapshot.proofState,
       verifyState: snapshot.verifyState,
       stampStatus: snapshot.stampStatus,
@@ -916,6 +1027,19 @@
     adapterModeValue: document.querySelector("#adapterModeValue"),
     approvalStatusValue: document.querySelector("#approvalStatusValue"),
     privacyValue: document.querySelector("#privacyValue"),
+    airjellyMatchStatusValue: document.querySelector("#airjellyMatchStatusValue"),
+    airjellyMatchNeedValue: document.querySelector("#airjellyMatchNeedValue"),
+    airjellyMatchQuestionValue: document.querySelector("#airjellyMatchQuestionValue"),
+    airjellyMatchCandidateValue: document.querySelector(
+      "#airjellyMatchCandidateValue",
+    ),
+    airjellyMatchSignalsValue: document.querySelector(
+      "#airjellyMatchSignalsValue",
+    ),
+    airjellyMatchInviteValue: document.querySelector("#airjellyMatchInviteValue"),
+    airjellyMatchExportedContextValue: document.querySelector(
+      "#airjellyMatchExportedContextValue",
+    ),
     proofStateValue: document.querySelector("#proofStateValue"),
     verifyStateValue: document.querySelector("#verifyStateValue"),
     stampStatusValue: document.querySelector("#stampStatusValue"),
@@ -1019,6 +1143,25 @@
     elements.adapterModeValue.textContent = viewModel.adapterMode;
     elements.approvalStatusValue.textContent = viewModel.approvalStatus;
     elements.privacyValue.textContent = viewModel.privacy;
+    elements.airjellyMatchStatusValue.textContent =
+      viewModel.airjellyMatchStatus;
+    elements.airjellyMatchNeedValue.textContent = viewModel.airjellyMatchNeed;
+    elements.airjellyMatchQuestionValue.textContent =
+      viewModel.airjellyMatchQuestion;
+    elements.airjellyMatchCandidateValue.textContent =
+      viewModel.airjellyMatchCandidate;
+    elements.airjellyMatchSignalsValue.innerHTML = viewModel.airjellyMatchSignals
+      .map(
+        (signal) =>
+          `<li><strong>${escapeHtml(signal.label)}</strong><span>${escapeHtml(
+            signal.summary,
+          )}</span><em>${escapeHtml(signal.source)}</em></li>`,
+      )
+      .join("");
+    elements.airjellyMatchInviteValue.textContent =
+      viewModel.airjellyMatchInvite;
+    elements.airjellyMatchExportedContextValue.textContent =
+      viewModel.airjellyMatchExportedContext;
     elements.proofStateValue.textContent = viewModel.proofState;
     elements.verifyStateValue.textContent = viewModel.verifyState;
     elements.stampStatusValue.textContent = viewModel.stampStatus;

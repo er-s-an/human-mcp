@@ -110,7 +110,49 @@
         "Audit Trail",
         "Final Control"
       ]
+    },
+    {
+      "name": "airjelly_match_layer",
+      "mode": "allOf",
+      "patterns": [
+        "context match layer",
+        "AirJelly match summary",
+        "Matched Human",
+        "Exported Context",
+        "Only the match summary leaves AirJelly",
+        "Willing to help AI with one 30-second question"
+      ]
+    },
+    {
+      "name": "airjelly_live_local_adapter",
+      "mode": "allOf",
+      "patterns": [
+        "airjelly_local_match_adapter",
+        "runtime.json",
+        "AirJelly Connected",
+        "listOpenTasks",
+        "listPersons",
+        "listMemories",
+        "rawPayloadsExported"
+      ]
     }
+  ],
+  "requiredAirJellyKeys": [
+    "source",
+    "adapterMode",
+    "capability",
+    "approvalStatus",
+    "privacy",
+    "match"
+  ],
+  "requiredAirJellyMatchKeys": [
+    "status",
+    "need",
+    "candidate",
+    "signals",
+    "score",
+    "invite",
+    "exportedContext"
   ],
   "requiredSmartAssignmentKeys": [
     "status",

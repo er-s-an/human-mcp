@@ -1,0 +1,74 @@
+{
+  "protocol": "airjelly_match_summary_v0",
+  "artifactId": "airjelly-match-summary-demo-001",
+  "source": "AirJelly Suggested, User Approved",
+  "createdAt": "2026-04-25T10:00:00+08:00",
+  "directNodeTransport": false,
+  "airjellyRole": "local_match_summary_only",
+  "coordinatorRole": "invite_response_packager",
+  "markers": [
+    "AIRJELLY_NO_DIRECT_NODE_COMMUNICATION",
+    "COORDINATOR_OWNS_INVITE_RESPONSE",
+    "MATCH_SUMMARY_ONLY_EXPORT",
+    "RAW_AIRJELLY_CONTEXT_STAYS_LOCAL"
+  ],
+  "summary": {
+    "status": "approved_match_summary",
+    "need": {
+      "question": "Can you judge whether this landing-page headline is clear in 10 seconds?",
+      "privacyBudget": "P1",
+      "visibleContext": [
+        "product category",
+        "redacted headline",
+        "single screenshot or bounded copy excerpt"
+      ]
+    },
+    "candidate": {
+      "humanId": "human_lindsay_demo",
+      "displayName": "Lindsay",
+      "endpoint": "/humanmcp/lindsay/business-judgment",
+      "capability": "business-judgment"
+    },
+    "signals": [
+      {
+        "label": "skill_match",
+        "summary": "Matched business-judgment capability to the user-approved AirJelly suggestion."
+      },
+      {
+        "label": "availability",
+        "summary": "Candidate is available for one 30-second question."
+      }
+    ],
+    "score": 0.92
+  },
+  "privacy": {
+    "exports": [
+      "match_summary",
+      "approved capability endpoint",
+      "redacted matching signals"
+    ],
+    "neverExports": [
+      "raw AirJelly memories",
+      "screenshots",
+      "contacts",
+      "clipboard contents",
+      "full app history",
+      "private notes",
+      "unapproved inferred labels"
+    ],
+    "statement": "Only the match summary leaves AirJelly; raw AirJelly context stays local."
+  },
+  "inviteResponseBoundary": {
+    "inviteOwner": "HumanMCP/OpenCloud coordinator",
+    "responseOwner": "HumanMCP/OpenCloud coordinator",
+    "airjellyMaySendInvite": false,
+    "airjellyMayCollectResponse": false,
+    "coordinatorPackageIncludes": [
+      "caller",
+      "helper",
+      "shared packet",
+      "structured response",
+      "user decision"
+    ]
+  }
+}

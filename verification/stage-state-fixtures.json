@@ -71,7 +71,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": null
+      "assignmentId": null,
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "pending",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "waiting",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "waiting"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "assigned",
@@ -144,7 +186,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": "assign-1"
+      "assignmentId": "assign-1",
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.92,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "calling",
@@ -217,7 +301,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": "assign-1"
+      "assignmentId": "assign-1",
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.92,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "proof_pending",
@@ -290,7 +416,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": "assign-1"
+      "assignmentId": "assign-1",
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.92,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "verified",
@@ -363,7 +531,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": "assign-1"
+      "assignmentId": "assign-1",
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.92,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "stamp_ready",
@@ -436,7 +646,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": "assign-1"
+      "assignmentId": "assign-1",
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.92,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "stamped",
@@ -509,7 +761,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": "assign-1"
+      "assignmentId": "assign-1",
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.92,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "complete",
@@ -582,7 +876,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": "assign-1"
+      "assignmentId": "assign-1",
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.92,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     }
   ],
   "fallbackPath": [
@@ -657,7 +993,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": null
+      "assignmentId": null,
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "pending",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "waiting",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "waiting"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "auth_blocked",
@@ -730,7 +1108,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": null
+      "assignmentId": null,
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "pending",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "waiting",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "waiting"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "manual_override",
@@ -797,7 +1217,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": null
+      "assignmentId": null,
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "manual_override",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Operator",
+            "endpoint": "manual_override"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.5,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "fallback_scripted",
@@ -864,7 +1326,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": null
+      "assignmentId": null,
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "manual_override",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Operator",
+            "endpoint": "manual_override"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.5,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     }
   ],
   "virtualStampPath": [
@@ -939,7 +1443,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": "assign-1"
+      "assignmentId": "assign-1",
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.92,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "virtual_stamp",
@@ -1012,7 +1558,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": "assign-1"
+      "assignmentId": "assign-1",
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.92,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "stamped",
@@ -1085,7 +1673,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": "assign-1"
+      "assignmentId": "assign-1",
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.92,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     },
     {
       "stage": "complete",
@@ -1158,7 +1788,49 @@
           "finalControl": "User confirms before any external publish/send/apply action."
         }
       },
-      "assignmentId": "assign-1"
+      "assignmentId": "assign-1",
+      "airjelly": {
+        "source": "AirJelly Suggested, User Approved",
+        "adapterMode": "Mock Mode",
+        "capability": "/lindsay/business_judgement",
+        "approvalStatus": "approved",
+        "privacy": "No raw AirJelly memories or private context leave the local broker.",
+        "match": {
+          "status": "matched",
+          "need": {
+            "label": "AI needs human judgment",
+            "reason": "The AI has a direction-level uncertainty that benefits from one human answer.",
+            "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+          },
+          "candidate": {
+            "displayName": "Lindsay",
+            "endpoint": "/lindsay/business_judgement"
+          },
+          "signals": [
+            {
+              "label": "Relevant experience",
+              "summary": "AirJelly found recent business-judgement and product-copy context locally.",
+              "source": "local AirJelly context"
+            },
+            {
+              "label": "Available now",
+              "summary": "Only an availability summary is exported; raw app state stays local.",
+              "source": "local task/app state"
+            },
+            {
+              "label": "Low interruption",
+              "summary": "HumanMCP will ask one scoped 30-second question.",
+              "source": "HumanMCP task packet"
+            }
+          ],
+          "score": 0.92,
+          "invite": {
+            "text": "Willing to help AI with one 30-second question?",
+            "status": "ready"
+          },
+          "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+        }
+      }
     }
   ]
 }

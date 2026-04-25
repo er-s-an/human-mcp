@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">HumanMCP human-AI collaboration diagram</title>
+  <desc id="desc">A simple presentation diagram explaining HumanMCP as a new way for humans and AI to collaborate through tiny questions, AirJelly context, lightweight consent, and human judgment.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8f6f1; }
+      .panel { fill: #ffffff; stroke: #ded8cd; stroke-width: 2; }
+      .card { stroke-width: 2; filter: url(#shadow); }
+      .ai { fill: #e9f1fb; stroke: #9db9d2; }
+      .air { fill: #ecf5ed; stroke: #9fc0a6; }
+      .mcp { fill: #fff3d7; stroke: #d8b66c; }
+      .human { fill: #f1ecfa; stroke: #b8add9; }
+      .answer { fill: #f2f0eb; stroke: #c8c0b4; }
+      .title { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 48px; font-weight: 760; fill: #24211d; letter-spacing: 0; }
+      .subtitle { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 25px; fill: #625b51; letter-spacing: 0; }
+      .label { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 27px; font-weight: 760; fill: #25221e; letter-spacing: 0; }
+      .body { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 20px; fill: #5d574f; letter-spacing: 0; }
+      .small { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 18px; fill: #746d63; letter-spacing: 0; }
+      .step { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 18px; font-weight: 760; fill: #ffffff; letter-spacing: 0; }
+      .note { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 20px; font-weight: 700; fill: #ffffff; letter-spacing: 0; }
+      .arrow { fill: none; stroke: #6d6256; stroke-width: 3.3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowhead); }
+      .arrow-soft { fill: none; stroke: #9f9385; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowhead-soft); stroke-dasharray: 9 8; }
+    </style>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6d6256"/>
+    </marker>
+    <marker id="arrowhead-soft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9f9385"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#2b2117" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <rect class="bg" width="1600" height="900"/>
+
+  <text class="title" x="80" y="82">HumanMCP：人机协同的新方式</text>
+  <text class="subtitle" x="80" y="124">OPC 把工作目标交给 AI；当 AI 需要人类判断时，只问一个很小、很清楚的问题。</text>
+
+  <rect class="panel" x="70" y="170" width="1460" height="635" rx="22"/>
+
+  <g>
+    <rect class="card ai" x="115" y="245" width="285" height="155" rx="16"/>
+    <circle cx="157" cy="288" r="22" fill="#46749b"/>
+    <text class="step" x="151" y="295">1</text>
+    <text class="label" x="190" y="295">OPC 发出目标</text>
+    <text class="body" x="150" y="340">人类使用者告诉 AI</text>
+    <text class="body" x="150" y="372">现在要完成什么工作</text>
+  </g>
+
+  <g>
+    <rect class="card ai" x="115" y="485" width="285" height="155" rx="16"/>
+    <circle cx="157" cy="528" r="22" fill="#46749b"/>
+    <text class="step" x="151" y="535">2</text>
+    <text class="label" x="190" y="535">AI 开始执行</text>
+    <text class="body" x="150" y="580">能写、能查、能总结</text>
+    <text class="body" x="150" y="612">但遇到判断盲区</text>
+  </g>
+
+  <g>
+    <rect class="card air" x="500" y="245" width="300" height="155" rx="16"/>
+    <circle cx="542" cy="288" r="22" fill="#4d8062"/>
+    <text class="step" x="536" y="295">3</text>
+    <text class="label" x="575" y="295">AirJelly 看懂现场</text>
+    <text class="body" x="535" y="340">识别：这里需要</text>
+    <text class="body" x="535" y="372">一个人类判断</text>
+  </g>
+
+  <g>
+    <rect class="card mcp" x="500" y="485" width="300" height="155" rx="16"/>
+    <circle cx="542" cy="528" r="22" fill="#8a6d3d"/>
+    <text class="step" x="536" y="535">4</text>
+    <text class="label" x="575" y="535">生成小问题</text>
+    <text class="body" x="535" y="580">只保留必要信息</text>
+    <text class="body" x="535" y="612">30 秒就能回答</text>
+  </g>
+
+  <g>
+    <rect class="card air" x="880" y="225" width="340" height="175" rx="16"/>
+    <circle cx="942" cy="288" r="22" fill="#4d8062"/>
+    <text class="step" x="936" y="295">5</text>
+    <text class="label" x="975" y="295">匹配合适的人</text>
+    <text class="body" x="915" y="340">AirJelly 看候选人的本地上下文</text>
+    <text class="body" x="915" y="372">判断：能力匹配 + 此刻方便</text>
+  </g>
+
+  <g>
+    <rect class="card answer" x="908" y="415" width="304" height="70" rx="14"/>
+    <text class="small" x="940" y="444">匹配依据示例：</text>
+    <text class="small" x="940" y="470">做过类似判断 / 空闲 / 低打扰</text>
+  </g>
+
+  <g>
+    <rect class="card human" x="880" y="540" width="340" height="145" rx="16"/>
+    <circle cx="942" cy="583" r="22" fill="#7663a8"/>
+    <text class="step" x="936" y="590">6</text>
+    <text class="label" x="975" y="592">轻量邀请</text>
+    <text class="body" x="915" y="628">“愿意帮 AI 看一眼吗？”</text>
+    <text class="body" x="915" y="658">愿意才打开问题</text>
+  </g>
+
+  <g>
+    <rect class="card answer" x="1300" y="360" width="175" height="205" rx="16"/>
+    <circle cx="1340" cy="403" r="22" fill="#6f665c"/>
+    <text class="step" x="1334" y="410">7</text>
+    <text class="label" x="1330" y="457">人类回答</text>
+    <text class="body" x="1330" y="500">一句判断</text>
+    <text class="body" x="1330" y="532">一个选择</text>
+  </g>
+
+  <path class="arrow" d="M258 400 L258 485"/>
+  <path class="arrow" d="M400 562 C445 562 455 322 500 322"/>
+  <path class="arrow" d="M650 400 L650 485"/>
+  <path class="arrow" d="M800 562 C850 562 830 312 880 312"/>
+  <path class="arrow" d="M1050 400 L1050 415"/>
+  <path class="arrow" d="M1050 485 L1050 540"/>
+  <path class="arrow" d="M1220 612 C1270 612 1250 463 1300 463"/>
+  <path class="arrow-soft" d="M1300 462 C1160 735 450 725 350 640"/>
+
+  <rect x="525" y="672" width="345" height="48" rx="24" fill="#8a6d3d"/>
+  <text class="note" x="565" y="703">HumanMCP 承载的是“小问题”</text>
+
+  <rect x="880" y="713" width="390" height="48" rx="24" fill="#4d7560"/>
+  <text class="note" x="920" y="744">匹配发生在本地上下文里</text>
+
+  <g>
+    <rect class="panel" x="115" y="825" width="1360" height="52" rx="14"/>
+    <text class="body" x="150" y="859">一句话：</text>
+    <text class="small" x="232" y="859">OPC 先把目标交给 AI；AirJelly 根据双方上下文完成匹配；HumanMCP 让 AI 用一个小问题和人完成一次轻量协同。</text>
+  </g>
+</svg>

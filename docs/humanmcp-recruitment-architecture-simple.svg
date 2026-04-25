@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">HumanMCP formal recruitment architecture</title>
+  <desc id="desc">A simple presentation diagram for the future HumanMCP recruitment system where AirJelly identifies user needs and tool worker capabilities, then HumanMCP matches, dispatches, verifies, and records reputation.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8f6f1; }
+      .lane { fill: #ffffff; stroke: #ddd7cc; stroke-width: 2; }
+      .box { stroke-width: 2; filter: url(#shadow); }
+      .need { fill: #eaf2fb; stroke: #9fb9d2; }
+      .worker { fill: #ecf5ed; stroke: #9ec0a6; }
+      .core { fill: #fff3d6; stroke: #d7b56b; }
+      .trust { fill: #f1ecfa; stroke: #b9addb; }
+      .result { fill: #f2f0eb; stroke: #c8c0b4; }
+      .danger { fill: #fdeceb; stroke: #d8a09c; }
+      .title { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 46px; font-weight: 760; fill: #24211d; letter-spacing: 0; }
+      .subtitle { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 24px; fill: #625b51; letter-spacing: 0; }
+      .lane-title { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 22px; font-weight: 760; fill: #7b5c31; letter-spacing: 0; }
+      .label { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 25px; font-weight: 760; fill: #25221e; letter-spacing: 0; }
+      .body { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 19px; fill: #5d574f; letter-spacing: 0; }
+      .small { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 17px; fill: #716a60; letter-spacing: 0; }
+      .pill { font-family: Inter, "Noto Sans SC", Arial, sans-serif; font-size: 17px; font-weight: 720; fill: #ffffff; letter-spacing: 0; }
+      .arrow { fill: none; stroke: #6e6255; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowhead); }
+      .arrow-soft { fill: none; stroke: #9d9184; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowhead-soft); stroke-dasharray: 8 8; }
+    </style>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6e6255"/>
+    </marker>
+    <marker id="arrowhead-soft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9d9184"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="9" stdDeviation="11" flood-color="#2b2117" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <rect class="bg" width="1600" height="900"/>
+
+  <text class="title" x="80" y="78">HumanMCP 正式招募版架构</text>
+  <text class="subtitle" x="80" y="118">AirJelly 同时理解“谁需要帮助”和“谁能提供帮助”，HumanMCP 负责匹配、派单、验证和信誉沉淀。</text>
+
+  <rect class="lane" x="70" y="160" width="430" height="610" rx="18"/>
+  <rect class="lane" x="585" y="160" width="430" height="610" rx="18"/>
+  <rect class="lane" x="1100" y="160" width="430" height="610" rx="18"/>
+
+  <text class="lane-title" x="110" y="205">需求侧：用户需要什么</text>
+  <text class="lane-title" x="625" y="205">HumanMCP：匹配与派单</text>
+  <text class="lane-title" x="1140" y="205">供给侧：工具员能做什么</text>
+
+  <g>
+    <rect class="box need" x="110" y="245" width="340" height="125" rx="14"/>
+    <text class="label" x="140" y="296">用户工作现场</text>
+    <text class="body" x="140" y="330">正在做产品、设计、销售、运营等任务</text>
+  </g>
+
+  <g>
+    <rect class="box need" x="110" y="415" width="340" height="145" rx="14"/>
+    <text class="label" x="140" y="466">AirJelly 识别需求</text>
+    <text class="body" x="140" y="500">判断当前缺什么判断力</text>
+    <text class="small" x="140" y="529">例如：用户访谈、审美判断、行业经验</text>
+  </g>
+
+  <g>
+    <rect class="box core" x="625" y="245" width="350" height="125" rx="14"/>
+    <text class="label" x="655" y="296">最小任务包</text>
+    <text class="body" x="655" y="330">只包含完成任务必须知道的信息</text>
+  </g>
+
+  <g>
+    <rect class="box core" x="625" y="415" width="350" height="145" rx="14"/>
+    <text class="label" x="655" y="466">智能匹配引擎</text>
+    <text class="body" x="655" y="500">按能力、空闲、可信度、价格匹配工具员</text>
+    <text class="small" x="655" y="529">不合适就推荐更安全的 fallback</text>
+  </g>
+
+  <g>
+    <rect class="box trust" x="625" y="610" width="350" height="115" rx="14"/>
+    <text class="label" x="655" y="660">交付验证与信誉</text>
+    <text class="body" x="655" y="694">记录结果、评价、可复用能力标签</text>
+  </g>
+
+  <g>
+    <rect class="box worker" x="1140" y="245" width="340" height="125" rx="14"/>
+    <text class="label" x="1170" y="296">工具员入驻</text>
+    <text class="body" x="1170" y="330">填写经验、技能、可接任务类型</text>
+  </g>
+
+  <g>
+    <rect class="box worker" x="1140" y="415" width="340" height="145" rx="14"/>
+    <text class="label" x="1170" y="466">AirJelly 识别能力</text>
+    <text class="body" x="1170" y="500">从工具员历史任务和行为中形成能力画像</text>
+    <text class="small" x="1170" y="529">例如：擅长审文案、懂某行业、回复快</text>
+  </g>
+
+  <g>
+    <rect class="box result" x="1140" y="610" width="340" height="115" rx="14"/>
+    <text class="label" x="1170" y="660">工具员接单交付</text>
+    <text class="body" x="1170" y="694">回答问题、给建议、提交可验证结果</text>
+  </g>
+
+  <path class="arrow" d="M280 370 L280 415"/>
+  <path class="arrow" d="M450 488 C525 488 550 308 625 308"/>
+  <path class="arrow" d="M975 488 C1045 488 1070 488 1140 488"/>
+  <path class="arrow" d="M1310 370 L1310 415"/>
+  <path class="arrow" d="M1140 668 C1070 668 1045 668 975 668"/>
+  <path class="arrow" d="M625 668 C545 668 500 540 450 520"/>
+  <path class="arrow-soft" d="M1310 610 C1310 585 1310 585 1310 560"/>
+  <path class="arrow-soft" d="M800 560 L800 610"/>
+
+  <rect x="636" y="376" width="328" height="40" rx="20" fill="#8a6d3d"/>
+  <text class="pill" x="671" y="402">隐私原则：只给任务必需信息</text>
+
+  <rect x="1136" y="574" width="352" height="40" rx="20" fill="#4d7560"/>
+  <text class="pill" x="1173" y="600">能力会随真实交付持续更新</text>
+
+  <g>
+    <rect class="box danger" x="110" y="795" width="1380" height="55" rx="14"/>
+    <text class="body" x="145" y="829">一句话讲法：</text>
+    <text class="small" x="262" y="829">AirJelly 发现需求和能力，HumanMCP 把需求变成安全任务包，匹配合适工具员，完成后把结果和信誉沉淀回来。</text>
+  </g>
+</svg>

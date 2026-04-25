@@ -39,6 +39,7 @@ const filesToScan = [
   'script.js',
   'styles.css',
   'scripts/stage_state_rehearsal_server.mjs',
+  'scripts/airjelly_local_match_adapter.mjs',
 ];
 const sourceByFile = Object.fromEntries(
   filesToScan.map((name) => [name, fs.readFileSync(path.join(rootDir, name), 'utf8')])
@@ -134,12 +135,59 @@ function validateEnterDatabaseHandoff(requirementsConfig) {
 
 function validateSmartAssignmentFixtures(fixturesByName) {
   const errors = [];
+  const requiredAirJellyKeys = requirements.requiredAirJellyKeys || [];
+  const requiredAirJellyMatchKeys = requirements.requiredAirJellyMatchKeys || [];
   const requiredKeys = requirements.requiredSmartAssignmentKeys || [];
   const requiredTaskPacketKeys = requirements.requiredTaskPacketKeys || [];
   const requiredResponsibilityKeys = requirements.requiredResponsibilityKeys || [];
 
   for (const [name, snapshots] of Object.entries(fixturesByName)) {
     for (const [index, snapshot] of snapshots.entries()) {
+      const airjelly = snapshot.airjelly || snapshot.airJelly;
+      if (!airjelly || typeof airjelly !== 'object') {
+        errors.push(`${name}[${index}] missing airjelly`);
+      } else {
+        const missingAirJellyKeys = requiredAirJellyKeys.filter((key) => !(key in airjelly));
+        if (missingAirJellyKeys.length) {
+          errors.push(`${name}[${index}] airjelly missing keys: ${missingAirJellyKeys.join(', ')}`);
+        }
+
+        const match = airjelly.match || airjelly.contextMatch;
+        if (!match || typeof match !== 'object') {
+          errors.push(`${name}[${index}] missing airjelly.match`);
+        } else {
+          const missingMatchKeys = requiredAirJellyMatchKeys.filter((key) => !(key in match));
+          if (missingMatchKeys.length) {
+            errors.push(
+              `${name}[${index}] airjelly.match missing keys: ${missingMatchKeys.join(', ')}`
+            );
+          }
+
+          if (!match.need || typeof match.need !== 'object' || !match.need.question) {
+            errors.push(`${name}[${index}] airjelly.match.need.question is required`);
+          }
+
+          if (
+            !match.candidate ||
+            typeof match.candidate !== 'object' ||
+            !match.candidate.endpoint
+          ) {
+            errors.push(`${name}[${index}] airjelly.match.candidate.endpoint is required`);
+          }
+
+          if (!Array.isArray(match.signals) || match.signals.length === 0) {
+            errors.push(`${name}[${index}] airjelly.match.signals must be a non-empty array`);
+          }
+
+          const exportedContext = String(match.exportedContext || match.exported_context || '');
+          if (!exportedContext.includes('raw memories') || !exportedContext.includes('stay local')) {
+            errors.push(
+              `${name}[${index}] airjelly.match.exportedContext must state raw memories stay local`
+            );
+          }
+        }
+      }
+
       const smartAssignment = snapshot.smartAssignment || snapshot.smart_assignment;
 
       if (!smartAssignment || typeof smartAssignment !== 'object') {

@@ -283,7 +283,7 @@
         <article class="block" aria-label="AirJelly source">
           <div class="block-head">
             <span class="prompt">airjelly</span>
-            <span>capability invitation</span>
+            <span>context match layer</span>
           </div>
           <div class="source-card">
             <span class="source-label" id="sourceLabelValue"
@@ -309,6 +309,38 @@
               </dd>
             </div>
           </dl>
+          <div class="match-card" aria-label="AirJelly match summary">
+            <span class="assignment-state" id="airjellyMatchStatusValue"
+              >waiting</span
+            >
+            <strong id="airjellyMatchNeedValue">
+              AI needs human judgment: waiting for a scoped question.
+            </strong>
+            <p id="airjellyMatchQuestionValue">
+              Can the target user understand this in 10 seconds?
+            </p>
+            <dl class="kv-list kv-list--compact">
+              <div>
+                <dt>Matched Human</dt>
+                <dd id="airjellyMatchCandidateValue">
+                  Waiting for HumanMCP endpoint
+                </dd>
+              </div>
+              <div>
+                <dt>Invite</dt>
+                <dd id="airjellyMatchInviteValue">
+                  Willing to help AI with one 30-second question?
+                </dd>
+              </div>
+              <div>
+                <dt>Exported Context</dt>
+                <dd id="airjellyMatchExportedContextValue">
+                  Only the match summary leaves AirJelly.
+                </dd>
+              </div>
+            </dl>
+            <ul class="match-signal-list" id="airjellyMatchSignalsValue"></ul>
+          </div>
         </article>
 
         <article class="block" aria-label="Responsibility and audit">

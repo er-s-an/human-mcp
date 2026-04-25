@@ -21,7 +21,42 @@
     "adapterMode": "Mock Mode",
     "capability": "/lindsay/business_judgement",
     "approvalStatus": "approved",
-    "privacy": "No raw AirJelly memories or private context leave the local broker."
+    "privacy": "No raw AirJelly memories or private context leave the local broker.",
+    "match": {
+      "status": "matched",
+      "need": {
+        "label": "AI needs human judgment",
+        "reason": "The AI needs a direction-level answer before continuing the landing-page critique.",
+        "question": "Can you understand this product in 10 seconds, and would you click Join Waitlist?"
+      },
+      "candidate": {
+        "displayName": "Lindsay",
+        "endpoint": "/lindsay/business_judgement"
+      },
+      "signals": [
+        {
+          "label": "Relevant experience",
+          "summary": "Recent product-copy and founder-feedback context matched locally.",
+          "source": "local AirJelly context"
+        },
+        {
+          "label": "Available now",
+          "summary": "AirJelly exports availability summary only, not raw app history.",
+          "source": "local task/app state"
+        },
+        {
+          "label": "Low interruption",
+          "summary": "The invite asks one scoped 30-second question.",
+          "source": "HumanMCP task packet"
+        }
+      ],
+      "score": 0.92,
+      "invite": {
+        "text": "Willing to help AI with one 30-second question?",
+        "status": "ready"
+      },
+      "exportedContext": "Only the match summary leaves AirJelly; raw memories and screenshots stay local."
+    }
   },
   "smartAssignment": {
     "status": "proof_wait",

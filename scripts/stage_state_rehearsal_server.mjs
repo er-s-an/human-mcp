@@ -153,9 +153,62 @@ function buildSmartAssignment(snapshot) {
   };
 }
 
+function buildAirJellyMatch(snapshot) {
+  const smartAssignment = buildSmartAssignment(snapshot);
+  const active = !["idle", "auth_blocked", "no_humans"].includes(snapshot.stage);
+  const candidateName = smartAssignment.selectedHuman || snapshot.humanName || "Lindsay";
+  const candidateEndpoint =
+    smartAssignment.selectedEndpoint || snapshot.endpoint || "/lindsay/business_judgement";
+  const taskPacket = smartAssignment.taskPacket || {};
+
+  return {
+    status: active ? "matched" : "waiting",
+    need: {
+      label: "AI needs human judgment",
+      reason:
+        "The AI has a direction-level uncertainty that benefits from one human answer.",
+      question:
+        taskPacket.singleQuestion ||
+        "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+    },
+    candidate: {
+      displayName: candidateName,
+      endpoint: candidateEndpoint,
+    },
+    signals: [
+      {
+        label: "Relevant experience",
+        summary:
+          "AirJelly found recent business-judgement and product-copy context locally.",
+        source: "local AirJelly context",
+      },
+      {
+        label: "Available now",
+        summary:
+          "Only an availability summary is exported; raw app state stays local.",
+        source: "local task/app state",
+      },
+      {
+        label: "Low interruption",
+        summary: "HumanMCP will ask one scoped 30-second question.",
+        source: "HumanMCP task packet",
+      },
+    ],
+    score: active ? smartAssignment.confidence || 0.92 : 0,
+    invite: {
+      text: "Willing to help AI with one 30-second question?",
+      status: active ? "ready" : "waiting",
+    },
+    exportedContext:
+      "Only the match summary leaves AirJelly; raw memories and screenshots stay local.",
+  };
+}
+
 function withLiveFields(snapshot) {
   const stage = snapshot.stage || "idle";
   const stampStatus = snapshot.stampStatus ?? null;
+  const smartAssignment = buildSmartAssignment(snapshot);
+  const existingAirJelly = snapshot.airjelly || {};
 
   return {
     version: snapshot.version || "2026-04-24",
@@ -165,13 +218,15 @@ function withLiveFields(snapshot) {
       "Turn AirJelly capability discovery into a stage-safe verified HumanMCP call.",
     nextAction: snapshot.nextAction || undefined,
     airjelly: {
+      ...existingAirJelly,
       source: "AirJelly Suggested, User Approved",
       adapterMode: "Mock Mode",
       capability: snapshot.endpoint || "/lindsay/business_judgement",
       approvalStatus: snapshot.endpoint ? "approved" : "pending",
       privacy: "No raw AirJelly memories or private context leave the local broker.",
+      match: existingAirJelly.match || buildAirJellyMatch(snapshot),
     },
-    smartAssignment: buildSmartAssignment(snapshot),
+    smartAssignment,
     proofState: snapshot.proofId ? (snapshot.verified ? "accepted" : "submitted") : "pending",
     verifyState: snapshot.verified ? "passed" : snapshot.proofId ? "pending" : "waiting",
     ...snapshot,
