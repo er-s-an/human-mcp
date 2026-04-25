@@ -11,6 +11,27 @@ Use this runbook after the Windows/OpenClaw rehearsal feed is reachable from the
 - Stage can sit at `stamp_ready` with `stampStatus=requested`.
 - AirJelly is still `Mock Mode` unless a real adapter explicitly reports otherwise.
 
+## Enter Database Handoff Inventory
+
+This repo currently contains no raw database dump, migration, SQLite file, or
+schema artifact. The actionable handoff surface is therefore the Enter API
+contract already frozen for OpenClaw:
+
+- task replay/create: `POST /tasks/assign`
+- proof polling: `GET /proofs?status=pending`
+- proof verification: `POST /proofs/{proof_id}/verify`
+- stamp persistence: `POST /stamps/{proof_id}/complete`
+
+Impact on the demo contract:
+
+- Mac Surface A remains read-only and mirrors the Windows/OpenClaw snapshot.
+- Windows/OpenClaw must publish the Enter `assignmentId` once assignment is
+  backed by the database.
+- Windows/OpenClaw must publish the Enter `proofId` once proof polling is
+  backed by the database.
+- `mode=live` is allowed only after those identifiers come from Enter, not from
+  rehearsal fixtures.
+
 ## Do Not Change
 
 - Do not make Mac Surface A a writer.
@@ -44,6 +65,7 @@ $env:HUMAN_MCP_AUTH_TOKEN = 'Bearer <redacted>'
 ```bash
 scripts/humanmcp_contract_probe.sh check-env
 scripts/humanmcp_contract_probe.sh smoke-read
+scripts/humanmcp_contract_probe.sh assign-demo <human_id>
 ```
 
 4. Wire OpenClaw actions to Enter instead of local rehearsal data:
@@ -183,6 +205,34 @@ node verification/check-demo-readiness.mjs --strict --remote-feed http://172.16.
 
 This only validates the shared feed. It does not prove Enter is live unless `mode=live` and the proof/assignment ids are known to come from Enter.
 
+After Gate 2 or later, add the stricter Enter-backed check:
+
+```bash
+node verification/check-demo-readiness.mjs --strict --remote-feed http://172.16.21.116:4173/humanmcp/stage-state --expect-live-enter
+```
+
+That stricter check fails if the remote feed claims a live Enter-backed stage but
+omits the required database-derived identifiers for that stage.
+
+## Windows Path Commands
+
+Run these from Windows PowerShell after substituting the actual checkout path and
+redacted credentials:
+
+```powershell
+$OpenClawRoot = 'C:\Users\31376\Documents\Codex\2026-04-24\c-users-31376-xwechat-files-wxid\humanmcp-surface-b'
+Set-Location $OpenClawRoot
+$env:VITE_HUMAN_MCP_API_BASE_URL = 'https://<enter-host>/api/v1'
+$env:VITE_HUMAN_MCP_AUTH_TOKEN = 'Bearer <redacted>'
+$env:HUMAN_MCP_API_BASE_URL = $env:VITE_HUMAN_MCP_API_BASE_URL
+$env:HUMAN_MCP_AUTH_TOKEN = $env:VITE_HUMAN_MCP_AUTH_TOKEN
+bash scripts/humanmcp_contract_probe.sh check-env
+bash scripts/humanmcp_contract_probe.sh smoke-read
+bash scripts/humanmcp_contract_probe.sh assign-demo <human_id>
+npm run build
+npm run dev -- --host 0.0.0.0 --port 4173
+```
+
 ## Windows Handoff Back To Mac
 
 Send this after each gate:
@@ -200,4 +250,3 @@ Auth configured by env: yes/no
 Virtual stamp writeback tested: yes/no
 Known gap:
 ```
-
