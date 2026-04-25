@@ -36,7 +36,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": null
     },
     {
       "stage": "assigned",
@@ -74,7 +75,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": "assign-1"
     },
     {
       "stage": "calling",
@@ -112,7 +114,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": "assign-1"
     },
     {
       "stage": "proof_pending",
@@ -150,7 +153,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": "assign-1"
     },
     {
       "stage": "verified",
@@ -188,7 +192,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": "assign-1"
     },
     {
       "stage": "stamp_ready",
@@ -226,7 +231,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": "assign-1"
     },
     {
       "stage": "stamped",
@@ -264,7 +270,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": "assign-1"
     },
     {
       "stage": "complete",
@@ -302,7 +309,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": "assign-1"
     }
   ],
   "fallbackPath": [
@@ -342,7 +350,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": null
     },
     {
       "stage": "auth_blocked",
@@ -380,7 +389,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": null
     },
     {
       "stage": "manual_override",
@@ -412,7 +422,8 @@
             "status": "selected"
           }
         ]
-      }
+      },
+      "assignmentId": null
     },
     {
       "stage": "fallback_scripted",
@@ -444,7 +455,8 @@
             "status": "selected"
           }
         ]
-      }
+      },
+      "assignmentId": null
     }
   ],
   "virtualStampPath": [
@@ -484,7 +496,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": "assign-1"
     },
     {
       "stage": "virtual_stamp",
@@ -522,7 +535,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": "assign-1"
     },
     {
       "stage": "stamped",
@@ -560,7 +574,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": "assign-1"
     },
     {
       "stage": "complete",
@@ -598,7 +613,8 @@
             "status": "fallback"
           }
         ]
-      }
+      },
+      "assignmentId": "assign-1"
     }
   ]
 }

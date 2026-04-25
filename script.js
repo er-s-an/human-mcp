@@ -492,6 +492,7 @@
       ),
       taskId: toDisplayText(rawSnapshot.taskId),
       subtaskId: toDisplayText(rawSnapshot.subtaskId),
+      assignmentId: toDisplayText(rawSnapshot.assignmentId),
       proofId: toDisplayText(rawSnapshot.proofId),
       verified: Boolean(rawSnapshot.verified),
       level: toDisplayText(rawSnapshot.level),
@@ -542,6 +543,7 @@
       `Authority: Windows/OpenClaw is the single live stage-state writer (${feedState.label}).`,
       `Current goal: ${snapshot.currentGoal}`,
       `Smart assignment: ${assignment.selectedLabel}; rationale: ${assignment.rationale}`,
+      `Enter assignment: ${snapshot.assignmentId || "not published yet"}`,
       `Active endpoint: ${snapshot.endpoint} · human: ${snapshot.humanName}`,
       `Proof ${snapshot.proofId}: ${snapshot.proofState}; verify: ${snapshot.verifyState}; stamped: ${snapshot.stampStatus}.`,
       `AirJelly source: ${snapshot.airjelly.source} · ${adapterSummary}.`,
@@ -621,6 +623,7 @@
       endpoint: snapshot.endpoint,
       taskId: snapshot.taskId,
       subtaskId: snapshot.subtaskId,
+      assignmentId: snapshot.assignmentId,
       assignmentState: snapshot.smartAssignment.status,
       assignmentSelected: snapshot.smartAssignment.selectedLabel,
       assignmentRationale: snapshot.smartAssignment.rationale,
@@ -681,6 +684,7 @@
     endpointValue: document.querySelector("#endpointValue"),
     taskIdValue: document.querySelector("#taskIdValue"),
     subtaskIdValue: document.querySelector("#subtaskIdValue"),
+    assignmentIdValue: document.querySelector("#assignmentIdValue"),
     assignmentStateValue: document.querySelector("#assignmentStateValue"),
     assignmentSelectedValue: document.querySelector("#assignmentSelectedValue"),
     assignmentRationaleValue: document.querySelector("#assignmentRationaleValue"),
@@ -738,6 +742,7 @@
     elements.endpointValue.textContent = viewModel.endpoint;
     elements.taskIdValue.textContent = viewModel.taskId;
     elements.subtaskIdValue.textContent = viewModel.subtaskId;
+    elements.assignmentIdValue.textContent = viewModel.assignmentId;
     elements.assignmentStateValue.textContent = viewModel.assignmentState;
     elements.assignmentSelectedValue.textContent = viewModel.assignmentSelected;
     elements.assignmentRationaleValue.textContent =
