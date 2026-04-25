@@ -19,6 +19,10 @@ Use this runbook after the Windows/OpenClaw rehearsal feed is reachable from the
 - Do not claim `AirJelly Connected` from rehearsal data.
 - Do not block the demo on hardware stamp; `virtual_done` is the P0-safe terminal branch.
 
+## Enter DB Handoff Review
+
+Before changing `mode` to `live`, use [`enter-db-handoff-impact.md`](./enter-db-handoff-impact.md) to inventory the received schema/API evidence, confirm which Windows/Enter commands still need credentials, and keep Surface A read-only.
+
 ## Windows/OpenClaw Next Task
 
 1. Inject Enter API config through environment only:
