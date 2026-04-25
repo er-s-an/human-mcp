@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-25T03:53:16.138Z",
+  "generatedAt": "2026-04-25T04:02:22.213Z",
   "summary": {
     "ready": true,
     "failedChecks": [],
@@ -9,8 +9,8 @@
       "styles.css",
       "scripts/stage_state_rehearsal_server.mjs"
     ],
-    "remoteFeedUrl": null,
-    "expectLiveEnter": false
+    "remoteFeedUrl": "http://172.16.21.116:4173/humanmcp/stage-state",
+    "expectLiveEnter": true
   },
   "checks": [
     {
@@ -185,6 +185,24 @@
           "virtualStampPath"
         ],
         "missing": []
+      }
+    },
+    {
+      "name": "remote_windows_stage_state_feed",
+      "pass": true,
+      "details": {
+        "feedUrl": "http://172.16.21.116:4173/humanmcp/stage-state",
+        "status": 200,
+        "cors": "*",
+        "cacheControl": "no-store",
+        "source": "windows-openclaw",
+        "mode": "live",
+        "stage": "stamped",
+        "assignmentId": "a139081e-5263-4b1d-a791-a964d938ef79",
+        "proofId": "6734468a-463e-4ac9-9fca-d727b042c4d1",
+        "expressionState": "stamped",
+        "stampStatus": "virtual_done",
+        "updatedAt": "2026-04-25T04:02:22.248Z"
       }
     }
   ]

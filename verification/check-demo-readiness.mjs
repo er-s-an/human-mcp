@@ -344,10 +344,7 @@ const fixtureChecks = [
   validateEnterDatabaseHandoff(requirements),
 ];
 
-const rehearsalServerPath = path.join(rootDir, 'scripts', 'stage_state_rehearsal_server.mjs');
-const rehearsalServerSource = fs.existsSync(rehearsalServerPath)
-  ? fs.readFileSync(rehearsalServerPath, 'utf8')
-  : '';
+const rehearsalServerSource = sourceByFile['scripts/stage_state_rehearsal_server.mjs'];
 const rehearsalServerMarkers = [
   '/humanmcp/stage-state',
   '/humanmcp/rehearsal/status',
@@ -356,9 +353,7 @@ const rehearsalServerMarkers = [
 ];
 const rehearsalServerCheck = {
   name: 'local_rehearsal_server_present',
-  pass:
-    fs.existsSync(rehearsalServerPath) &&
-    rehearsalServerMarkers.every((marker) => rehearsalServerSource.includes(marker)),
+  pass: rehearsalServerMarkers.every((marker) => rehearsalServerSource.includes(marker)),
   details: {
     path: 'scripts/stage_state_rehearsal_server.mjs',
     markers: rehearsalServerMarkers.filter((marker) => rehearsalServerSource.includes(marker)),

@@ -7,8 +7,8 @@ Use this runbook after the Windows/OpenClaw rehearsal feed is reachable from the
 - Mac can fetch `http://172.16.21.116:4173/humanmcp/stage-state`.
 - Windows/OpenClaw publishes `source=windows-openclaw`.
 - Windows/OpenClaw publishes CORS headers for Surface A.
-- Surface A shows `FEED=CONNECTED` and `MODE=rehearsal`.
-- Stage can sit at `stamp_ready` with `stampStatus=requested`.
+- Surface A shows `FEED=CONNECTED` and mirrors the Windows `MODE` (`rehearsal` before Enter handoff, `live` after Enter-backed gates pass).
+- Stage can sit at `stamp_ready` with `stampStatus=requested` or finish at `stamped`/`complete` with `stampStatus=virtual_done`.
 - AirJelly is still `Mock Mode` unless a real adapter explicitly reports otherwise.
 
 ## Enter Database Handoff Inventory

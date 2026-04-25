@@ -123,5 +123,40 @@
       "scripts/humanmcp_contract_probe.sh smoke-read",
       "node verification/check-demo-readiness.mjs --strict --remote-feed"
     ]
+  },
+  "enterBackedStageRequirements": {
+    "assignmentIdFromStages": [
+      "assigned",
+      "calling",
+      "proof_pending",
+      "verified",
+      "stamp_ready",
+      "virtual_stamp",
+      "stamped",
+      "complete"
+    ],
+    "proofIdFromStages": [
+      "proof_pending",
+      "verified",
+      "stamp_ready",
+      "virtual_stamp",
+      "stamped",
+      "complete"
+    ],
+    "verifiedTrueFromStages": [
+      "verified",
+      "stamp_ready",
+      "virtual_stamp",
+      "stamped",
+      "complete"
+    ],
+    "terminalStampStages": [
+      "stamped",
+      "complete"
+    ],
+    "terminalStampStatuses": [
+      "virtual_done",
+      "hardware_done"
+    ]
   }
 }

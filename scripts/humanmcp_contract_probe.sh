@@ -56,6 +56,16 @@ build_headers() {
   API_KEY_HEADER=${API_KEY_HEADER#bearer }
 }
 
+json_escape() {
+  local value=$1
+  value=${value//\\/\\\\}
+  value=${value//\"/\\\"}
+  value=${value//$'\n'/\\n}
+  value=${value//$'\r'/\\r}
+  value=${value//$'\t'/\\t}
+  printf '%s' "$value"
+}
+
 run_curl() {
   local method=$1
   local path=$2
@@ -106,9 +116,16 @@ assign_demo() {
   local prompt=${HUMAN_MCP_DEMO_PROMPT:-'OpenClaw Surface B live demo proof'}
   local reward=${HUMAN_MCP_DEMO_REWARD:-10}
   local deadline_sec=${HUMAN_MCP_DEMO_DEADLINE_SEC:-300}
+  [[ $reward =~ ^[0-9]+$ ]] || fail 'HUMAN_MCP_DEMO_REWARD must be an integer'
+  [[ $deadline_sec =~ ^[0-9]+$ ]] || fail 'HUMAN_MCP_DEMO_DEADLINE_SEC must be an integer'
   local body
   body=$(printf '{"task_id":"%s","subtask_id":"%s","human_id":"%s","prompt":"%s","reward":%s,"deadline_sec":%s}' \
-    "$task_id" "$subtask_id" "$human_id" "$prompt" "$reward" "$deadline_sec")
+    "$(json_escape "$task_id")" \
+    "$(json_escape "$subtask_id")" \
+    "$(json_escape "$human_id")" \
+    "$(json_escape "$prompt")" \
+    "$reward" \
+    "$deadline_sec")
   check_env
   log "POST /tasks/assign (${task_id}/${subtask_id})"
   run_curl POST '/tasks/assign' "$body"
