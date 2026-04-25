@@ -641,6 +641,15 @@ kbd {
   padding-top: 12px;
 }
 
+.packet-policy {
+  background: rgba(71, 255, 173, 0.06);
+  border: 1px solid rgba(71, 255, 173, 0.16);
+  color: #e9fff5;
+  line-height: 1.55;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+}
+
 .kv-list {
   display: grid;
   gap: 14px;
@@ -649,6 +658,10 @@ kbd {
 
 .kv-list--compact {
   gap: 12px;
+}
+
+.kv-list--packet {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .kv-list div {
@@ -743,6 +756,10 @@ kbd {
 
   .status-cluster {
     display: grid;
+  }
+
+  .kv-list--packet {
+    grid-template-columns: 1fr;
   }
 }
 

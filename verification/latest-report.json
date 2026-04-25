@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-25T04:02:22.213Z",
+  "generatedAt": "2026-04-25T05:07:34.707Z",
   "summary": {
     "ready": true,
     "failedChecks": [],
@@ -9,8 +9,8 @@
       "styles.css",
       "scripts/stage_state_rehearsal_server.mjs"
     ],
-    "remoteFeedUrl": "http://172.16.21.116:4173/humanmcp/stage-state",
-    "expectLiveEnter": true
+    "remoteFeedUrl": null,
+    "expectLiveEnter": false
   },
   "checks": [
     {
@@ -129,7 +129,12 @@
           "智能分配任务",
           "smartAssignment",
           "candidate-list",
-          "proofability"
+          "proofability",
+          "Human Task Packet",
+          "Need-to-know Human Call",
+          "Privacy Budget",
+          "Audit Trail",
+          "Final Control"
         ],
         "missing": []
       }
@@ -152,7 +157,7 @@
     {
       "name": "smart_assignment_fixture_contract",
       "pass": true,
-      "details": "All fixture snapshots include smart assignment routing, rationale, policy, fallback, and candidates."
+      "details": "All fixture snapshots include smart assignment routing, Human Task Packet, privacy budget, audit boundary, fallback, and candidates."
     },
     {
       "name": "enter_database_handoff_inventory",
@@ -185,24 +190,6 @@
           "virtualStampPath"
         ],
         "missing": []
-      }
-    },
-    {
-      "name": "remote_windows_stage_state_feed",
-      "pass": true,
-      "details": {
-        "feedUrl": "http://172.16.21.116:4173/humanmcp/stage-state",
-        "status": 200,
-        "cors": "*",
-        "cacheControl": "no-store",
-        "source": "windows-openclaw",
-        "mode": "live",
-        "stage": "stamped",
-        "assignmentId": "a139081e-5263-4b1d-a791-a964d938ef79",
-        "proofId": "6734468a-463e-4ac9-9fca-d727b042c4d1",
-        "expressionState": "stamped",
-        "stampStatus": "virtual_done",
-        "updatedAt": "2026-04-25T04:02:22.248Z"
       }
     }
   ]

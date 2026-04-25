@@ -209,6 +209,64 @@
           </p>
         </article>
 
+        <article class="block block--wide" aria-label="Human task packet">
+          <div class="block-head">
+            <span class="prompt">Human Task Packet</span>
+            <span>need-to-know call</span>
+          </div>
+          <p class="packet-policy" id="taskPacketPolicyValue">
+            Need-to-know Human Call: send only scoped, redacted, auditable context.
+          </p>
+          <dl class="kv-list kv-list--packet">
+            <div>
+              <dt>Task Type</dt>
+              <dd id="taskPacketTypeValue">feedback / judgment</dd>
+            </div>
+            <div>
+              <dt>Privacy Budget</dt>
+              <dd id="taskPacketPrivacyBudgetValue">P1 · redacted artifact slice</dd>
+            </div>
+            <div>
+              <dt>Role</dt>
+              <dd id="taskPacketRoleValue">target-user reviewer</dd>
+            </div>
+            <div>
+              <dt>Goal</dt>
+              <dd id="taskPacketGoalValue">Waiting for controller goal.</dd>
+            </div>
+            <div>
+              <dt>Visible Context</dt>
+              <dd id="taskPacketVisibleContextValue">
+                Product summary, target user, and current artifact slice.
+              </dd>
+            </div>
+            <div>
+              <dt>Redacted Context</dt>
+              <dd id="taskPacketHiddenContextValue">
+                Raw screen, private messages, credentials, and unrelated tabs.
+              </dd>
+            </div>
+            <div>
+              <dt>Single Question</dt>
+              <dd id="taskPacketSingleQuestionValue">
+                Can the target user understand the offer quickly?
+              </dd>
+            </div>
+            <div>
+              <dt>Output Schema</dt>
+              <dd id="taskPacketOutputSchemaValue">
+                understood_in_10s, click_intent, main_confusion, suggested_change
+              </dd>
+            </div>
+            <div>
+              <dt>Guardrails</dt>
+              <dd id="taskPacketGuardrailsValue">
+                Suggestion only; user keeps final approval.
+              </dd>
+            </div>
+          </dl>
+        </article>
+
         <article class="block" aria-label="AirJelly source">
           <div class="block-head">
             <span class="prompt">airjelly</span>
@@ -235,6 +293,37 @@
               <dt>Privacy</dt>
               <dd id="privacyValue">
                 No raw AirJelly memory leaves the local layer.
+              </dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="block" aria-label="Responsibility and audit">
+          <div class="block-head">
+            <span class="prompt">audit</span>
+            <span>responsibility boundary</span>
+          </div>
+          <p class="packet-policy" id="responsibilitySummaryValue">
+            AI coordinates, helper answers within scope, platform records audit,
+            user approves final action.
+          </p>
+          <dl class="kv-list kv-list--compact">
+            <div>
+              <dt>Consent</dt>
+              <dd id="responsibilityConsentValue">
+                User-approved or pre-authorized before dispatch.
+              </dd>
+            </div>
+            <div>
+              <dt>Audit Trail</dt>
+              <dd id="responsibilityAuditTrailValue">
+                Caller, helper, shared packet, response, and user decision.
+              </dd>
+            </div>
+            <div>
+              <dt>Final Control</dt>
+              <dd id="responsibilityFinalControlValue">
+                User confirms before external action.
               </dd>
             </div>
           </dl>

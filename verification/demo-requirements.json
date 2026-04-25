@@ -95,7 +95,12 @@
         "智能分配任务",
         "smartAssignment",
         "candidate-list",
-        "proofability"
+        "proofability",
+        "Human Task Packet",
+        "Need-to-know Human Call",
+        "Privacy Budget",
+        "Audit Trail",
+        "Final Control"
       ]
     }
   ],
@@ -108,6 +113,22 @@
     "policy",
     "fallback",
     "candidates"
+  ],
+  "requiredTaskPacketKeys": [
+    "taskType",
+    "privacyBudget",
+    "role",
+    "goal",
+    "visibleContext",
+    "hiddenContext",
+    "singleQuestion",
+    "outputSchema",
+    "guardrails"
+  ],
+  "requiredResponsibilityKeys": [
+    "consent",
+    "auditTrail",
+    "finalControl"
   ],
   "enterDatabaseHandoff": {
     "docPath": "docs/runbooks/enter-database-handoff-inventory.md",

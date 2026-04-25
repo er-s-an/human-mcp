@@ -35,7 +35,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": null
     },
@@ -74,7 +107,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": "assign-1"
     },
@@ -113,7 +179,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": "assign-1"
     },
@@ -152,7 +251,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": "assign-1"
     },
@@ -191,7 +323,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": "assign-1"
     },
@@ -230,7 +395,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": "assign-1"
     },
@@ -269,7 +467,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": "assign-1"
     },
@@ -308,7 +539,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": "assign-1"
     }
@@ -349,7 +613,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": null
     },
@@ -388,7 +685,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": null
     },
@@ -421,7 +751,40 @@
             "score": 0.5,
             "status": "selected"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": null
     },
@@ -454,7 +817,40 @@
             "score": 0.5,
             "status": "selected"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": null
     }
@@ -495,7 +891,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": "assign-1"
     },
@@ -534,7 +963,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": "assign-1"
     },
@@ -573,7 +1035,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": "assign-1"
     },
@@ -612,7 +1107,40 @@
             "score": "fallback",
             "status": "fallback"
           }
-        ]
+        ],
+        "taskPacket": {
+          "taskType": "feedback / judgment",
+          "privacyBudget": "P1 · redacted artifact slice",
+          "role": "target-user reviewer",
+          "goal": "Help a one-person company founder improve landing-page clarity and waitlist conversion.",
+          "visibleContext": {
+            "productSummary": "An AI assistant for indie developers to debug and ship faster.",
+            "targetUser": "solo founder / indie developer",
+            "currentArtifact": "hero copy and call-to-action copy only"
+          },
+          "hiddenContext": [
+            "founder identity",
+            "raw AirJelly memory",
+            "full screen",
+            "private messages",
+            "revenue data",
+            "credentials",
+            "unrelated tabs"
+          ],
+          "singleQuestion": "Can you understand this product in 10 seconds, and would you click Join Waitlist?",
+          "outputSchema": {
+            "understood_in_10s": "boolean",
+            "click_intent": "yes | maybe | no",
+            "main_confusion": "string",
+            "suggested_change": "string"
+          },
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+        },
+        "responsibility": {
+          "consent": "User approved this human call before dispatch.",
+          "auditTrail": "Record caller, helper, shared task packet, structured response, and user decision.",
+          "finalControl": "User confirms before any external publish/send/apply action."
+        }
       },
       "assignmentId": "assign-1"
     }

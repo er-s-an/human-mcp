@@ -6,6 +6,18 @@
     "Rank approved capability cards by skill match, availability, proofability, and demo safety.";
   const SMART_ASSIGNMENT_FALLBACK =
     "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.";
+  const TASK_PACKET_POLICY =
+    "Need-to-know Human Call: send only a scoped, redacted, auditable packet.";
+  const DEFAULT_VISIBLE_CONTEXT =
+    "Product summary, target user, current artifact slice, and the single question needed for this call.";
+  const DEFAULT_HIDDEN_CONTEXT =
+    "Founder identity, raw AirJelly memory, full screen, private messages, revenue, credentials, and unrelated tabs.";
+  const DEFAULT_OUTPUT_SCHEMA =
+    "understood_in_10s:boolean, click_intent:yes|maybe|no, main_confusion:string, suggested_change:string";
+  const DEFAULT_GUARDRAILS =
+    "Suggestion only; do not infer private information, pricing, legal, finance, medical, or employment decisions.";
+  const DEFAULT_RESPONSIBILITY =
+    "AI coordinates, helper answers within scope, platform records consent/minimal context/audit, user approves final action.";
   const STAGE_ORDER = [
     "idle",
     "auth_blocked",
@@ -189,6 +201,25 @@
           status: "fallback",
         },
       ],
+      taskPacket: {
+        taskType: "feedback / judgment",
+        privacyBudget: "P1 · redacted artifact slice",
+        role: "target-user reviewer",
+        goal: "Improve a solo founder's landing-page waitlist conversion.",
+        visibleContext:
+          "An indie developer tool, target user, current hero copy, and one 10-second comprehension question.",
+        hiddenContext: DEFAULT_HIDDEN_CONTEXT,
+        singleQuestion:
+          "Can you understand the product in 10 seconds, and would you click Join Waitlist?",
+        outputSchema: DEFAULT_OUTPUT_SCHEMA,
+        guardrails: DEFAULT_GUARDRAILS,
+      },
+      responsibility: {
+        consent: "User approved this human call before dispatch.",
+        auditTrail:
+          "Record who was called, what packet was shared, what came back, and whether the user accepted it.",
+        finalControl: "User confirms before any external publish/send/apply action.",
+      },
     },
   };
 
@@ -240,6 +271,31 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
+  }
+
+  function formatStructuredValue(value, fallback = "—") {
+    if (Array.isArray(value)) {
+      return value.length
+        ? value.map((item) => toDisplayText(item)).join("; ")
+        : fallback;
+    }
+
+    if (value && typeof value === "object") {
+      const entries = Object.entries(value).filter(([, entryValue]) =>
+        entryValue !== undefined && entryValue !== null && entryValue !== "",
+      );
+
+      return entries.length
+        ? entries
+            .map(
+              ([key, entryValue]) =>
+                `${key}: ${formatStructuredValue(entryValue)}`,
+            )
+            .join("; ")
+        : fallback;
+    }
+
+    return toDisplayText(value, fallback);
   }
 
   function getStageMeta(stage) {
@@ -416,6 +472,77 @@
     }));
   }
 
+  function normalizeTaskPacket(smartAssignment, rawSnapshot, baseSnapshot) {
+    const taskPacket =
+      smartAssignment.taskPacket ||
+      smartAssignment.task_packet ||
+      rawSnapshot.taskPacket ||
+      rawSnapshot.task_packet ||
+      {};
+
+    return {
+      policy: TASK_PACKET_POLICY,
+      taskType: toDisplayText(
+        taskPacket.taskType || taskPacket.task_type,
+        "feedback / judgment",
+      ),
+      privacyBudget: toDisplayText(
+        taskPacket.privacyBudget || taskPacket.privacy_budget,
+        "P1 · redacted artifact slice",
+      ),
+      role: toDisplayText(taskPacket.role, "target-user reviewer"),
+      goal: toDisplayText(taskPacket.goal, baseSnapshot.currentGoal),
+      visibleContext: formatStructuredValue(
+        taskPacket.visibleContext || taskPacket.visible_context,
+        DEFAULT_VISIBLE_CONTEXT,
+      ),
+      hiddenContext: formatStructuredValue(
+        taskPacket.hiddenContext ||
+          taskPacket.hidden_context ||
+          taskPacket.redactedContext ||
+          taskPacket.redacted_context,
+        DEFAULT_HIDDEN_CONTEXT,
+      ),
+      singleQuestion: toDisplayText(
+        taskPacket.singleQuestion ||
+          taskPacket.single_question ||
+          taskPacket.question ||
+          taskPacket.task,
+        "Can the target user understand the offer quickly and name the main confusion?",
+      ),
+      outputSchema: formatStructuredValue(
+        taskPacket.outputSchema || taskPacket.output_schema,
+        DEFAULT_OUTPUT_SCHEMA,
+      ),
+      guardrails: formatStructuredValue(taskPacket.guardrails, DEFAULT_GUARDRAILS),
+    };
+  }
+
+  function normalizeResponsibility(smartAssignment, rawSnapshot) {
+    const responsibility =
+      smartAssignment.responsibility ||
+      smartAssignment.audit ||
+      rawSnapshot.responsibility ||
+      rawSnapshot.audit ||
+      {};
+
+    return {
+      summary: DEFAULT_RESPONSIBILITY,
+      consent: toDisplayText(
+        responsibility.consent,
+        "User-approved or pre-authorized before dispatch.",
+      ),
+      auditTrail: toDisplayText(
+        responsibility.auditTrail || responsibility.audit_trail,
+        "Saved: caller, helper, shared packet, structured response, user decision.",
+      ),
+      finalControl: toDisplayText(
+        responsibility.finalControl || responsibility.final_control,
+        "User keeps final approval before external action.",
+      ),
+    };
+  }
+
   function normalizeSmartAssignment(rawSnapshot, baseSnapshot) {
     const smartAssignment =
       rawSnapshot.smartAssignment || rawSnapshot.smart_assignment || {};
@@ -472,6 +599,8 @@
         selectedEndpoint,
         active,
       ),
+      taskPacket: normalizeTaskPacket(smartAssignment, rawSnapshot, baseSnapshot),
+      responsibility: normalizeResponsibility(smartAssignment, rawSnapshot),
     };
   }
 
@@ -543,6 +672,7 @@
       `Authority: Windows/OpenClaw is the single live stage-state writer (${feedState.label}).`,
       `Current goal: ${snapshot.currentGoal}`,
       `Smart assignment: ${assignment.selectedLabel}; rationale: ${assignment.rationale}`,
+      `Human Task Packet: ${assignment.taskPacket.privacyBudget}; ${assignment.taskPacket.policy}`,
       `Enter assignment: ${snapshot.assignmentId || "not published yet"}`,
       `Active endpoint: ${snapshot.endpoint} · human: ${snapshot.humanName}`,
       `Proof ${snapshot.proofId}: ${snapshot.proofState}; verify: ${snapshot.verifyState}; stamped: ${snapshot.stampStatus}.`,
@@ -631,6 +761,20 @@
       assignmentPolicy: snapshot.smartAssignment.policy,
       assignmentFallback: snapshot.smartAssignment.fallback,
       assignmentCandidates: snapshot.smartAssignment.candidates,
+      taskPacketPolicy: snapshot.smartAssignment.taskPacket.policy,
+      taskPacketType: snapshot.smartAssignment.taskPacket.taskType,
+      taskPacketPrivacyBudget: snapshot.smartAssignment.taskPacket.privacyBudget,
+      taskPacketRole: snapshot.smartAssignment.taskPacket.role,
+      taskPacketGoal: snapshot.smartAssignment.taskPacket.goal,
+      taskPacketVisibleContext: snapshot.smartAssignment.taskPacket.visibleContext,
+      taskPacketHiddenContext: snapshot.smartAssignment.taskPacket.hiddenContext,
+      taskPacketSingleQuestion: snapshot.smartAssignment.taskPacket.singleQuestion,
+      taskPacketOutputSchema: snapshot.smartAssignment.taskPacket.outputSchema,
+      taskPacketGuardrails: snapshot.smartAssignment.taskPacket.guardrails,
+      responsibilitySummary: snapshot.smartAssignment.responsibility.summary,
+      responsibilityConsent: snapshot.smartAssignment.responsibility.consent,
+      responsibilityAuditTrail: snapshot.smartAssignment.responsibility.auditTrail,
+      responsibilityFinalControl: snapshot.smartAssignment.responsibility.finalControl,
       sourceLabel: snapshot.airjelly.source,
       capability: snapshot.airjelly.capability,
       adapterMode: snapshot.airjelly.adapterMode,
@@ -694,6 +838,40 @@
     assignmentPolicyValue: document.querySelector("#assignmentPolicyValue"),
     assignmentFallbackValue: document.querySelector("#assignmentFallbackValue"),
     candidateListValue: document.querySelector("#candidateListValue"),
+    taskPacketPolicyValue: document.querySelector("#taskPacketPolicyValue"),
+    taskPacketTypeValue: document.querySelector("#taskPacketTypeValue"),
+    taskPacketPrivacyBudgetValue: document.querySelector(
+      "#taskPacketPrivacyBudgetValue",
+    ),
+    taskPacketRoleValue: document.querySelector("#taskPacketRoleValue"),
+    taskPacketGoalValue: document.querySelector("#taskPacketGoalValue"),
+    taskPacketVisibleContextValue: document.querySelector(
+      "#taskPacketVisibleContextValue",
+    ),
+    taskPacketHiddenContextValue: document.querySelector(
+      "#taskPacketHiddenContextValue",
+    ),
+    taskPacketSingleQuestionValue: document.querySelector(
+      "#taskPacketSingleQuestionValue",
+    ),
+    taskPacketOutputSchemaValue: document.querySelector(
+      "#taskPacketOutputSchemaValue",
+    ),
+    taskPacketGuardrailsValue: document.querySelector(
+      "#taskPacketGuardrailsValue",
+    ),
+    responsibilitySummaryValue: document.querySelector(
+      "#responsibilitySummaryValue",
+    ),
+    responsibilityConsentValue: document.querySelector(
+      "#responsibilityConsentValue",
+    ),
+    responsibilityAuditTrailValue: document.querySelector(
+      "#responsibilityAuditTrailValue",
+    ),
+    responsibilityFinalControlValue: document.querySelector(
+      "#responsibilityFinalControlValue",
+    ),
     sourceLabelValue: document.querySelector("#sourceLabelValue"),
     capabilityValue: document.querySelector("#capabilityValue"),
     adapterModeValue: document.querySelector("#adapterModeValue"),
@@ -761,6 +939,30 @@
           )}</em></li>`,
       )
       .join("");
+    elements.taskPacketPolicyValue.textContent = viewModel.taskPacketPolicy;
+    elements.taskPacketTypeValue.textContent = viewModel.taskPacketType;
+    elements.taskPacketPrivacyBudgetValue.textContent =
+      viewModel.taskPacketPrivacyBudget;
+    elements.taskPacketRoleValue.textContent = viewModel.taskPacketRole;
+    elements.taskPacketGoalValue.textContent = viewModel.taskPacketGoal;
+    elements.taskPacketVisibleContextValue.textContent =
+      viewModel.taskPacketVisibleContext;
+    elements.taskPacketHiddenContextValue.textContent =
+      viewModel.taskPacketHiddenContext;
+    elements.taskPacketSingleQuestionValue.textContent =
+      viewModel.taskPacketSingleQuestion;
+    elements.taskPacketOutputSchemaValue.textContent =
+      viewModel.taskPacketOutputSchema;
+    elements.taskPacketGuardrailsValue.textContent =
+      viewModel.taskPacketGuardrails;
+    elements.responsibilitySummaryValue.textContent =
+      viewModel.responsibilitySummary;
+    elements.responsibilityConsentValue.textContent =
+      viewModel.responsibilityConsent;
+    elements.responsibilityAuditTrailValue.textContent =
+      viewModel.responsibilityAuditTrail;
+    elements.responsibilityFinalControlValue.textContent =
+      viewModel.responsibilityFinalControl;
     elements.sourceLabelValue.textContent = viewModel.sourceLabel;
     elements.capabilityValue.textContent = viewModel.capability;
     elements.adapterModeValue.textContent = viewModel.adapterMode;

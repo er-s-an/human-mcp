@@ -135,6 +135,8 @@ function validateEnterDatabaseHandoff(requirementsConfig) {
 function validateSmartAssignmentFixtures(fixturesByName) {
   const errors = [];
   const requiredKeys = requirements.requiredSmartAssignmentKeys || [];
+  const requiredTaskPacketKeys = requirements.requiredTaskPacketKeys || [];
+  const requiredResponsibilityKeys = requirements.requiredResponsibilityKeys || [];
 
   for (const [name, snapshots] of Object.entries(fixturesByName)) {
     for (const [index, snapshot] of snapshots.entries()) {
@@ -157,6 +159,46 @@ function validateSmartAssignmentFixtures(fixturesByName) {
       if (!String(smartAssignment.policy || '').includes('proofability')) {
         errors.push(`${name}[${index}] smartAssignment.policy must mention proofability`);
       }
+
+      const taskPacket =
+        smartAssignment.taskPacket ||
+        smartAssignment.task_packet ||
+        snapshot.taskPacket ||
+        snapshot.task_packet;
+
+      if (!taskPacket || typeof taskPacket !== 'object') {
+        errors.push(`${name}[${index}] missing Human Task Packet`);
+      } else {
+        const missingTaskPacketKeys = requiredTaskPacketKeys.filter((key) => !(key in taskPacket));
+        if (missingTaskPacketKeys.length) {
+          errors.push(
+            `${name}[${index}] taskPacket missing keys: ${missingTaskPacketKeys.join(', ')}`
+          );
+        }
+
+        if (!String(taskPacket.privacyBudget || taskPacket.privacy_budget || '').startsWith('P')) {
+          errors.push(`${name}[${index}] taskPacket.privacyBudget must use a P-level budget`);
+        }
+      }
+
+      const responsibility =
+        smartAssignment.responsibility ||
+        smartAssignment.audit ||
+        snapshot.responsibility ||
+        snapshot.audit;
+
+      if (!responsibility || typeof responsibility !== 'object') {
+        errors.push(`${name}[${index}] missing responsibility/audit boundary`);
+      } else {
+        const missingResponsibilityKeys = requiredResponsibilityKeys.filter(
+          (key) => !(key in responsibility)
+        );
+        if (missingResponsibilityKeys.length) {
+          errors.push(
+            `${name}[${index}] responsibility missing keys: ${missingResponsibilityKeys.join(', ')}`
+          );
+        }
+      }
     }
   }
 
@@ -165,7 +207,7 @@ function validateSmartAssignmentFixtures(fixturesByName) {
     pass: errors.length === 0,
     details:
       errors.length === 0
-        ? 'All fixture snapshots include smart assignment routing, rationale, policy, fallback, and candidates.'
+        ? 'All fixture snapshots include smart assignment routing, Human Task Packet, privacy budget, audit boundary, fallback, and candidates.'
         : errors,
   };
 }
