@@ -15,6 +15,7 @@ const reportPath = reportFlagIndex >= 0 ? args[reportFlagIndex + 1] : null;
 const remoteFeedFlagIndex = args.indexOf('--remote-feed');
 const remoteFeedUrl =
   remoteFeedFlagIndex >= 0 ? args[remoteFeedFlagIndex + 1] : null;
+const expectLiveEnter = args.includes('--expect-live-enter');
 
 if (reportFlagIndex >= 0 && !reportPath) {
   console.error('Missing value for --report');
@@ -222,6 +223,40 @@ function validateRemoteSnapshot(feedUrl, remoteResult) {
     errors.push('operatorActions must be an object');
   }
 
+  if (expectLiveEnter) {
+    const enterRequirements = requirements.enterBackedStageRequirements || {};
+    const assignmentStages = enterRequirements.assignmentIdFromStages || [];
+    const proofStages = enterRequirements.proofIdFromStages || [];
+    const verifiedStages = enterRequirements.verifiedTrueFromStages || [];
+    const terminalStages = enterRequirements.terminalStampStages || [];
+    const terminalStatuses = enterRequirements.terminalStampStatuses || [];
+
+    if (snapshot.mode !== 'live') {
+      errors.push(`mode must be live for Enter-backed validation; got ${snapshot.mode}`);
+    }
+
+    if (assignmentStages.includes(snapshot.stage) && !snapshot.assignmentId) {
+      errors.push(`assignmentId is required for Enter-backed stage ${snapshot.stage}`);
+    }
+
+    if (proofStages.includes(snapshot.stage) && !snapshot.proofId) {
+      errors.push(`proofId is required for Enter-backed stage ${snapshot.stage}`);
+    }
+
+    if (verifiedStages.includes(snapshot.stage) && snapshot.verified !== true) {
+      errors.push(`verified must be true for Enter-backed stage ${snapshot.stage}`);
+    }
+
+    if (
+      terminalStages.includes(snapshot.stage) &&
+      !terminalStatuses.includes(snapshot.stampStatus)
+    ) {
+      errors.push(
+        `stampStatus must be terminal for ${snapshot.stage}; got ${snapshot.stampStatus}`
+      );
+    }
+  }
+
   return {
     name: 'remote_windows_stage_state_feed',
     pass: errors.length === 0,
@@ -235,6 +270,8 @@ function validateRemoteSnapshot(feedUrl, remoteResult) {
             source: snapshot.source,
             mode: snapshot.mode,
             stage: snapshot.stage,
+            assignmentId: snapshot.assignmentId || null,
+            proofId: snapshot.proofId || null,
             expressionState: snapshot.expressionState,
             stampStatus: snapshot.stampStatus,
             updatedAt: snapshot.updatedAt,
@@ -323,6 +360,7 @@ const summary = {
   failedChecks: failedChecks.map((check) => check.name),
   sourceFiles: filesToScan,
   remoteFeedUrl,
+  expectLiveEnter,
 };
 
 const report = {

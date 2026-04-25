@@ -8,6 +8,7 @@ usage() {
 Usage:
   $SCRIPT_NAME check-env
   $SCRIPT_NAME smoke-read
+  $SCRIPT_NAME assign-demo <human_id>
   $SCRIPT_NAME verify-proof <proof_id>
   $SCRIPT_NAME complete-stamp <proof_id> <virtual_done|hardware_done|failed|skipped>
 
@@ -17,6 +18,8 @@ Required env:
 
 Optional env:
   HUMAN_MCP_DRY_RUN=1      Print curl commands instead of executing them
+  HUMAN_MCP_DEMO_TASK_ID   Override assign-demo task id (default: openclaw_live_demo)
+  HUMAN_MCP_DEMO_SUBTASK_ID Override assign-demo subtask id (default: surface-b)
 USAGE
 }
 
@@ -95,6 +98,22 @@ smoke_read() {
   run_curl GET '/proofs?status=pending'
 }
 
+assign_demo() {
+  local human_id=${1:-}
+  [[ -n $human_id ]] || fail 'assign-demo requires <human_id>'
+  local task_id=${HUMAN_MCP_DEMO_TASK_ID:-openclaw_live_demo}
+  local subtask_id=${HUMAN_MCP_DEMO_SUBTASK_ID:-surface-b}
+  local prompt=${HUMAN_MCP_DEMO_PROMPT:-'OpenClaw Surface B live demo proof'}
+  local reward=${HUMAN_MCP_DEMO_REWARD:-10}
+  local deadline_sec=${HUMAN_MCP_DEMO_DEADLINE_SEC:-300}
+  local body
+  body=$(printf '{"task_id":"%s","subtask_id":"%s","human_id":"%s","prompt":"%s","reward":%s,"deadline_sec":%s}' \
+    "$task_id" "$subtask_id" "$human_id" "$prompt" "$reward" "$deadline_sec")
+  check_env
+  log "POST /tasks/assign (${task_id}/${subtask_id})"
+  run_curl POST '/tasks/assign' "$body"
+}
+
 verify_proof() {
   local proof_id=${1:-}
   [[ -n $proof_id ]] || fail 'verify-proof requires <proof_id>'
@@ -134,6 +153,10 @@ main() {
       ;;
     smoke-read)
       smoke_read
+      ;;
+    assign-demo)
+      shift
+      assign_demo "$@"
       ;;
     verify-proof)
       shift
