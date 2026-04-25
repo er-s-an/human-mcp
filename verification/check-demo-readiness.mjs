@@ -99,6 +99,39 @@ function validateFixturePath(name, snapshots, expectedStages) {
   };
 }
 
+function validateEnterDatabaseHandoff(requirementsConfig) {
+  const config = requirementsConfig.enterDatabaseHandoff || {};
+  const docPath = config.docPath || 'docs/runbooks/enter-database-handoff-inventory.md';
+  const requiredMarkers = config.requiredMarkers || [];
+  const resolvedDocPath = path.join(rootDir, docPath);
+
+  if (!fs.existsSync(resolvedDocPath)) {
+    return {
+      name: 'enter_database_handoff_inventory',
+      pass: false,
+      details: [`missing handoff inventory doc: ${docPath}`],
+    };
+  }
+
+  const source = fs.readFileSync(resolvedDocPath, 'utf8');
+  const missing = requiredMarkers.filter((marker) => !source.includes(marker));
+
+  return {
+    name: 'enter_database_handoff_inventory',
+    pass: missing.length === 0,
+    details:
+      missing.length === 0
+        ? {
+            path: docPath,
+            markers: requiredMarkers,
+          }
+        : {
+            path: docPath,
+            missing,
+          },
+  };
+}
+
 function validateSmartAssignmentFixtures(fixturesByName) {
   const errors = [];
   const requiredKeys = requirements.requiredSmartAssignmentKeys || [];
@@ -308,6 +341,7 @@ const fixtureChecks = [
     requirements.virtualStampPathStages
   ),
   validateSmartAssignmentFixtures(fixtures),
+  validateEnterDatabaseHandoff(requirements),
 ];
 
 const rehearsalServerPath = path.join(rootDir, 'scripts', 'stage_state_rehearsal_server.mjs');

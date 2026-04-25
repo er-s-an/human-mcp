@@ -109,43 +109,19 @@
     "fallback",
     "candidates"
   ],
-  "enterBackedStageRequirements": {
-    "assignmentIdFromStages": [
-      "assigned",
-      "calling",
-      "proof_pending",
-      "verify_failed",
-      "verified",
-      "stamp_ready",
-      "virtual_stamp",
-      "stamped",
-      "complete"
-    ],
-    "proofIdFromStages": [
-      "proof_pending",
-      "verify_failed",
-      "verified",
-      "stamp_ready",
-      "virtual_stamp",
-      "stamped",
-      "complete"
-    ],
-    "verifiedTrueFromStages": [
-      "verified",
-      "stamp_ready",
-      "virtual_stamp",
-      "stamped",
-      "complete"
-    ],
-    "terminalStampStages": [
-      "stamped",
-      "complete"
-    ],
-    "terminalStampStatuses": [
-      "virtual_done",
-      "hardware_done",
-      "manual_done",
-      "reconciliation_pending"
+  "enterDatabaseHandoff": {
+    "docPath": "docs/runbooks/enter-database-handoff-inventory.md",
+    "requiredMarkers": [
+      "Database artifact inventory",
+      "no direct database client",
+      "Enter REST API",
+      "Mac Surface A",
+      "read-only consumer",
+      "Windows/OpenClaw Surface B",
+      "single live stage-state writer",
+      "C:\\Users\\31376\\Documents\\Codex\\2026-04-24\\c-users-31376-xwechat-files-wxid\\humanmcp-surface-b",
+      "scripts/humanmcp_contract_probe.sh smoke-read",
+      "node verification/check-demo-readiness.mjs --strict --remote-feed"
     ]
   }
 }

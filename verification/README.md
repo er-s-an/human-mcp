@@ -12,6 +12,7 @@ This worker lane adds a lightweight, dependency-free verification harness for th
 - The worktree contains stage-feed contract markers (`/humanmcp/stage-state`, `stage-state.json`, or SSE/event markers).
 - The worktree contains the local rehearsal feed server used to test Surface A before Windows is ready.
 - Fixture snapshots satisfy the controller-snapshot contract from the plan.
+- The Enter database handoff inventory exists and preserves the REST-only/read-only Surface A boundary.
 
 ## Commands
 
@@ -20,6 +21,9 @@ node --check scripts/stage_state_rehearsal_server.mjs
 node verification/check-demo-readiness.mjs --report verification/latest-report.json
 node verification/check-demo-readiness.mjs --strict
 node verification/check-demo-readiness.mjs --strict --remote-feed http://<windows-host>:4173/humanmcp/stage-state
+# Optional credentialed API smoke test after Enter API env is injected:
+scripts/humanmcp_contract_probe.sh check-env
+scripts/humanmcp_contract_probe.sh smoke-read
 ```
 
 - Default mode writes a human-readable console report and can optionally emit JSON.
@@ -30,7 +34,7 @@ node verification/check-demo-readiness.mjs --strict --remote-feed http://<window
 
 - `verification/demo-requirements.json` — frozen requirements used by the harness.
 - `verification/stage-state-fixtures.json` — sample happy/fallback controller snapshots for validator smoke coverage.
-- `verification/check-demo-readiness.mjs` — source and fixture validator.
+- `verification/check-demo-readiness.mjs` — source, fixture, remote feed, and Enter database handoff validator.
 - `verification/latest-report.json` — latest machine-readable run report (generated after execution).
 - `scripts/stage_state_rehearsal_server.mjs` — dependency-free local feed and scenario controller for Mac Surface A rehearsal.
 
