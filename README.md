@@ -1,5 +1,7 @@
 # HumanMCP AirJelly Bridge
 
+`#AttraX_Spring_Hackathon`
+
 HumanMCP AirJelly Bridge is a hackathon prototype that lets an AI agent ask a bounded question to a real human on another AirJelly-enabled computer, while keeping local AirJelly memory and private screen context on the original machine.
 
 This is intentionally not presented as a finished commercial product. The hackathon scope proves the core interaction: AirJelly-aware agents can route privacy-scoped questions to another human/agent, collect a reply, and keep an auditable HumanMCP state trail. Production-grade identity, cloud persistence, marketplace distribution, billing, and polished native AirJelly UX are future work.
