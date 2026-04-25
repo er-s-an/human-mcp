@@ -2,6 +2,10 @@
   const STALE_AFTER_MS = 5000;
   const POLL_INTERVAL_MS = 1500;
   const DEFAULT_FEED_URL = "./stage-state.json";
+  const SMART_ASSIGNMENT_POLICY =
+    "Rank approved capability cards by skill match, availability, proofability, and demo safety.";
+  const SMART_ASSIGNMENT_FALLBACK =
+    "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.";
   const STAGE_ORDER = [
     "idle",
     "auth_blocked",
@@ -161,6 +165,31 @@
       privacy:
         "No raw AirJelly memories or private context leave the local broker.",
     },
+    smartAssignment: {
+      status: "proof_wait",
+      selectedHuman: "Lindsay",
+      selectedEndpoint: "/lindsay/business_judgement",
+      rationale:
+        "Matched business-judgement skill, approved AirJelly capability card, and live demo availability.",
+      confidence: 0.92,
+      policy: SMART_ASSIGNMENT_POLICY,
+      fallback:
+        "If Lindsay is unavailable, Surface B can route to Operator manual_override without changing Surface A authority.",
+      candidates: [
+        {
+          name: "Lindsay",
+          endpoint: "/lindsay/business_judgement",
+          score: 0.92,
+          status: "selected",
+        },
+        {
+          name: "Operator",
+          endpoint: "manual_override",
+          score: "fallback",
+          status: "fallback",
+        },
+      ],
+    },
   };
 
   function resolveFeedUrl(locationLike = globalThis.location) {
@@ -189,6 +218,28 @@
     }
 
     return String(value);
+  }
+
+  function formatConfidence(value) {
+    if (value === undefined || value === null || value === "") {
+      return "—";
+    }
+
+    if (typeof value === "number" && Number.isFinite(value)) {
+      const normalized = value <= 1 ? value * 100 : value;
+      return `${Math.round(normalized)}%`;
+    }
+
+    return String(value);
+  }
+
+  function escapeHtml(value) {
+    return toDisplayText(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
   }
 
   function getStageMeta(stage) {
@@ -262,11 +313,172 @@
     };
   }
 
+  function deriveSmartAssignmentStatus(stage) {
+    if (stage === "auth_blocked") {
+      return "blocked_auth";
+    }
+
+    if (stage === "no_humans") {
+      return "no_candidate";
+    }
+
+    if (stage === "assigned") {
+      return "selected";
+    }
+
+    if (stage === "calling") {
+      return "dispatching";
+    }
+
+    if (stage === "proof_pending") {
+      return "proof_wait";
+    }
+
+    if (stage === "verify_failed") {
+      return "needs_retry";
+    }
+
+    if (
+      stage === "verified" ||
+      stage === "stamp_ready" ||
+      stage === "virtual_stamp" ||
+      stage === "stamped" ||
+      stage === "complete"
+    ) {
+      return "completed";
+    }
+
+    if (stage === "manual_override" || stage === "fallback_scripted") {
+      return "operator_sync";
+    }
+
+    return "waiting";
+  }
+
+  function defaultAssignmentRationale(stage) {
+    if (stage === "auth_blocked") {
+      return "Assignment is paused until the Windows/OpenClaw auth and API base URL are fixed.";
+    }
+
+    if (stage === "no_humans") {
+      return "No approved human/capability is currently online, so assignment must wait or fall back to operator control.";
+    }
+
+    if (stage === "manual_override" || stage === "fallback_scripted") {
+      return "Operator owns the recovery path while Surface A keeps the audience narrative synchronized.";
+    }
+
+    if (stage === "idle") {
+      return "Waiting for Windows/OpenClaw to rank approved capability cards and publish the next assignment.";
+    }
+
+    return "Matched skill intent, approved AirJelly capability source, live availability, proofability, and stage safety.";
+  }
+
+  function normalizeCandidates(rawCandidates, selectedHuman, selectedEndpoint, active) {
+    const sourceCandidates = Array.isArray(rawCandidates) && rawCandidates.length
+      ? rawCandidates
+      : [
+          {
+            name: selectedHuman,
+            endpoint: selectedEndpoint,
+            score: active ? 0.92 : 0,
+            status: active ? "selected" : "waiting",
+          },
+          {
+            name: "Operator",
+            endpoint: "manual_override",
+            score: "fallback",
+            status: "fallback",
+          },
+        ];
+    const seen = new Set();
+    const candidates = [];
+
+    for (const candidate of sourceCandidates) {
+      const name = toDisplayText(candidate.name, `Candidate ${candidates.length + 1}`);
+      const endpoint = toDisplayText(candidate.endpoint, "No endpoint");
+      const key = `${name}::${endpoint}`;
+
+      if (seen.has(key)) {
+        continue;
+      }
+
+      seen.add(key);
+      candidates.push({ ...candidate, name, endpoint });
+    }
+
+    return candidates.slice(0, 4).map((candidate, index) => ({
+      name: candidate.name,
+      endpoint: candidate.endpoint,
+      score: formatConfidence(candidate.score),
+      status: toDisplayText(candidate.status, index === 0 ? "selected" : "backup"),
+    }));
+  }
+
+  function normalizeSmartAssignment(rawSnapshot, baseSnapshot) {
+    const smartAssignment =
+      rawSnapshot.smartAssignment || rawSnapshot.smart_assignment || {};
+    const active = ![
+      "idle",
+      "auth_blocked",
+      "no_humans",
+      "fallback_scripted",
+    ].includes(baseSnapshot.stage);
+    const selectedHuman = toDisplayText(
+      smartAssignment.selectedHuman || smartAssignment.humanName,
+      baseSnapshot.stage === "no_humans"
+        ? "No eligible human"
+        : baseSnapshot.humanName,
+    );
+    const selectedEndpoint = toDisplayText(
+      smartAssignment.selectedEndpoint ||
+        smartAssignment.endpoint ||
+        rawSnapshot.endpoint,
+      baseSnapshot.stage === "no_humans"
+        ? "No callable endpoint"
+        : "Awaiting endpoint",
+    );
+
+    return {
+      status: toDisplayText(
+        smartAssignment.status,
+        deriveSmartAssignmentStatus(baseSnapshot.stage),
+      ),
+      selectedHuman,
+      selectedEndpoint,
+      selectedLabel:
+        selectedEndpoint === "Awaiting endpoint"
+          ? selectedHuman
+          : `${selectedHuman} · ${selectedEndpoint}`,
+      rationale: toDisplayText(
+        smartAssignment.rationale || smartAssignment.reason,
+        defaultAssignmentRationale(baseSnapshot.stage),
+      ),
+      confidence: formatConfidence(
+        smartAssignment.confidence ?? (active ? 0.92 : undefined),
+      ),
+      policy: toDisplayText(
+        smartAssignment.policy,
+        `${SMART_ASSIGNMENT_POLICY} Surface A mirrors only.`,
+      ),
+      fallback: toDisplayText(
+        smartAssignment.fallback,
+        `Fallback: ${SMART_ASSIGNMENT_FALLBACK}`,
+      ),
+      candidates: normalizeCandidates(
+        smartAssignment.candidates,
+        selectedHuman,
+        selectedEndpoint,
+        active,
+      ),
+    };
+  }
+
   function normalizeSnapshot(rawSnapshot = {}) {
     const stage = STAGE_META[rawSnapshot.stage] ? rawSnapshot.stage : "idle";
     const meta = getStageMeta(stage);
-
-    return {
+    const baseSnapshot = {
       stage,
       humanName: toDisplayText(
         rawSnapshot.humanName,
@@ -297,6 +509,11 @@
       verifyState: deriveVerifyState(rawSnapshot),
       airjelly: normalizeAirJelly(rawSnapshot),
     };
+
+    return {
+      ...baseSnapshot,
+      smartAssignment: normalizeSmartAssignment(rawSnapshot, baseSnapshot),
+    };
   }
 
   function buildFallbackSnapshot(lastSnapshot, now = new Date()) {
@@ -319,10 +536,12 @@
       snapshot.airjelly.adapterMode === "Mock Mode"
         ? "AirJelly Adapter: Mock Mode"
         : `AirJelly Adapter: ${snapshot.airjelly.adapterMode}`;
+    const assignment = snapshot.smartAssignment;
 
     return [
       `Authority: Windows/OpenClaw is the single live stage-state writer (${feedState.label}).`,
       `Current goal: ${snapshot.currentGoal}`,
+      `Smart assignment: ${assignment.selectedLabel}; rationale: ${assignment.rationale}`,
       `Active endpoint: ${snapshot.endpoint} · human: ${snapshot.humanName}`,
       `Proof ${snapshot.proofId}: ${snapshot.proofState}; verify: ${snapshot.verifyState}; stamped: ${snapshot.stampStatus}.`,
       `AirJelly source: ${snapshot.airjelly.source} · ${adapterSummary}.`,
@@ -402,6 +621,13 @@
       endpoint: snapshot.endpoint,
       taskId: snapshot.taskId,
       subtaskId: snapshot.subtaskId,
+      assignmentState: snapshot.smartAssignment.status,
+      assignmentSelected: snapshot.smartAssignment.selectedLabel,
+      assignmentRationale: snapshot.smartAssignment.rationale,
+      assignmentConfidence: snapshot.smartAssignment.confidence,
+      assignmentPolicy: snapshot.smartAssignment.policy,
+      assignmentFallback: snapshot.smartAssignment.fallback,
+      assignmentCandidates: snapshot.smartAssignment.candidates,
       sourceLabel: snapshot.airjelly.source,
       capability: snapshot.airjelly.capability,
       adapterMode: snapshot.airjelly.adapterMode,
@@ -455,6 +681,15 @@
     endpointValue: document.querySelector("#endpointValue"),
     taskIdValue: document.querySelector("#taskIdValue"),
     subtaskIdValue: document.querySelector("#subtaskIdValue"),
+    assignmentStateValue: document.querySelector("#assignmentStateValue"),
+    assignmentSelectedValue: document.querySelector("#assignmentSelectedValue"),
+    assignmentRationaleValue: document.querySelector("#assignmentRationaleValue"),
+    assignmentConfidenceValue: document.querySelector(
+      "#assignmentConfidenceValue",
+    ),
+    assignmentPolicyValue: document.querySelector("#assignmentPolicyValue"),
+    assignmentFallbackValue: document.querySelector("#assignmentFallbackValue"),
+    candidateListValue: document.querySelector("#candidateListValue"),
     sourceLabelValue: document.querySelector("#sourceLabelValue"),
     capabilityValue: document.querySelector("#capabilityValue"),
     adapterModeValue: document.querySelector("#adapterModeValue"),
@@ -468,6 +703,8 @@
     levelValue: document.querySelector("#levelValue"),
     rewardValue: document.querySelector("#rewardValue"),
     activityList: document.querySelector("#activityList"),
+    controlFeedback: document.querySelector("#controlFeedback"),
+    controlButtons: document.querySelectorAll("[data-demo-action]"),
     shell: document.querySelector(".context-shell"),
   };
 
@@ -501,6 +738,24 @@
     elements.endpointValue.textContent = viewModel.endpoint;
     elements.taskIdValue.textContent = viewModel.taskId;
     elements.subtaskIdValue.textContent = viewModel.subtaskId;
+    elements.assignmentStateValue.textContent = viewModel.assignmentState;
+    elements.assignmentSelectedValue.textContent = viewModel.assignmentSelected;
+    elements.assignmentRationaleValue.textContent =
+      viewModel.assignmentRationale;
+    elements.assignmentConfidenceValue.textContent =
+      viewModel.assignmentConfidence;
+    elements.assignmentPolicyValue.textContent = viewModel.assignmentPolicy;
+    elements.assignmentFallbackValue.textContent = viewModel.assignmentFallback;
+    elements.candidateListValue.innerHTML = viewModel.assignmentCandidates
+      .map(
+        (candidate) =>
+          `<li><strong>${escapeHtml(candidate.name)}</strong><span>${escapeHtml(
+            candidate.endpoint,
+          )}</span><em>${escapeHtml(candidate.score)} · ${escapeHtml(
+            candidate.status,
+          )}</em></li>`,
+      )
+      .join("");
     elements.sourceLabelValue.textContent = viewModel.sourceLabel;
     elements.capabilityValue.textContent = viewModel.capability;
     elements.adapterModeValue.textContent = viewModel.adapterMode;
@@ -519,6 +774,141 @@
     elements.operatorBanner.hidden = !viewModel.showOperatorBanner;
     renderStageRail(viewModel.stage);
   }
+
+  function feedUrlObject() {
+    try {
+      return new URL(feedUrl, globalThis.location?.href || "http://127.0.0.1/");
+    } catch {
+      return null;
+    }
+  }
+
+  function rehearsalUrl(pathname) {
+    const url = feedUrlObject();
+
+    if (!url) {
+      return null;
+    }
+
+    url.pathname = pathname;
+    url.search = "";
+    url.hash = "";
+    return url.toString();
+  }
+
+  function setControlFeedback(message) {
+    if (elements.controlFeedback) {
+      elements.controlFeedback.textContent = message;
+    }
+  }
+
+  async function copyFeedUrl() {
+    const resolvedFeed = feedUrlObject()?.toString() || feedUrl;
+
+    try {
+      await navigator.clipboard.writeText(resolvedFeed);
+      setControlFeedback(`Copied feed URL: ${resolvedFeed}`);
+    } catch {
+      setControlFeedback(`Feed URL: ${resolvedFeed}`);
+    }
+  }
+
+  function openRehearsalStatus() {
+    const statusUrl = rehearsalUrl("/humanmcp/rehearsal/status");
+
+    if (!statusUrl) {
+      setControlFeedback("No rehearsal status URL is available for this feed.");
+      return;
+    }
+
+    globalThis.open(statusUrl, "_blank", "noopener,noreferrer");
+    setControlFeedback(`Opened rehearsal status: ${statusUrl}`);
+  }
+
+  async function postRehearsal(pathname, body) {
+    const target = rehearsalUrl(pathname);
+
+    if (!target) {
+      throw new Error("No rehearsal endpoint is available for this feed.");
+    }
+
+    const response = await fetch(target, {
+      method: "POST",
+      headers: body ? { "Content-Type": "application/json" } : undefined,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  async function runDemoAction(action) {
+    if (action === "copy-feed") {
+      await copyFeedUrl();
+      return;
+    }
+
+    if (action === "open-status") {
+      openRehearsalStatus();
+      return;
+    }
+
+    try {
+      if (action === "next-rehearsal") {
+        const result = await postRehearsal("/humanmcp/rehearsal/next");
+        setControlFeedback(
+          `Advanced ${result.activeScenario} to step ${result.activeIndex}.`,
+        );
+        await pollFeed();
+        return;
+      }
+
+      if (action === "show-fallback") {
+        const result = await postRehearsal("/humanmcp/rehearsal/set", {
+          scenario: "fallbackPath",
+          index: 3,
+        });
+        setControlFeedback(
+          `Fallback cue ready: ${result.current?.stage || "fallback_scripted"} · operator sync mode.`,
+        );
+        await pollFeed();
+      }
+    } catch (error) {
+      setControlFeedback(
+        `Rehearsal shortcut unavailable on this feed: ${String(
+          error.message || error,
+        )}`,
+      );
+    }
+  }
+
+  elements.controlButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      runDemoAction(button.dataset.demoAction);
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.metaKey || event.ctrlKey || event.altKey) {
+      return;
+    }
+
+    const actionByKey = {
+      c: "copy-feed",
+      s: "open-status",
+      n: "next-rehearsal",
+      f: "show-fallback",
+    };
+    const action = actionByKey[event.key.toLowerCase()];
+
+    if (action) {
+      event.preventDefault();
+      runDemoAction(action);
+    }
+  });
 
   async function pollFeed() {
     if (!feedUrl) {

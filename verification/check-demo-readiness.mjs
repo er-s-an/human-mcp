@@ -98,6 +98,44 @@ function validateFixturePath(name, snapshots, expectedStages) {
   };
 }
 
+function validateSmartAssignmentFixtures(fixturesByName) {
+  const errors = [];
+  const requiredKeys = requirements.requiredSmartAssignmentKeys || [];
+
+  for (const [name, snapshots] of Object.entries(fixturesByName)) {
+    for (const [index, snapshot] of snapshots.entries()) {
+      const smartAssignment = snapshot.smartAssignment || snapshot.smart_assignment;
+
+      if (!smartAssignment || typeof smartAssignment !== 'object') {
+        errors.push(`${name}[${index}] missing smartAssignment`);
+        continue;
+      }
+
+      const missingKeys = requiredKeys.filter((key) => !(key in smartAssignment));
+      if (missingKeys.length) {
+        errors.push(`${name}[${index}] smartAssignment missing keys: ${missingKeys.join(', ')}`);
+      }
+
+      if (!Array.isArray(smartAssignment.candidates) || smartAssignment.candidates.length === 0) {
+        errors.push(`${name}[${index}] smartAssignment.candidates must be a non-empty array`);
+      }
+
+      if (!String(smartAssignment.policy || '').includes('proofability')) {
+        errors.push(`${name}[${index}] smartAssignment.policy must mention proofability`);
+      }
+    }
+  }
+
+  return {
+    name: 'smart_assignment_fixture_contract',
+    pass: errors.length === 0,
+    details:
+      errors.length === 0
+        ? 'All fixture snapshots include smart assignment routing, rationale, policy, fallback, and candidates.'
+        : errors,
+  };
+}
+
 async function fetchRemoteSnapshot(feedUrl) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
@@ -232,6 +270,7 @@ const fixtureChecks = [
     fixtures.virtualStampPath,
     requirements.virtualStampPathStages
   ),
+  validateSmartAssignmentFixtures(fixtures),
 ];
 
 const rehearsalServerPath = path.join(rootDir, 'scripts', 'stage_state_rehearsal_server.mjs');

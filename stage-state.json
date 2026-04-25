@@ -22,5 +22,28 @@
     "capability": "/lindsay/business_judgement",
     "approvalStatus": "approved",
     "privacy": "No raw AirJelly memories or private context leave the local broker."
+  },
+  "smartAssignment": {
+    "status": "proof_wait",
+    "selectedHuman": "Lindsay",
+    "selectedEndpoint": "/lindsay/business_judgement",
+    "rationale": "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+    "confidence": 0.92,
+    "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+    "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+    "candidates": [
+      {
+        "name": "Lindsay",
+        "endpoint": "/lindsay/business_judgement",
+        "score": 0.92,
+        "status": "selected"
+      },
+      {
+        "name": "Operator",
+        "endpoint": "manual_override",
+        "score": "fallback",
+        "status": "fallback"
+      }
+    ]
   }
 }

@@ -103,6 +103,45 @@
         </div>
       </section>
 
+      <section class="demo-ops block" aria-label="Demo operation shortcuts">
+        <div class="block-head">
+          <span class="prompt">handoff</span>
+          <span>Surface B authority + demo shortcuts</span>
+        </div>
+        <div class="handoff-grid">
+          <div>
+            <span>Single writer</span>
+            <strong>Windows/OpenClaw Surface B</strong>
+          </div>
+          <div>
+            <span>Stale threshold</span>
+            <strong>&gt;5s → operator sync mode</strong>
+          </div>
+          <div>
+            <span>Mac role</span>
+            <strong>read-only mirror, never terminal truth</strong>
+          </div>
+        </div>
+        <div class="control-strip" aria-label="Rehearsal helper controls">
+          <button type="button" data-demo-action="copy-feed">
+            Copy feed URL <kbd>C</kbd>
+          </button>
+          <button type="button" data-demo-action="open-status">
+            Open status <kbd>S</kbd>
+          </button>
+          <button type="button" data-demo-action="next-rehearsal">
+            Next rehearsal step <kbd>N</kbd>
+          </button>
+          <button type="button" data-demo-action="show-fallback">
+            Check fallback cue <kbd>F</kbd>
+          </button>
+        </div>
+        <p class="control-feedback" id="controlFeedback" aria-live="polite">
+          Shortcuts operate the local rehearsal server only; live Windows feed
+          remains authoritative.
+        </p>
+      </section>
+
       <section class="context-grid">
         <article class="block" aria-label="Endpoint context">
           <div class="block-head">
@@ -127,6 +166,43 @@
               <dd>Windows/OpenClaw only</dd>
             </div>
           </dl>
+        </article>
+
+        <article class="block block--assignment" aria-label="Smart assignment context">
+          <div class="block-head">
+            <span class="prompt">智能分配任务</span>
+            <span>smart assignment</span>
+          </div>
+          <div class="assignment-hero">
+            <span class="assignment-state" id="assignmentStateValue"
+              >waiting</span
+            >
+            <strong id="assignmentSelectedValue"
+              >Waiting for Windows/OpenClaw routing decision</strong
+            >
+          </div>
+          <dl class="kv-list kv-list--compact">
+            <div>
+              <dt>Rationale</dt>
+              <dd id="assignmentRationaleValue">
+                Assignment rationale will mirror the controller snapshot.
+              </dd>
+            </div>
+            <div>
+              <dt>Confidence</dt>
+              <dd id="assignmentConfidenceValue">—</dd>
+            </div>
+            <div>
+              <dt>Policy</dt>
+              <dd id="assignmentPolicyValue">
+                Windows/OpenClaw selects; Surface A mirrors.
+              </dd>
+            </div>
+          </dl>
+          <ul class="candidate-list" id="candidateListValue"></ul>
+          <p class="assignment-fallback" id="assignmentFallbackValue">
+            Fallback: operator can switch to manual assignment or scripted demo.
+          </p>
         </article>
 
         <article class="block" aria-label="AirJelly source">

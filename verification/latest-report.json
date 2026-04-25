@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-24T15:09:10.401Z",
+  "generatedAt": "2026-04-25T03:29:31.345Z",
   "summary": {
     "ready": true,
     "failedChecks": [],
@@ -120,6 +120,20 @@
       }
     },
     {
+      "name": "smart_assignment_ux",
+      "pass": true,
+      "details": {
+        "mode": "allOf",
+        "matches": [
+          "智能分配任务",
+          "smartAssignment",
+          "candidate-list",
+          "proofability"
+        ],
+        "missing": []
+      }
+    },
+    {
       "name": "happyPath",
       "pass": true,
       "details": "happyPath fixture matches required stage sequence."
@@ -133,6 +147,11 @@
       "name": "virtualStampPath",
       "pass": true,
       "details": "virtualStampPath fixture matches required stage sequence."
+    },
+    {
+      "name": "smart_assignment_fixture_contract",
+      "pass": true,
+      "details": "All fixture snapshots include smart assignment routing, rationale, policy, fallback, and candidates."
     },
     {
       "name": "local_rehearsal_server_present",
@@ -157,11 +176,11 @@
         "cors": "*",
         "cacheControl": "no-store",
         "source": "windows-openclaw",
-        "mode": "rehearsal",
-        "stage": "stamp_ready",
-        "expressionState": "verified",
-        "stampStatus": "requested",
-        "updatedAt": "2026-04-24T15:09:09.317Z"
+        "mode": "live",
+        "stage": "stamped",
+        "expressionState": "stamped",
+        "stampStatus": "virtual_done",
+        "updatedAt": "2026-04-25T03:29:31.384Z"
       }
     }
   ]

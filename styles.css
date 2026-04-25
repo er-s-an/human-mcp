@@ -453,6 +453,83 @@ body::after {
   padding: 0 16px 16px;
 }
 
+.demo-ops {
+  margin: 0 16px 16px;
+}
+
+.handoff-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 14px;
+}
+
+.handoff-grid div {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(105, 245, 255, 0.12);
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+}
+
+.handoff-grid span,
+.control-feedback {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.handoff-grid strong {
+  color: var(--cyan);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.control-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.control-strip button {
+  background: linear-gradient(
+    180deg,
+    rgba(105, 245, 255, 0.12),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid rgba(105, 245, 255, 0.28);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding: 9px 12px;
+}
+
+.control-strip button:hover,
+.control-strip button:focus-visible {
+  border-color: rgba(71, 255, 173, 0.52);
+  box-shadow: 0 0 20px rgba(71, 255, 173, 0.14);
+  outline: none;
+}
+
+kbd {
+  background: rgba(3, 16, 22, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--green);
+  font-size: 0.72rem;
+  margin-left: 6px;
+  padding: 2px 5px;
+}
+
+.control-feedback {
+  margin: 12px 0 0;
+  text-transform: none;
+}
+
 .block--wide {
   grid-column: 1 / -1;
 }
@@ -494,6 +571,74 @@ body::after {
   font-size: 1.02rem;
   line-height: 1.4;
   overflow-wrap: anywhere;
+}
+
+.assignment-hero {
+  background: linear-gradient(
+    135deg,
+    rgba(172, 146, 255, 0.16),
+    rgba(105, 245, 255, 0.04)
+  );
+  border: 1px solid rgba(172, 146, 255, 0.26);
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding: 14px;
+}
+
+.assignment-hero strong {
+  font-size: 1.04rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.assignment-state {
+  color: var(--violet);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.candidate-list {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+
+.candidate-list li {
+  align-items: start;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(105, 245, 255, 0.1);
+  display: grid;
+  gap: 4px;
+  grid-template-columns: minmax(80px, 0.9fr) minmax(0, 1.3fr);
+  padding: 8px 10px;
+}
+
+.candidate-list strong {
+  color: var(--cyan);
+}
+
+.candidate-list span,
+.candidate-list em {
+  color: var(--muted);
+  font-style: normal;
+  overflow-wrap: anywhere;
+}
+
+.candidate-list em {
+  grid-column: 1 / -1;
+}
+
+.assignment-fallback {
+  border-top: 1px solid rgba(172, 146, 255, 0.18);
+  color: #f2ecff;
+  line-height: 1.55;
+  margin: 14px 0 0;
+  padding-top: 12px;
 }
 
 .kv-list {
@@ -577,6 +722,7 @@ body::after {
   .topbar,
   .footer-bar,
   .hero-panel,
+  .handoff-grid,
   .context-grid,
   .goal-stack,
   .status-cluster {

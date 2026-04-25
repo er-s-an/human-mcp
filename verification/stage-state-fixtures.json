@@ -13,7 +13,30 @@
       "stampStatus": "idle",
       "message": "Waiting for a demo task",
       "updatedAt": "2026-04-24T10:00:00.000Z",
-      "mode": "live"
+      "mode": "live",
+      "smartAssignment": {
+        "status": "waiting",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Waiting for Windows/OpenClaw to rank approved capability cards.",
+        "confidence": 0,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0,
+            "status": "waiting"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     },
     {
       "stage": "assigned",
@@ -28,7 +51,30 @@
       "stampStatus": "queued",
       "message": "Task assigned and visible on stage",
       "updatedAt": "2026-04-24T10:00:10.000Z",
-      "mode": "live"
+      "mode": "live",
+      "smartAssignment": {
+        "status": "selected",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+        "confidence": 0.92,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0.92,
+            "status": "selected"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     },
     {
       "stage": "calling",
@@ -43,7 +89,30 @@
       "stampStatus": "queued",
       "message": "AI is calling the approved human endpoint",
       "updatedAt": "2026-04-24T10:00:20.000Z",
-      "mode": "live"
+      "mode": "live",
+      "smartAssignment": {
+        "status": "dispatching",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+        "confidence": 0.92,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0.92,
+            "status": "selected"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     },
     {
       "stage": "proof_pending",
@@ -58,7 +127,30 @@
       "stampStatus": "queued",
       "message": "Proof submitted and awaiting verification",
       "updatedAt": "2026-04-24T10:00:30.000Z",
-      "mode": "live"
+      "mode": "live",
+      "smartAssignment": {
+        "status": "proof_wait",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+        "confidence": 0.92,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0.92,
+            "status": "selected"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     },
     {
       "stage": "verified",
@@ -73,7 +165,30 @@
       "stampStatus": "queued",
       "message": "Proof verified and reward granted",
       "updatedAt": "2026-04-24T10:00:40.000Z",
-      "mode": "live"
+      "mode": "live",
+      "smartAssignment": {
+        "status": "completed",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+        "confidence": 0.92,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0.92,
+            "status": "selected"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     },
     {
       "stage": "stamp_ready",
@@ -88,7 +203,30 @@
       "stampStatus": "ready",
       "message": "Stamp action ready on Windows/OpenClaw",
       "updatedAt": "2026-04-24T10:00:50.000Z",
-      "mode": "live"
+      "mode": "live",
+      "smartAssignment": {
+        "status": "completed",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+        "confidence": 0.92,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0.92,
+            "status": "selected"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     },
     {
       "stage": "stamped",
@@ -103,7 +241,30 @@
       "stampStatus": "stamped",
       "message": "Stamp completed",
       "updatedAt": "2026-04-24T10:01:00.000Z",
-      "mode": "live"
+      "mode": "live",
+      "smartAssignment": {
+        "status": "completed",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+        "confidence": 0.92,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0.92,
+            "status": "selected"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     },
     {
       "stage": "complete",
@@ -118,7 +279,30 @@
       "stampStatus": "stamped",
       "message": "Demo story complete",
       "updatedAt": "2026-04-24T10:01:10.000Z",
-      "mode": "live"
+      "mode": "live",
+      "smartAssignment": {
+        "status": "completed",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+        "confidence": 0.92,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0.92,
+            "status": "selected"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     }
   ],
   "fallbackPath": [
@@ -135,7 +319,30 @@
       "stampStatus": "idle",
       "message": "Waiting for feed",
       "updatedAt": "2026-04-24T10:05:00.000Z",
-      "mode": "live"
+      "mode": "live",
+      "smartAssignment": {
+        "status": "waiting",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Waiting for Windows/OpenClaw to rank approved capability cards.",
+        "confidence": 0,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0,
+            "status": "waiting"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     },
     {
       "stage": "auth_blocked",
@@ -150,7 +357,30 @@
       "stampStatus": "blocked",
       "message": "Authorization missing; operator notified",
       "updatedAt": "2026-04-24T10:05:05.000Z",
-      "mode": "live"
+      "mode": "live",
+      "smartAssignment": {
+        "status": "blocked_auth",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Auth is blocked, so the assignment router pauses until Windows/OpenClaw env config is fixed.",
+        "confidence": 0,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0,
+            "status": "waiting"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     },
     {
       "stage": "manual_override",
@@ -165,7 +395,24 @@
       "stampStatus": "manual",
       "message": "Operator takes over stage progression",
       "updatedAt": "2026-04-24T10:05:10.000Z",
-      "mode": "operator_sync"
+      "mode": "operator_sync",
+      "smartAssignment": {
+        "status": "operator_sync",
+        "selectedHuman": "Operator",
+        "selectedEndpoint": "manual_override",
+        "rationale": "Operator fallback is selected to preserve the demo while Surface B remains authoritative.",
+        "confidence": 0.5,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": 0.5,
+            "status": "selected"
+          }
+        ]
+      }
     },
     {
       "stage": "fallback_scripted",
@@ -180,7 +427,24 @@
       "stampStatus": "manual",
       "message": "Surface A enters operator sync mode after feed timeout",
       "updatedAt": "2026-04-24T10:05:16.000Z",
-      "mode": "operator_sync"
+      "mode": "operator_sync",
+      "smartAssignment": {
+        "status": "operator_sync",
+        "selectedHuman": "Operator",
+        "selectedEndpoint": "manual_override",
+        "rationale": "Operator fallback is selected to preserve the demo while Surface B remains authoritative.",
+        "confidence": 0.5,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": 0.5,
+            "status": "selected"
+          }
+        ]
+      }
     }
   ],
   "virtualStampPath": [
@@ -197,7 +461,30 @@
       "stampStatus": "requested",
       "message": "Stamp action ready, but robot availability is not guaranteed",
       "updatedAt": "2026-04-24T10:10:00.000Z",
-      "mode": "mock_live_feed"
+      "mode": "mock_live_feed",
+      "smartAssignment": {
+        "status": "completed",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+        "confidence": 0.92,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0.92,
+            "status": "selected"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     },
     {
       "stage": "virtual_stamp",
@@ -212,7 +499,30 @@
       "stampStatus": "requested",
       "message": "Robot branch is unavailable; virtual stamp fallback is visible",
       "updatedAt": "2026-04-24T10:10:10.000Z",
-      "mode": "mock_live_feed"
+      "mode": "mock_live_feed",
+      "smartAssignment": {
+        "status": "completed",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+        "confidence": 0.92,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0.92,
+            "status": "selected"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     },
     {
       "stage": "stamped",
@@ -227,7 +537,30 @@
       "stampStatus": "virtual_done",
       "message": "Virtual stamp fallback completed and can be reconciled later",
       "updatedAt": "2026-04-24T10:10:20.000Z",
-      "mode": "mock_live_feed"
+      "mode": "mock_live_feed",
+      "smartAssignment": {
+        "status": "completed",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+        "confidence": 0.92,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0.92,
+            "status": "selected"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     },
     {
       "stage": "complete",
@@ -242,7 +575,30 @@
       "stampStatus": "virtual_done",
       "message": "Demo loop complete with virtual stamp fallback",
       "updatedAt": "2026-04-24T10:10:30.000Z",
-      "mode": "mock_live_feed"
+      "mode": "mock_live_feed",
+      "smartAssignment": {
+        "status": "completed",
+        "selectedHuman": "Lindsay",
+        "selectedEndpoint": "/lindsay/business_judgement",
+        "rationale": "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+        "confidence": 0.92,
+        "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+        "fallback": "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.",
+        "candidates": [
+          {
+            "name": "Lindsay",
+            "endpoint": "/lindsay/business_judgement",
+            "score": 0.92,
+            "status": "selected"
+          },
+          {
+            "name": "Operator",
+            "endpoint": "manual_override",
+            "score": "fallback",
+            "status": "fallback"
+          }
+        ]
+      }
     }
   ]
 }

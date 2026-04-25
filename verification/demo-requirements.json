@@ -86,6 +86,26 @@
         "stage-events",
         "EventSource"
       ]
+    },
+    {
+      "name": "smart_assignment_ux",
+      "mode": "allOf",
+      "patterns": [
+        "智能分配任务",
+        "smartAssignment",
+        "candidate-list",
+        "proofability"
+      ]
     }
+  ],
+  "requiredSmartAssignmentKeys": [
+    "status",
+    "selectedHuman",
+    "selectedEndpoint",
+    "rationale",
+    "confidence",
+    "policy",
+    "fallback",
+    "candidates"
   ]
 }

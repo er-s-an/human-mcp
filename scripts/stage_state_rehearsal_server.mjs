@@ -28,9 +28,138 @@ const scenarios = {
 
 let activeScenarioName = scenarios[initialScenario] ? initialScenario : "happyPath";
 let activeIndex = 0;
+const SMART_ASSIGNMENT_POLICY =
+  "Rank approved capability cards by skill match, availability, proofability, and demo safety.";
+const SMART_ASSIGNMENT_FALLBACK =
+  "If routing fails, Surface B can choose manual_override or fallback_scripted while Mac remains read-only.";
+
+function smartAssignmentStatus(stage) {
+  const statuses = {
+    idle: "waiting",
+    auth_blocked: "blocked_auth",
+    no_humans: "no_candidate",
+    assigned: "selected",
+    calling: "dispatching",
+    proof_pending: "proof_wait",
+    verify_failed: "needs_retry",
+    verified: "completed",
+    stamp_ready: "completed",
+    virtual_stamp: "completed",
+    manual_override: "operator_sync",
+    stamped: "completed",
+    complete: "completed",
+    fallback_scripted: "operator_sync",
+  };
+
+  return statuses[stage] || "waiting";
+}
+
+function expressionStateForStage(stage) {
+  const states = {
+    idle: "idle",
+    auth_blocked: "needs_help",
+    no_humans: "thinking",
+    assigned: "calling",
+    calling: "calling",
+    proof_pending: "proof_verifying",
+    verify_failed: "needs_help",
+    verified: "verified",
+    stamp_ready: "verified",
+    virtual_stamp: "verified",
+    manual_override: "needs_help",
+    stamped: "stamped",
+    complete: "stamped",
+    fallback_scripted: "needs_help",
+  };
+
+  return states[stage] || "idle";
+}
+
+function operatorActionsForStage(stage, stampStatus) {
+  return {
+    canRetry: !["idle", "complete"].includes(stage),
+    canManualAdvance: [
+      "auth_blocked",
+      "no_humans",
+      "verify_failed",
+      "verified",
+      "stamp_ready",
+      "manual_override",
+      "fallback_scripted",
+    ].includes(stage),
+    canVirtualStamp:
+      ["verified", "stamp_ready", "virtual_stamp"].includes(stage) &&
+      stampStatus !== "virtual_done",
+    canOperatorFallback: !["idle", "complete"].includes(stage),
+    canTriggerRobot: stage === "stamp_ready" && stampStatus === "requested",
+  };
+}
+
+function buildSmartAssignment(snapshot) {
+  if (snapshot.smartAssignment || snapshot.smart_assignment) {
+    return snapshot.smartAssignment || snapshot.smart_assignment;
+  }
+
+  const selectedHuman =
+    snapshot.humanName ||
+    (snapshot.stage === "manual_override" || snapshot.stage === "fallback_scripted"
+      ? "Operator"
+      : "Lindsay");
+  const selectedEndpoint =
+    snapshot.endpoint ||
+    (snapshot.stage === "manual_override" || snapshot.stage === "fallback_scripted"
+      ? "manual_override"
+      : "/lindsay/business_judgement");
+  const blocked = ["idle", "auth_blocked", "no_humans"].includes(snapshot.stage);
+  const confidence = blocked ? 0 : snapshot.stage === "fallback_scripted" ? 0.5 : 0.92;
+
+  const rawCandidates = [
+    {
+      name: selectedHuman,
+      endpoint: selectedEndpoint,
+      score: confidence,
+      status: confidence ? "selected" : "waiting",
+    },
+    {
+      name: "Operator",
+      endpoint: "manual_override",
+      score: "fallback",
+      status: "fallback",
+    },
+  ];
+  const seenCandidates = new Set();
+  const candidates = rawCandidates.filter((candidate) => {
+    const key = `${candidate.name}::${candidate.endpoint}`;
+
+    if (seenCandidates.has(key)) {
+      return false;
+    }
+
+    seenCandidates.add(key);
+    return true;
+  });
+
+  return {
+    status: smartAssignmentStatus(snapshot.stage),
+    selectedHuman,
+    selectedEndpoint,
+    rationale: blocked
+      ? "Waiting until Windows/OpenClaw has auth, approved humans, and a safe dispatch target."
+      : "Matched skill intent, approved AirJelly capability card, live availability, proofability, and demo safety.",
+    confidence,
+    policy: SMART_ASSIGNMENT_POLICY,
+    fallback: SMART_ASSIGNMENT_FALLBACK,
+    candidates,
+  };
+}
 
 function withLiveFields(snapshot) {
+  const stage = snapshot.stage || "idle";
+  const stampStatus = snapshot.stampStatus ?? null;
+
   return {
+    version: snapshot.version || "2026-04-24",
+    source: snapshot.source || "windows-openclaw",
     currentGoal:
       snapshot.currentGoal ||
       "Turn AirJelly capability discovery into a stage-safe verified HumanMCP call.",
@@ -42,9 +171,13 @@ function withLiveFields(snapshot) {
       approvalStatus: snapshot.endpoint ? "approved" : "pending",
       privacy: "No raw AirJelly memories or private context leave the local broker.",
     },
+    smartAssignment: buildSmartAssignment(snapshot),
     proofState: snapshot.proofId ? (snapshot.verified ? "accepted" : "submitted") : "pending",
     verifyState: snapshot.verified ? "passed" : snapshot.proofId ? "pending" : "waiting",
     ...snapshot,
+    expressionState: snapshot.expressionState || expressionStateForStage(stage),
+    operatorActions:
+      snapshot.operatorActions || operatorActionsForStage(stage, stampStatus),
     mode: snapshot.mode || "mock_live_feed",
     updatedAt: new Date().toISOString(),
   };
