@@ -72,6 +72,7 @@ If the HTTP endpoint is not ready, use the contingency file URL instead:
 
 The Windows owner must ensure these actions all update one shared snapshot:
 
+- preview the Human Task Packet before assignment dispatch
 - assign task
 - refresh / poll proofs
 - verify proof
@@ -81,6 +82,15 @@ The Windows owner must ensure these actions all update one shared snapshot:
 - retry / manual advance
 
 Do **not** let the Mac screen or a second UI loop derive terminal truth independently.
+
+The preview step is a real gate:
+
+- Show `AI wants to call a human reviewer.`
+- Show `Human will see` and `Human will NOT see` columns.
+- Show Privacy Budget `P0` to `P4`; default `P1`, block `P4`.
+- `Confirm` may create/replay the Enter assignment.
+- `Cancel` must not create an assignment.
+- Keep `secret_phrase`, `narrative`, and `proof_text` out of Task Packet state.
 
 ## 6. Publish the stage-state snapshot
 
@@ -151,6 +161,8 @@ The Windows machine is ready only when all are true:
 - auth/base URL values are injected through env only
 - one snapshot feed is reachable from the Mac
 - the snapshot includes `stage`, `expressionState`, `stampStatus`, `message`, and `updatedAt`
+- Task Packet Preview blocks assignment dispatch until confirmed
+- Privacy Budget `P0` to `P4` is visible; `P4` blocks dispatch
 - Mac feed loss for >5 seconds can be handled by keeping Surface B as the authority
 - at least one fallback path (`virtual` or `manual`) has been rehearsed end-to-end
 - proof ids requiring reconciliation are written down before shutdown

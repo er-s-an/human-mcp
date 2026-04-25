@@ -41,6 +41,11 @@ Expected visible sequence:
 idle -> assigned -> calling -> proof_pending -> verified -> stamp_ready -> stamped -> complete
 ```
 
+During `assigned` or `calling`, Surface A must show the Task Packet Preview
+summary: `Human will see`, `Human will NOT see`, Privacy Budget `P0` to `P4`,
+and the single question. This rehearses the same privacy boundary that Enter /
+Surface B must enforce with a blocking modal before assignment dispatch.
+
 ## 3. Rehearse the virtual stamp fallback
 
 ```bash
@@ -87,6 +92,7 @@ Do not run the local rehearsal server as the stage-state authority during the li
 
 - Surface A loads from the rehearsal server.
 - Happy path reaches `complete`.
+- Task Packet Preview summary is visible with two columns and Privacy Budget `P0` to `P4`.
 - Virtual stamp path reaches `complete` with `virtual_done`.
 - Fallback path reaches `fallback_scripted` and the operator banner is visible.
 - `node verification/check-demo-readiness.mjs --strict` passes.

@@ -24,6 +24,57 @@
     "canOperatorFallback": true,
     "canTriggerRobot": true
   },
+  "smartAssignment": {
+    "status": "selected",
+    "selectedHuman": "Alice",
+    "selectedEndpoint": "/humanmcp/alice/vision",
+    "rationale": "Matched skill intent, approved AirJelly capability, availability, proofability, and demo safety.",
+    "confidence": 0.92,
+    "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+    "fallback": "Operator can use manual_override or fallback_scripted.",
+    "candidates": [
+      {
+        "name": "Alice",
+        "endpoint": "/humanmcp/alice/vision",
+        "score": 0.92,
+        "status": "selected"
+      }
+    ],
+    "taskPacket": {
+      "taskType": "feedback / judgment",
+      "privacyLevel": "P1",
+      "privacyBudget": "P1 · redacted artifact slice",
+      "role": "target-user reviewer",
+      "goal": "Help a one-person company founder improve landing-page clarity.",
+      "visibleContext": {
+        "productCategory": "AI developer tool",
+        "currentHeadline": "Ship debugging fixes faster",
+        "artifactSlice": "one screenshot or bounded copy excerpt"
+      },
+      "hiddenContext": [
+        "user name",
+        "full browser screen",
+        "raw AirJelly memory",
+        "private messages",
+        "revenue data",
+        "credentials",
+        "unrelated tabs"
+      ],
+      "singleQuestion": "Can you understand the product in 10 seconds?",
+      "outputSchema": {
+        "understood_in_10s": "boolean",
+        "click_intent": "yes | maybe | no",
+        "main_confusion": "string",
+        "suggested_change": "string"
+      },
+      "guardrails": "Suggestion only; user keeps final approval."
+    },
+    "responsibility": {
+      "consent": "User approved this call before dispatch.",
+      "auditTrail": "Record helper, shared packet, response, and user decision.",
+      "finalControl": "User confirms before external publish/send/apply."
+    }
+  },
   "fallback": {
     "macContextMode": "live",
     "reason": null

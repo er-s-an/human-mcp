@@ -62,7 +62,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -134,7 +135,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -206,7 +208,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -278,7 +281,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -350,7 +354,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -422,7 +427,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -494,7 +500,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -566,7 +573,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -640,7 +648,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -712,7 +721,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -778,7 +788,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -844,7 +855,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -918,7 +930,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -990,7 +1003,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -1062,7 +1076,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",
@@ -1134,7 +1149,8 @@
             "main_confusion": "string",
             "suggested_change": "string"
           },
-          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions."
+          "guardrails": "Suggestion only; do not infer private identity, pricing, legal, finance, medical, or employment decisions.",
+          "privacyLevel": "P1"
         },
         "responsibility": {
           "consent": "User approved this human call before dispatch.",

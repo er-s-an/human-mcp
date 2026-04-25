@@ -10,9 +10,29 @@ This worker lane adds a lightweight, dependency-free verification harness for th
 - The worktree contains an AirJelly adapter mode (`AirJelly Connected` or `AirJelly Adapter: Mock Mode`).
 - The worktree contains the `fallback_scripted` + `operator sync mode` fallback language.
 - The worktree contains stage-feed contract markers (`/humanmcp/stage-state`, `stage-state.json`, or SSE/event markers).
+- The worktree contains the Task Packet Preview contract: `Human will see`, `Human will NOT see`, and Privacy Budget `P0` to `P4`.
 - The worktree contains the local rehearsal feed server used to test Surface A before Windows is ready.
 - Fixture snapshots satisfy the controller-snapshot contract from the plan.
 - The Enter database handoff inventory exists and preserves the REST-only/read-only Surface A boundary.
+
+## Proof flow contract versions
+
+The current Enter proof API may still require `secret_phrase`, `narrative`, and
+`proof_text`. Those fields are **post-task evidence** for proof/verify.
+They are not the privacy-safe context contract.
+
+The demo context contract is the **Task Packet Preview**:
+
+- shown before assignment dispatch or task reveal,
+- split into `Human will see` and `Human will NOT see`,
+- governed by Privacy Budget `P0` to `P4`,
+- defaulted to `P1 · redacted artifact slice`,
+- blocked at `P4`,
+- audited separately from proof submission.
+
+Regression checks should fail if Task Packet fields disappear, if P-level privacy
+budget is not parseable as `P0` to `P4`, or if docs/UI collapse the preview into
+`secret_phrase + narrative` proof copy.
 
 ## Commands
 

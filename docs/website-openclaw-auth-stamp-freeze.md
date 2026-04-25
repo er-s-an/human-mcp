@@ -35,6 +35,10 @@ This freeze is grounded in the current plan + code evidence:
 6. **Current request-shape mismatch is frozen as a compatibility rule.**
    - Canonical verify request: `{"operator":"openclaw","mode":"auto"}`.
    - Transitional compatibility: accept the current OpenClaw payload `{"force_verify":true}` until the client and website are aligned.
+7. **Task Packet Preview is a pre-dispatch gate, not proof text.**
+   - Before a QR-created assignment is dispatched, the Enter website must show a Task Packet Preview modal.
+   - The modal shows exactly what the human reviewer will see and what they will not see.
+   - Proof fields such as `secret_phrase`, `narrative`, and `proof_text` remain evidence/verification fields after the task is done; they do not replace the structured Task Packet.
 
 ## Auth Contract
 
@@ -72,9 +76,9 @@ Freeze the contract as:
 |---|---|---|---|---|
 | `GET /humans?online=true&skill=...` | OpenClaw | Fetch callable humans | Query only | Returns human list; never returns canonical `secret_phrase` |
 | `GET /tasks?human_id=...&status=...` | Website/operator | Fetch inbox/task state | Query only | Supports `delivered -> seen -> submitted` viewing flow |
-| `POST /tasks/assign` | QR landing page / Website or OpenClaw operator path | Create or replay assignment | `task_id`, `subtask_id`, `human_id`, `prompt`, `reward`, `deadline_sec` | Same business key returns same `assignment_id`; replay is `200`, not `409` |
+| `POST /tasks/assign` | QR landing page / Website or OpenClaw operator path | Create or replay assignment | `task_id`, `subtask_id`, `human_id`, `prompt`, `reward`, `deadline_sec`; optional `task_packet`/`metadata.task_packet` when the backend supports metadata | Same business key returns same `assignment_id`; replay is `200`, not `409`; if metadata is unsupported, the website may keep the preview packet client-side keyed by assignment id for demo proof |
 | `POST /tasks/{assignment_id}/seen` | Website/client | Mark first read | No extra frozen fields required | Idempotent; repeats keep `seen` |
-| `POST /humans/{human_id}/proofs` | Website/client | Submit proof | `assignment_id`, `task_id`, `subtask_id`, `narrative`, `secret_phrase`, `proof_text` | Creates a new `proof_id` with `status=pending`; `422` if required fields are missing |
+| `POST /humans/{human_id}/proofs` | Website/client | Submit proof after the human completes the assigned task | `assignment_id`, `task_id`, `subtask_id`, `narrative`, `secret_phrase`, `proof_text`; optional `proof_metadata`/`proof_contract_ref` | Creates a new `proof_id` with `status=pending`; `422` if required fields are missing; this proof payload is evidence, not the pre-dispatch Task Packet |
 | `GET /proofs?status=pending&cursor=...` | OpenClaw | Poll pending proofs | Query only | Returns `cursor` + proof items; invalid cursor is `400` |
 | `POST /proofs/{proof_id}/verify` | OpenClaw / manual operator path | Verify or manually override | Canonical `{"operator":"openclaw","mode":"auto"}`; transitional compatibility accepts `{"force_verify":true}`; manual override uses same endpoint | `200 verified=true/false`; `409` when assignment is expired/cancelled; idempotent per `proof_id` |
 | `POST /stamps/{proof_id}/complete` | OpenClaw / operator | Persist stamp outcome | Canonical `{"mode":"virtual|hardware|manual","result":"...","operator":"..."}` | Returns `proof_id` + `stamp_status`; repeated same terminal write is idempotent |
@@ -86,13 +90,18 @@ Freeze the contract as:
 1. Human scans the QR code and opens the Enter website.
 2. If the demo promise is “scan to receive a task,” the QR landing page / website must create or replay `assignment_id` via `POST /tasks/assign` before showing the task inbox. A plain website `GET` or static landing page view does **not** prove assignment by itself.
 3. If the task was pre-created by OpenClaw/operator, the QR URL must carry or resolve the existing `assignment_id` / `human_id` and must not create a duplicate assignment.
-4. User/client marks `seen` via `POST /tasks/{assignment_id}/seen`.
-5. User submits proof via `POST /humans/{human_id}/proofs`.
-6. Website stores proof as `pending`.
-7. OpenClaw polls `GET /proofs?status=pending&cursor=...`.
-8. OpenClaw calls `POST /proofs/{proof_id}/verify`.
-9. Website performs the actual validation and writes the terminal result.
-10. Success response must contain at least:
+4. Before dispatch or task detail display, Enter shows **Task Packet Preview**:
+   - **Human will see:** product category, current headline/artifact slice, one screenshot or bounded artifact excerpt, target user, the single question, and the expected output schema.
+   - **Human will NOT see:** the user’s name, full browser screen, raw AirJelly memory, private messages, credentials, revenue data, unrelated tabs, and any P4 content.
+   - Privacy Budget is visible as `P0` to `P4`; the default demo budget is `P1`, and `P4` must block dispatch.
+   - `Confirm` creates/replays the assignment; `Cancel` must not create a new assignment.
+5. User/client marks `seen` via `POST /tasks/{assignment_id}/seen`.
+6. User submits proof via `POST /humans/{human_id}/proofs`.
+7. Website stores proof as `pending`.
+8. OpenClaw polls `GET /proofs?status=pending&cursor=...`.
+9. OpenClaw calls `POST /proofs/{proof_id}/verify`.
+10. Website performs the actual validation and writes the terminal result.
+11. Success response must contain at least:
    - `proof_id`
    - `verified`
    - `human_name`
@@ -102,14 +111,64 @@ Freeze the contract as:
    - `stamp_status`
    - `verified_by`
    - `verified_at`
-11. If verified and `can_stamp=true`, the website moves business state to `stamp_status=requested`.
+12. If verified and `can_stamp=true`, the website moves business state to `stamp_status=requested`.
+
+### Task Packet / Privacy Budget contract
+
+The structured packet is the context contract for human escalation in the OPC demo.
+It must be visible before dispatch and auditable after dispatch.
+
+Minimum packet shape:
+
+```json
+{
+  "task_type": "feedback / judgment",
+  "privacy_level": "P1",
+  "privacy_budget": "P1 · redacted artifact slice",
+  "role": "target-user reviewer",
+  "goal": "Help a one-person company founder improve landing-page clarity.",
+  "visible_context": {
+    "product_category": "AI developer tool",
+    "current_headline": "Ship debugging fixes faster",
+    "artifact_slice": "one screenshot or bounded copy excerpt"
+  },
+  "redacted_context": [
+    "user name",
+    "full browser screen",
+    "raw AirJelly memory",
+    "private messages",
+    "revenue data",
+    "credentials",
+    "unrelated tabs"
+  ],
+  "single_question": "Can you understand the offer in 10 seconds?",
+  "output_schema": {
+    "understood_in_10s": "boolean",
+    "click_intent": "yes | maybe | no",
+    "main_confusion": "string",
+    "suggested_change": "string"
+  },
+  "guardrails": "Suggestion only; user keeps final approval."
+}
+```
+
+Privacy Budget levels:
+
+- `P0` — internal only; no human dispatch.
+- `P1` — demo default; redacted artifact slice and one question.
+- `P2` — limited workflow context with explicit approval.
+- `P3` — sensitive review; requires stronger consent, audit, and operator review.
+- `P4` — blocked; credentials, private messages, raw memory, full screen, or irreversible/private material.
+
+The proof API can continue to require `secret_phrase` and `narrative` for current backend validation.
+That is an evidence mechanism. It must not be presented as the privacy-safe context boundary.
 
 ### QR assignment rule
 
 The QR code is a human entry point into the website, not an OpenClaw scan event. Therefore:
 
 - **Scan opens website only:** no assignment is guaranteed unless the website route runs the assign flow or resolves a pre-created assignment.
-- **Scan creates assignment:** the QR landing route must call `POST /tasks/assign`, persist/replay the returned id, then render the assigned task.
+- **Scan creates assignment:** the QR landing route must show the Task Packet Preview modal, then call `POST /tasks/assign` only after `Confirm`, persist/replay the returned id, and render the assigned task.
 - **Scan opens existing assignment:** the QR URL must include a safe lookup key or assignment identifier, then call `GET /tasks?human_id=...&status=...` and `POST /tasks/{assignment_id}/seen`.
 - The acceptance artifact must show the same id in the website response and in the Windows/OpenClaw `/humanmcp/stage-state` `assignmentId`.
 
@@ -210,6 +269,8 @@ The website/OpenClaw lane is considered frozen only if all of the following are 
 - Bearer auth is configured from env, not hardcoded.
 - `GET /humans` does not leak the canonical secret.
 - `POST /tasks/assign` is idempotent on the business key.
+- QR assignment displays Task Packet Preview before dispatch, with two columns for visible and redacted context.
+- Privacy Budget `P0` to `P4` is visible; `P1` is the demo default and `P4` blocks dispatch.
 - `POST /proofs/{proof_id}/verify` is idempotent on `proof_id`.
 - Manual verify uses the same endpoint, not a side-channel contract.
 - `virtual_done` is accepted as the P0-safe terminal stamp state.

@@ -18,6 +18,33 @@
     "Suggestion only; do not infer private information, pricing, legal, finance, medical, or employment decisions.";
   const DEFAULT_RESPONSIBILITY =
     "AI coordinates, helper answers within scope, platform records consent/minimal context/audit, user approves final action.";
+  const PRIVACY_BUDGET_LEVELS = [
+    {
+      level: "P0",
+      label: "internal only",
+      description: "No external human sees context.",
+    },
+    {
+      level: "P1",
+      label: "redacted artifact",
+      description: "Demo default: scoped slice plus one question.",
+    },
+    {
+      level: "P2",
+      label: "workflow context",
+      description: "Limited surrounding context with explicit approval.",
+    },
+    {
+      level: "P3",
+      label: "sensitive review",
+      description: "Requires stronger consent and audit.",
+    },
+    {
+      level: "P4",
+      label: "blocked",
+      description: "Credentials, private messages, raw memory, and full screen stay hidden.",
+    },
+  ];
   const STAGE_ORDER = [
     "idle",
     "auth_blocked",
@@ -203,6 +230,7 @@
       ],
       taskPacket: {
         taskType: "feedback / judgment",
+        privacyLevel: "P1",
         privacyBudget: "P1 · redacted artifact slice",
         role: "target-user reviewer",
         goal: "Improve a solo founder's landing-page waitlist conversion.",
@@ -479,6 +507,10 @@
       rawSnapshot.taskPacket ||
       rawSnapshot.task_packet ||
       {};
+    const privacyBudget = toDisplayText(
+      taskPacket.privacyBudget || taskPacket.privacy_budget,
+      "P1 · redacted artifact slice",
+    );
 
     return {
       policy: TASK_PACKET_POLICY,
@@ -486,9 +518,9 @@
         taskPacket.taskType || taskPacket.task_type,
         "feedback / judgment",
       ),
-      privacyBudget: toDisplayText(
-        taskPacket.privacyBudget || taskPacket.privacy_budget,
-        "P1 · redacted artifact slice",
+      privacyBudget,
+      privacyLevel: derivePrivacyLevel(
+        taskPacket.privacyLevel || taskPacket.privacy_level || privacyBudget,
       ),
       role: toDisplayText(taskPacket.role, "target-user reviewer"),
       goal: toDisplayText(taskPacket.goal, baseSnapshot.currentGoal),
@@ -516,6 +548,11 @@
       ),
       guardrails: formatStructuredValue(taskPacket.guardrails, DEFAULT_GUARDRAILS),
     };
+  }
+
+  function derivePrivacyLevel(value) {
+    const match = String(value || "").match(/\bP[0-4]\b/i);
+    return match ? match[0].toUpperCase() : "P1";
   }
 
   function normalizeResponsibility(smartAssignment, rawSnapshot) {
@@ -764,6 +801,7 @@
       taskPacketPolicy: snapshot.smartAssignment.taskPacket.policy,
       taskPacketType: snapshot.smartAssignment.taskPacket.taskType,
       taskPacketPrivacyBudget: snapshot.smartAssignment.taskPacket.privacyBudget,
+      taskPacketPrivacyLevel: snapshot.smartAssignment.taskPacket.privacyLevel,
       taskPacketRole: snapshot.smartAssignment.taskPacket.role,
       taskPacketGoal: snapshot.smartAssignment.taskPacket.goal,
       taskPacketVisibleContext: snapshot.smartAssignment.taskPacket.visibleContext,
@@ -843,6 +881,7 @@
     taskPacketPrivacyBudgetValue: document.querySelector(
       "#taskPacketPrivacyBudgetValue",
     ),
+    privacyBudgetRail: document.querySelector("#privacyBudgetRail"),
     taskPacketRoleValue: document.querySelector("#taskPacketRoleValue"),
     taskPacketGoalValue: document.querySelector("#taskPacketGoalValue"),
     taskPacketVisibleContextValue: document.querySelector(
@@ -903,6 +942,17 @@
     }).join("");
   }
 
+  function renderPrivacyBudgetRail(currentLevel) {
+    elements.privacyBudgetRail.innerHTML = PRIVACY_BUDGET_LEVELS.map((budget) => {
+      const isActive = budget.level === currentLevel ? " is-active" : "";
+      return `<span class="budget-chip${isActive}" title="${escapeHtml(
+        budget.description,
+      )}"><strong>${budget.level}</strong><em>${escapeHtml(
+        budget.label,
+      )}</em></span>`;
+    }).join("");
+  }
+
   function render(viewModel) {
     elements.shell.dataset.tone = viewModel.tone;
     elements.authorityLabel.textContent = "Windows/OpenClaw";
@@ -943,6 +993,7 @@
     elements.taskPacketTypeValue.textContent = viewModel.taskPacketType;
     elements.taskPacketPrivacyBudgetValue.textContent =
       viewModel.taskPacketPrivacyBudget;
+    renderPrivacyBudgetRail(viewModel.taskPacketPrivacyLevel);
     elements.taskPacketRoleValue.textContent = viewModel.taskPacketRole;
     elements.taskPacketGoalValue.textContent = viewModel.taskPacketGoal;
     elements.taskPacketVisibleContextValue.textContent =

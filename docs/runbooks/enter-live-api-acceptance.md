@@ -32,6 +32,22 @@ Impact on the demo contract:
 - `mode=live` is allowed only after those identifiers come from Enter, not from
   rehearsal fixtures.
 
+## OPC / Task Packet Demo Contract
+
+The demo story is **AI Operating Team for One-Person Companies**:
+
+1. AirJelly observes the solo founder's local work context and current artifact.
+2. OpenClaw decides that a permissioned human reviewer is useful.
+3. HumanMCP packages a minimal, redacted Task Packet.
+4. The human user scans the QR code and opens the Enter website.
+5. Enter shows **Task Packet Preview** before assignment dispatch or task reveal.
+6. The reviewer answers one scoped question.
+7. The proof/verify/stamp path records the result and returns control to the founder.
+
+`secret_phrase`, `narrative`, and `proof_text` are proof submission evidence.
+They do not define what context the human reviewer is allowed to see.
+The Task Packet Preview is the pre-dispatch privacy boundary.
+
 ## Do Not Change
 
 - Do not make Mac Surface A a writer.
@@ -112,6 +128,13 @@ Expected stage-state if blocked:
 Pass criteria:
 
 - The human QR code opens the Enter website, not an OpenClaw scanner path.
+- Before assignment dispatch or task detail display, the website shows a **Task Packet Preview** modal.
+- The modal says “AI wants to call a human reviewer.”
+- The modal has two explicit columns:
+  - `Human will see`: product category, current headline/artifact slice, one screenshot or bounded excerpt, target user, one question, output schema.
+  - `Human will NOT see`: user name, full browser screen, raw AirJelly memory, private messages, credentials, revenue data, unrelated tabs.
+- The modal visualizes Privacy Budget `P0`, `P1`, `P2`, `P3`, and `P4`; demo default is `P1`, and `P4` blocks dispatch.
+- `Confirm` creates/replays the assignment; `Cancel` does not create a new assignment.
 - If the demo claim is “scan to receive a task,” the website QR landing route can create/replay one demo assignment through `POST /tasks/assign`, or it can resolve a pre-created assignment id from the QR URL.
 - A plain website visit is not enough evidence; the validation must show the assignment id created or resolved by the website flow.
 - The returned assignment identity appears in `/humanmcp/stage-state`.
@@ -134,11 +157,17 @@ QR website validation evidence:
 
 ```text
 QR URL opened:
+Task Packet Preview shown before assignment dispatch: yes/no
+Privacy Budget level shown:
+Human will see column:
+Human will NOT see column:
+Preview action: confirmed | cancelled | existing assignment resolved
 Human id resolved by website:
 Assignment flow: created by website | replayed by website | pre-created by OpenClaw/operator
 Assignment id returned/resolved by website:
 Website marked seen: yes/no
 Same assignment id appears in Surface B feed: yes/no
+Proof fields kept out of preview: yes/no
 Known gap:
 ```
 
@@ -149,6 +178,18 @@ If the website source is not available from the Mac checkout, verify this with A
 3. Capture task count or task ids again.
 4. Confirm a new/replayed `assignment_id` appears, or confirm the QR resolved an existing assignment id.
 5. Confirm `/humanmcp/stage-state` publishes the same id.
+
+### Gate 2.5: Task Packet Preview
+
+Pass criteria:
+
+- Preview is generated from `taskPacket` / `task_packet` or safe defaults derived from the current assignment.
+- The preview supports both snake_case and camelCase fields.
+- Missing packet fields degrade to safe copy instead of a blank modal.
+- If backend assignment metadata is supported, `POST /tasks/assign` may include `task_packet` or `metadata.task_packet`.
+- If backend metadata is not supported, the frontend keeps the packet keyed by `assignmentId` for demo display and audit, without changing the proof API.
+- The preview never renders canonical `secret_phrase`, raw AirJelly memory, full-screen data, private messages, credentials, or revenue data.
+- After confirmation, the task detail/proof page still uses the existing proof submission fields, but displays the Task Packet summary separately.
 
 ### Gate 3: Proof Poll
 

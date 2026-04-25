@@ -15,10 +15,12 @@ Write scope for this worker was documentation-only. The OpenClaw repo at `/Users
   - Normalizes humans / assignments / proofs / verify responses.
   - Provides `listHumans`, `assignTask`, `listPendingProofs`, and `verifyProof`.
   - Does **not** currently expose a dedicated stamp-complete client helper.
+  - Does **not** yet normalize a structured `taskPacket` / `privacyBudget` / `privacyLevel` contract for the new preview flow.
 - `ui/src/ui/components/humanmcp-stage-panel.ts`
   - Already renders the HumanMCP operator panel and stage display.
   - Polls proofs every 5 seconds.
   - Still owns local `verification` and `localStampStatus` state, plus `Virtual stamp` and `Operator fallback` buttons.
+  - Does **not** yet render the required Task Packet Preview modal or P0-P4 Privacy Budget rail.
 - `ui/src/ui/components/humanmcp-stage-display.ts`
   - Already renders the expression-facing stage display from a snapshot with AI state, stage, metrics, toolbox, and log trace.
 - `ui/src/ui/views/overview.ts`
@@ -58,6 +60,8 @@ Surface B is the Windows/OpenClaw full-screen operator surface and must always s
 4. **Stamp path** — `requested`, robot in-flight, hardware done, virtual done, or manual/reconciliation mode.
 5. **Operator controls** — retry, skip/manual advance, virtual stamp, operator fallback, optional robot trigger.
 6. **Stage trace** — short recent log rows visible enough for live recovery.
+7. **Task Packet Preview** — the pre-dispatch context boundary showing what the helper will and will not see.
+8. **Privacy Budget** — `P0` to `P4`, defaulting to `P1` and blocking dispatch at `P4`.
 
 ### Required state fields for Surface B rendering
 
@@ -76,6 +80,25 @@ Surface B must render directly from the controller snapshot below rather than mi
 | `message` | yes | Operator-readable live summary |
 | `updatedAt` | yes | ISO timestamp used for feed staleness checks |
 | `operatorActions` | yes | Which controls remain legal in the current state |
+| `smartAssignment.taskPacket` | yes when assignment is selected | Structured packet for the human call preview |
+| `smartAssignment.responsibility` | yes when assignment is selected | Consent, audit, and final-control copy |
+
+### Task Packet fields Surface B must normalize
+
+`humanmcp.ts` must accept both camelCase and snake_case:
+
+| Canonical field | Accepted aliases | Meaning |
+| --- | --- | --- |
+| `taskType` | `task_type` | Low-risk task class, e.g. `feedback / judgment` |
+| `privacyLevel` | `privacy_level` | P-level from `P0` to `P4` |
+| `privacyBudget` | `privacy_budget` | Human-readable P-level label |
+| `role` | — | Helper role, e.g. `target-user reviewer` |
+| `goal` | — | Goal of this one human call |
+| `visibleContext` | `visible_context` | Context that may be shown to the human |
+| `hiddenContext` | `hidden_context`, `redactedContext`, `redacted_context` | Context that must not be shown |
+| `singleQuestion` | `single_question`, `question`, `task` | One question the helper should answer |
+| `outputSchema` | `output_schema` | Structured answer schema |
+| `guardrails` | — | Safety and scope constraints |
 
 ## Shared Stage-State JSON Contract
 
@@ -124,6 +147,50 @@ Contingency transport if the endpoint is not ready in time:
     "canVirtualStamp": true,
     "canOperatorFallback": true,
     "canTriggerRobot": true
+  },
+  "smartAssignment": {
+    "status": "selected",
+    "selectedHuman": "Alice",
+    "selectedEndpoint": "/humanmcp/alice/vision",
+    "rationale": "Matched skill intent, approved AirJelly capability, availability, proofability, and demo safety.",
+    "confidence": 0.92,
+    "policy": "Rank approved capability cards by skill match, availability, proofability, and demo safety.",
+    "fallback": "Operator can use manual_override or fallback_scripted.",
+    "candidates": [],
+    "taskPacket": {
+      "taskType": "feedback / judgment",
+      "privacyLevel": "P1",
+      "privacyBudget": "P1 · redacted artifact slice",
+      "role": "target-user reviewer",
+      "goal": "Help a one-person company founder improve landing-page clarity.",
+      "visibleContext": {
+        "productCategory": "AI developer tool",
+        "currentHeadline": "Ship debugging fixes faster",
+        "artifactSlice": "one screenshot or bounded copy excerpt"
+      },
+      "hiddenContext": [
+        "user name",
+        "full browser screen",
+        "raw AirJelly memory",
+        "private messages",
+        "revenue data",
+        "credentials",
+        "unrelated tabs"
+      ],
+      "singleQuestion": "Can you understand the product in 10 seconds?",
+      "outputSchema": {
+        "understood_in_10s": "boolean",
+        "click_intent": "yes | maybe | no",
+        "main_confusion": "string",
+        "suggested_change": "string"
+      },
+      "guardrails": "Suggestion only; user keeps final approval."
+    },
+    "responsibility": {
+      "consent": "User approved this call before dispatch.",
+      "auditTrail": "Record helper, shared packet, response, and user decision.",
+      "finalControl": "User confirms before external publish/send/apply."
+    }
   },
   "fallback": {
     "macContextMode": "live",
@@ -205,6 +272,12 @@ Use these values so robot and fallback branches remain unambiguous:
 5. **Keep auth/config out of code**
    - Continue injecting base URL and auth token through env/config only.
    - Do not embed any secret token into repo files or documentation artifacts.
+6. **Add Task Packet Preview before assignment dispatch**
+   - `humanmcp-stage-panel.ts` must show a modal or equivalent blocking preview when the operator/QR flow is about to create or reveal a human task.
+   - The preview must have two columns: `Human will see` and `Human will NOT see`.
+   - `Confirm` may call/replay `POST /tasks/assign`; `Cancel` must not create a new assignment.
+   - `P4` Privacy Budget must block dispatch.
+   - `secret_phrase`, `narrative`, and `proof_text` remain proof-submission fields and must not be mixed into the Task Packet.
 
 ## Robot / Virtual Stamp Fallback Policy
 

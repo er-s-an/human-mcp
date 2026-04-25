@@ -650,6 +650,103 @@ kbd {
   padding: 12px 14px;
 }
 
+.packet-preview-callout {
+  background: linear-gradient(
+    135deg,
+    rgba(105, 245, 255, 0.12),
+    rgba(172, 146, 255, 0.08)
+  );
+  border: 1px solid rgba(105, 245, 255, 0.22);
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding: 14px;
+}
+
+.packet-preview-callout strong {
+  color: var(--cyan);
+  font-size: 1.08rem;
+}
+
+.packet-preview-callout span {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.privacy-budget-rail {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-bottom: 16px;
+}
+
+.budget-chip {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(105, 245, 255, 0.1);
+  display: grid;
+  gap: 4px;
+  min-height: 58px;
+  padding: 9px;
+}
+
+.budget-chip.is-active {
+  background: rgba(71, 255, 173, 0.12);
+  border-color: rgba(71, 255, 173, 0.48);
+  box-shadow: 0 0 0 1px rgba(71, 255, 173, 0.12);
+}
+
+.budget-chip strong {
+  color: var(--text);
+  font-family:
+    "JetBrains Mono", "SFMono-Regular", Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+}
+
+.budget-chip em {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-style: normal;
+  line-height: 1.35;
+}
+
+.packet-preview-columns {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 16px;
+}
+
+.packet-preview-card {
+  border: 1px solid rgba(105, 245, 255, 0.13);
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+}
+
+.packet-preview-card--visible {
+  background: rgba(71, 255, 173, 0.06);
+}
+
+.packet-preview-card--hidden {
+  background: rgba(255, 185, 105, 0.06);
+  border-color: rgba(255, 185, 105, 0.16);
+}
+
+.packet-preview-card h3 {
+  color: var(--text);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.packet-preview-card p {
+  color: var(--text);
+  line-height: 1.55;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
 .kv-list {
   display: grid;
   gap: 14px;
@@ -759,6 +856,11 @@ kbd {
   }
 
   .kv-list--packet {
+    grid-template-columns: 1fr;
+  }
+
+  .privacy-budget-rail,
+  .packet-preview-columns {
     grid-template-columns: 1fr;
   }
 }

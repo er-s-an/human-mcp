@@ -176,8 +176,15 @@ function validateSmartAssignmentFixtures(fixturesByName) {
           );
         }
 
-        if (!String(taskPacket.privacyBudget || taskPacket.privacy_budget || '').startsWith('P')) {
-          errors.push(`${name}[${index}] taskPacket.privacyBudget must use a P-level budget`);
+        const privacyBudget = String(
+          taskPacket.privacyBudget ||
+            taskPacket.privacy_budget ||
+            taskPacket.privacyLevel ||
+            taskPacket.privacy_level ||
+            ''
+        );
+        if (!/\bP[0-4]\b/.test(privacyBudget)) {
+          errors.push(`${name}[${index}] taskPacket privacy must use a P0-P4 budget`);
         }
       }
 

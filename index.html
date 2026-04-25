@@ -211,12 +211,37 @@
 
         <article class="block block--wide" aria-label="Human task packet">
           <div class="block-head">
-            <span class="prompt">Human Task Packet</span>
-            <span>need-to-know call</span>
+            <span class="prompt">Task Packet Preview</span>
+            <span>Human Task Packet · need-to-know call</span>
+          </div>
+          <div class="packet-preview-callout" aria-label="Task Packet Preview summary">
+            <strong>AI wants to call a human reviewer.</strong>
+            <span>
+              Preview the exact packet before dispatch; Enter owns Confirm / Cancel
+              and assignment creation.
+            </span>
           </div>
           <p class="packet-policy" id="taskPacketPolicyValue">
             Need-to-know Human Call: send only scoped, redacted, auditable context.
           </p>
+          <div class="privacy-budget-rail" id="privacyBudgetRail" aria-label="Privacy Budget P0 to P4">
+            <span class="budget-chip is-active"><strong>P1</strong><em>redacted artifact slice</em></span>
+          </div>
+          <div class="packet-preview-columns">
+            <section class="packet-preview-card packet-preview-card--visible">
+              <h3>Human will see</h3>
+              <p id="taskPacketVisibleContextValue">
+                Product summary, target user, current headline, and one screenshot/artifact slice.
+              </p>
+            </section>
+            <section class="packet-preview-card packet-preview-card--hidden">
+              <h3>Human will NOT see</h3>
+              <p id="taskPacketHiddenContextValue">
+                Your name, full browser screen, private messages, credentials,
+                revenue data, and unrelated tabs.
+              </p>
+            </section>
+          </div>
           <dl class="kv-list kv-list--packet">
             <div>
               <dt>Task Type</dt>
@@ -233,18 +258,6 @@
             <div>
               <dt>Goal</dt>
               <dd id="taskPacketGoalValue">Waiting for controller goal.</dd>
-            </div>
-            <div>
-              <dt>Visible Context</dt>
-              <dd id="taskPacketVisibleContextValue">
-                Product summary, target user, and current artifact slice.
-              </dd>
-            </div>
-            <div>
-              <dt>Redacted Context</dt>
-              <dd id="taskPacketHiddenContextValue">
-                Raw screen, private messages, credentials, and unrelated tabs.
-              </dd>
             </div>
             <div>
               <dt>Single Question</dt>

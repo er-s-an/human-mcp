@@ -32,7 +32,10 @@ Use this checklist before rehearsal or live demo. Leave secrets blank in files; 
 - [ ] At least one seed human exists
 - [ ] At least one reusable demo task exists
 - [ ] Manual verify path is available through the same verify endpoint / admin action
-- [ ] Proof submission requires `assignment_id`, `task_id`, `subtask_id`, `narrative`, `secret_phrase`, and `proof_text`
+- [ ] QR/task-detail flow shows **Task Packet Preview** before assignment dispatch or task reveal
+- [ ] Task Packet Preview shows two columns: `Human will see` and `Human will NOT see`
+- [ ] Privacy Budget displays `P0`, `P1`, `P2`, `P3`, and `P4`; demo default is `P1`, and `P4` blocks dispatch
+- [ ] Proof submission may still require `assignment_id`, `task_id`, `subtask_id`, `narrative`, `secret_phrase`, and `proof_text`, but these are evidence/verification fields after completion, not the Task Packet itself
 - [ ] `GET /humans` response hides the canonical `secret_phrase`
 - [ ] `POST /tasks/assign` idempotency has been checked once
 - [ ] `POST /proofs/{proof_id}/verify` idempotency has been checked once
@@ -61,5 +64,7 @@ If uncertain, choose **virtual_done** as the P0-safe default.
 - [ ] Missing bearer token
 - [ ] OpenClaw can only work unauthenticated
 - [ ] `GET /humans` exposes canonical secret data
+- [ ] QR route can create an assignment without first showing the Task Packet Preview
+- [ ] Task Packet contains raw AirJelly memory, full screen, private messages, credentials, revenue data, or unrelated tabs
 - [ ] Verify duplicates reward/stamp side effects on retry
 - [ ] Local stamp success cannot be written back to website truth

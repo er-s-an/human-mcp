@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-25T05:07:34.707Z",
+  "generatedAt": "2026-04-25T05:40:44.436Z",
   "summary": {
     "ready": true,
     "failedChecks": [],
@@ -130,7 +130,15 @@
           "smartAssignment",
           "candidate-list",
           "proofability",
+          "Task Packet Preview",
           "Human Task Packet",
+          "Human will see",
+          "Human will NOT see",
+          "P0",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
           "Need-to-know Human Call",
           "Privacy Budget",
           "Audit Trail",
