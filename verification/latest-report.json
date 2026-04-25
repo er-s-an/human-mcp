@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-25T03:29:31.345Z",
+  "generatedAt": "2026-04-25T03:53:16.138Z",
   "summary": {
     "ready": true,
     "failedChecks": [],
@@ -9,7 +9,8 @@
       "styles.css",
       "scripts/stage_state_rehearsal_server.mjs"
     ],
-    "remoteFeedUrl": "http://172.16.21.116:4173/humanmcp/stage-state"
+    "remoteFeedUrl": null,
+    "expectLiveEnter": false
   },
   "checks": [
     {
@@ -165,22 +166,6 @@
           "virtualStampPath"
         ],
         "missing": []
-      }
-    },
-    {
-      "name": "remote_windows_stage_state_feed",
-      "pass": true,
-      "details": {
-        "feedUrl": "http://172.16.21.116:4173/humanmcp/stage-state",
-        "status": 200,
-        "cors": "*",
-        "cacheControl": "no-store",
-        "source": "windows-openclaw",
-        "mode": "live",
-        "stage": "stamped",
-        "expressionState": "stamped",
-        "stampStatus": "virtual_done",
-        "updatedAt": "2026-04-25T03:29:31.384Z"
       }
     }
   ]
