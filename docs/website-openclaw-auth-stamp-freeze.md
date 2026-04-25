@@ -72,7 +72,7 @@ Freeze the contract as:
 |---|---|---|---|---|
 | `GET /humans?online=true&skill=...` | OpenClaw | Fetch callable humans | Query only | Returns human list; never returns canonical `secret_phrase` |
 | `GET /tasks?human_id=...&status=...` | Website/operator | Fetch inbox/task state | Query only | Supports `delivered -> seen -> submitted` viewing flow |
-| `POST /tasks/assign` | OpenClaw | Create or replay assignment | `task_id`, `subtask_id`, `human_id`, `prompt`, `reward`, `deadline_sec` | Same business key returns same `assignment_id`; replay is `200`, not `409` |
+| `POST /tasks/assign` | QR landing page / Website or OpenClaw operator path | Create or replay assignment | `task_id`, `subtask_id`, `human_id`, `prompt`, `reward`, `deadline_sec` | Same business key returns same `assignment_id`; replay is `200`, not `409` |
 | `POST /tasks/{assignment_id}/seen` | Website/client | Mark first read | No extra frozen fields required | Idempotent; repeats keep `seen` |
 | `POST /humans/{human_id}/proofs` | Website/client | Submit proof | `assignment_id`, `task_id`, `subtask_id`, `narrative`, `secret_phrase`, `proof_text` | Creates a new `proof_id` with `status=pending`; `422` if required fields are missing |
 | `GET /proofs?status=pending&cursor=...` | OpenClaw | Poll pending proofs | Query only | Returns `cursor` + proof items; invalid cursor is `400` |
@@ -83,14 +83,16 @@ Freeze the contract as:
 
 ### Happy path
 
-1. Website creates `assignment_id` via `POST /tasks/assign`.
-2. User/client marks `seen` via `POST /tasks/{assignment_id}/seen`.
-3. User submits proof via `POST /humans/{human_id}/proofs`.
-4. Website stores proof as `pending`.
-5. OpenClaw polls `GET /proofs?status=pending&cursor=...`.
-6. OpenClaw calls `POST /proofs/{proof_id}/verify`.
-7. Website performs the actual validation and writes the terminal result.
-8. Success response must contain at least:
+1. Human scans the QR code and opens the Enter website.
+2. If the demo promise is “scan to receive a task,” the QR landing page / website must create or replay `assignment_id` via `POST /tasks/assign` before showing the task inbox. A plain website `GET` or static landing page view does **not** prove assignment by itself.
+3. If the task was pre-created by OpenClaw/operator, the QR URL must carry or resolve the existing `assignment_id` / `human_id` and must not create a duplicate assignment.
+4. User/client marks `seen` via `POST /tasks/{assignment_id}/seen`.
+5. User submits proof via `POST /humans/{human_id}/proofs`.
+6. Website stores proof as `pending`.
+7. OpenClaw polls `GET /proofs?status=pending&cursor=...`.
+8. OpenClaw calls `POST /proofs/{proof_id}/verify`.
+9. Website performs the actual validation and writes the terminal result.
+10. Success response must contain at least:
    - `proof_id`
    - `verified`
    - `human_name`
@@ -100,7 +102,16 @@ Freeze the contract as:
    - `stamp_status`
    - `verified_by`
    - `verified_at`
-9. If verified and `can_stamp=true`, the website moves business state to `stamp_status=requested`.
+11. If verified and `can_stamp=true`, the website moves business state to `stamp_status=requested`.
+
+### QR assignment rule
+
+The QR code is a human entry point into the website, not an OpenClaw scan event. Therefore:
+
+- **Scan opens website only:** no assignment is guaranteed unless the website route runs the assign flow or resolves a pre-created assignment.
+- **Scan creates assignment:** the QR landing route must call `POST /tasks/assign`, persist/replay the returned id, then render the assigned task.
+- **Scan opens existing assignment:** the QR URL must include a safe lookup key or assignment identifier, then call `GET /tasks?human_id=...&status=...` and `POST /tasks/{assignment_id}/seen`.
+- The acceptance artifact must show the same id in the website response and in the Windows/OpenClaw `/humanmcp/stage-state` `assignmentId`.
 
 ### Failure / recovery path
 

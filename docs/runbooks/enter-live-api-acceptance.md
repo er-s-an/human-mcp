@@ -111,7 +111,9 @@ Expected stage-state if blocked:
 
 Pass criteria:
 
-- OpenClaw can create/replay one demo assignment through `POST /tasks/assign`.
+- The human QR code opens the Enter website, not an OpenClaw scanner path.
+- If the demo claim is “scan to receive a task,” the website QR landing route can create/replay one demo assignment through `POST /tasks/assign`, or it can resolve a pre-created assignment id from the QR URL.
+- A plain website visit is not enough evidence; the validation must show the assignment id created or resolved by the website flow.
 - The returned assignment identity appears in `/humanmcp/stage-state`.
 - Surface A updates from Windows feed without changing its URL.
 
@@ -127,6 +129,26 @@ Expected stage-state:
   "subtaskId": "surface-b"
 }
 ```
+
+QR website validation evidence:
+
+```text
+QR URL opened:
+Human id resolved by website:
+Assignment flow: created by website | replayed by website | pre-created by OpenClaw/operator
+Assignment id returned/resolved by website:
+Website marked seen: yes/no
+Same assignment id appears in Surface B feed: yes/no
+Known gap:
+```
+
+If the website source is not available from the Mac checkout, verify this with API evidence:
+
+1. Capture task count or task ids for the target `human_id` before opening the QR URL.
+2. Open the QR URL as the human would.
+3. Capture task count or task ids again.
+4. Confirm a new/replayed `assignment_id` appears, or confirm the QR resolved an existing assignment id.
+5. Confirm `/humanmcp/stage-state` publishes the same id.
 
 ### Gate 3: Proof Poll
 
