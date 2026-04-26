@@ -314,9 +314,11 @@ async function macNotification(task) {
   const title = "HumanMCP task";
   const subtitle = task.humanName ? `For ${task.humanName}` : "AirJelly suggested";
   const message = task.question;
-  const script = `display notification ${JSON.stringify(message)} with title ${JSON.stringify(
-    title,
-  )} subtitle ${JSON.stringify(subtitle)}`;
+  const script = [
+    `tell application "System Events"`,
+    `display notification ${JSON.stringify(message)} with title ${JSON.stringify(title)} subtitle ${JSON.stringify(subtitle)}`,
+    `end tell`,
+  ].join("\n");
 
   try {
     await execFileAsync("osascript", ["-e", script]);
@@ -339,14 +341,17 @@ async function askForConsent(task) {
     "Only the task packet and match summary are shared. Raw AirJelly memory stays local.",
   ].join("\n");
   const script = [
-    `set dialogResult to display dialog ${JSON.stringify(prompt)}`,
-    `with title "HumanMCP task request"`,
-    `buttons {"Not now", "Help"}`,
-    `default button "Help"`,
-    `cancel button "Not now"`,
+    `tell application "System Events"`,
+    `activate`,
+    `set dialogResult to display dialog ${JSON.stringify(prompt)} ¬`,
+    `with title "HumanMCP task request" ¬`,
+    `buttons {"Not now", "Help"} ¬`,
+    `default button "Help" ¬`,
+    `cancel button "Not now" ¬`,
     `with icon note`,
     `return button returned of dialogResult`,
-  ].join(" ");
+    `end tell`,
+  ].join("\n");
 
   try {
     const { stdout } = await execFileAsync("osascript", ["-e", script]);
