@@ -815,14 +815,18 @@ function htmlPage(task = latestTask(), options = {}) {
       const gate = task.privacyGate || { allowed: true, level: packet.privacyLevel, blockedReasons: [] };
       const visibleItems = Object.values(packet.visibleContext || {});
       const disabled = gate.allowed ? "" : "disabled";
-      const answerReadyClass = view === "ask" ? "" : "ready";
+      const needsPageAccept = view === "ask" && task.status === "queued";
+      const answerReadyClass = needsPageAccept ? "" : "ready";
+      const acceptActions = needsPageAccept
+        ? \`<div class="actions">
+          <button id="accept" \${disabled}>Accept</button>
+          <button class="ghost" id="decline">Not now</button>
+        </div>\`
+        : "";
       content.innerHTML = \`
         <p><strong>Status:</strong> <code>\${escapeHtml(task.status)}</code></p>
         <p><strong>Question:</strong> \${escapeHtml(task.question)}</p>
-        <div class="actions">
-          <button id="accept" \${disabled}>Accept</button>
-          <button class="ghost" id="decline">Not now</button>
-        </div>
+        \${acceptActions}
         <div class="full-only">
         <h2>Task Packet Preview</h2>
         <p><strong>Privacy Gate:</strong> <code>\${escapeHtml(gate.level || packet.privacyLevel)} · \${escapeHtml(gate.allowed ? "allowed" : "blocked")}</code></p>
@@ -849,11 +853,12 @@ function htmlPage(task = latestTask(), options = {}) {
         </div>
       </div>
       \`;
-      document.querySelector("#accept").addEventListener("click", async () => {
+      document.querySelector("#accept")?.addEventListener("click", async () => {
         await post("/humanmcp/tasks/" + task.id + "/seen");
         document.querySelector("#answerPanel").classList.add("ready");
+        document.querySelector("#accept").closest(".actions").remove();
       });
-      document.querySelector("#decline").addEventListener("click", () => {
+      document.querySelector("#decline")?.addEventListener("click", () => {
         content.innerHTML = "<p class='muted'>No problem. This HumanMCP request was not accepted on this device.</p>";
       });
       document.querySelector("#seen").addEventListener("click", async () => {
