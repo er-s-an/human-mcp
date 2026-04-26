@@ -31,6 +31,9 @@ const publishProfileTag =
   process.env.HUMANMCP_PUBLISH_PROFILE_TAG === "1";
 const mockProfile = args.includes("--mock-profile");
 const once = args.includes("--once");
+const ignoreExisting =
+  args.includes("--ignore-existing") ||
+  process.env.HUMANMCP_IGNORE_EXISTING === "1";
 const runtimePath = path.join(
   os.homedir(),
   "Library",
@@ -407,6 +410,16 @@ async function pollOnce() {
   return tasks.length;
 }
 
+async function primeExistingTasks() {
+  const inboxUrl = `${coordinator.replace(/\/$/, "")}/humanmcp/inbox/${encodeURIComponent(humanId)}`;
+  const inbox = await fetchJson(inboxUrl);
+  const tasks = Array.isArray(inbox.tasks) ? inbox.tasks : [];
+  for (const task of tasks) {
+    seenTaskIds.add(task.id);
+  }
+  console.log(`[humanmcp-notifier] ignored existing tasks=${tasks.length}`);
+}
+
 async function main() {
   console.log(`[humanmcp-notifier] coordinator=${coordinator}`);
   console.log(`[humanmcp-notifier] humanId=${humanId}`);
@@ -416,6 +429,7 @@ async function main() {
   );
   console.log(`[humanmcp-notifier] askBeforeOpen=${askBeforeOpen ? "enabled" : "disabled"}`);
   console.log(`[humanmcp-notifier] profileTag=${publishProfileTag ? "enabled" : "disabled"}`);
+  console.log(`[humanmcp-notifier] ignoreExisting=${ignoreExisting ? "enabled" : "disabled"}`);
 
   if (publishProfileTag) {
     const profile = await publishLocalProfileTag().catch((error) => {
@@ -427,6 +441,10 @@ async function main() {
         `[humanmcp-notifier] profile tag published: ${profile.primaryTag} confidence=${profile.confidence}`,
       );
     }
+  }
+
+  if (ignoreExisting) {
+    await primeExistingTasks();
   }
 
   do {
