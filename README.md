@@ -223,6 +223,10 @@ Main tools:
 
 See [docs/runbooks/airjelly-humanmcp-mcp.md](docs/runbooks/airjelly-humanmcp-mcp.md) for Codex/AirJelly MCP configuration.
 
+## Learning Guide
+
+If you are new to AI agents, MCP, and local tool-based development, start with [docs/ai-beginner-project-journal.md](docs/ai-beginner-project-journal.md). It explains the project story, terms, tools, debugging process, and a beginner-friendly path for recreating the demo.
+
 ## Privacy Model
 
 The bridge sends only:
